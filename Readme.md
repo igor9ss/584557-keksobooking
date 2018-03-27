@@ -1,7 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
 * Студент: [Igor Zorin](https://up.htmlacademy.ru/javascript/13/user/584557).
-* Наставник: `Неизвестно`.
+* Наставник: Сергей Ufocoder.
 
 ---
 
