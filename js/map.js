@@ -42,16 +42,17 @@ var getFeatures = function () {
 
 var getPrimaryMass = function () {
   var PrimaryMass = [];
-  for (var i = 0; i <= OFFER_LIMIT; i++) {
-    var avatarImgNumber = '0' + (i + 1);
+
+  var generateOffer = function (index) {
     var xCoordinate = getRandomNumber(300, 901);
     var yCoordinate = getRandomNumber(150, 501);
+    var avatarImgNumber = '0' + (index + 1);
     var massObj = {
       author: {
         avatar: 'img/avatars/user' + avatarImgNumber + '.png'
       },
       offer: {
-        title: TITLE[i],
+        title: TITLE[index],
         address: xCoordinate + ', ' + yCoordinate,
         price: getRandomNumber(1000, 1000001),
         type: OFFER_TYPE[getRandomNumber(0, 4)],
@@ -72,7 +73,11 @@ var getPrimaryMass = function () {
         y: yCoordinate
       }
     };
-    PrimaryMass[i] = massObj;
+    return massObj;
+  };
+
+  for (var i = 0; i <= OFFER_LIMIT; i++) {
+    PrimaryMass[i] = generateOffer(i);
   }
   return PrimaryMass;
 };
@@ -89,17 +94,22 @@ var renderPin = function (mass1) {
 };
 
 var getTypeOfDigs = function (key) {
-  if (key === 'flat') {
-    key = 'Квартира';
-  }
-  if (key === 'bungalo') {
-    key = 'Бунгало';
-  }
-  if (key === 'house') {
-    key = 'Дом';
-  }
-  if (key === 'palace') {
-    key = 'Дворец';
+  switch (key) {
+    case 'flat':
+      key = 'Квартира';
+      break;
+
+    case 'bungalo':
+      key = 'Бунгало';
+      break;
+
+    case 'house':
+      key = 'Дом';
+      break;
+
+    case 'palace':
+      key = 'Дворец';
+      break;
   }
   return key;
 };
