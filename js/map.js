@@ -11,12 +11,11 @@ var TITLE = [
   'Неуютное бунгало по колено в воде'
 ];
 
-var offerType = ['palace', 'flat', 'house', 'bungalo'];
-var offerCheckin = ['12:00', '13:00', '4:00'];
-var offerCheckout = ['12:00', '13:00', '14:00'];
-var offerFeaturesWords = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var fragment = document.createDocumentFragment();
-var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+var OFFER_TYPE = ['palace', 'flat', 'house', 'bungalo'];
+var OFFER_CHECKIN = ['12:00', '13:00', '4:00'];
+var OFFER_CHECKOUT = ['12:00', '13:00', '14:00'];
+var OFFER_FEATURES_WORDS = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
+var OFFER_LIMIT = 7;
 
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -24,8 +23,8 @@ var getRandomNumber = function (min, max) {
 
 var getFeatures = function () {
   var features = [];
-  for (var i = 0; i <= offerFeaturesWords.length; i++) {
-    features[i] = offerFeaturesWords[getRandomNumber(0, offerFeaturesWords.length)];
+  for (var i = 0; i <= OFFER_FEATURES_WORDS.length; i++) {
+    features[i] = OFFER_FEATURES_WORDS[getRandomNumber(0, OFFER_FEATURES_WORDS.length)];
   }
   function unique(arr) {
     var obj = {};
@@ -41,9 +40,46 @@ var getFeatures = function () {
   return unique(features);
 };
 
-var getPrimaryMass = function () {
+var getPrimaryMass = function (OFFER_LIMIT) {
   var PrimaryMass = [];
-  for (var i = 0; i <= TITLE.length - 1; i++) {
+  for(var i = 0; i <= OFFER_LIMIT; i++) {
+    var avatarImgNumber = '0' + (i + 1);
+    var xCoordinate = getRandomNumber(300, 901);
+    var yCoordinate = getRandomNumber(150, 501);
+    var massObj = {
+      author: {
+        avatar: 'img/avatars/user' + avatarImgNumber + '.png'
+      },
+      offer: {
+        title: TITLE[i],
+        address: xCoordinate + ', ' + yCoordinate,
+        price: getRandomNumber(1000, 1000001),
+        type: OFFER_TYPE[getRandomNumber(0, 4)],
+        rooms: getRandomNumber(1, 6),
+        guests: Math.floor(Math.random() * 100),
+        checkin: OFFER_CHECKIN[getRandomNumber(0, 3)],
+        checkout: OFFER_CHECKOUT[getRandomNumber(0, 3)],
+        features: getFeatures(),
+        description: '',
+        photos: [
+          'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+          'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+          'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+        ]
+      },
+      location: {
+        x: xCoordinate,
+        y: yCoordinate
+      }
+    };
+    PrimaryMass[i] = massObj;
+  }
+  return PrimaryMass;
+};
+
+/*var getPrimaryMass = function () {
+  var PrimaryMass = [];
+  for (var i = 0; i <= OFFER_LIMIT; i++) {
     var avatarImgNumber = '0' + (i + 1);
     var xCoordinate = getRandomNumber(300, 901);
     var yCoordinate = getRandomNumber(150, 501);
@@ -55,11 +91,11 @@ var getPrimaryMass = function () {
         title: TITLE[i],
         address: xCoordinate + ', ' + yCoordinate,
         price: getRandomNumber(1000, 1000001),
-        type: offerType[getRandomNumber(0, 4)],
+        type: OFFER_TYPE[getRandomNumber(0, 4)],
         rooms: getRandomNumber(1, 6),
         guests: Math.floor(Math.random() * 100),
-        checkin: offerCheckin[getRandomNumber(0, 3)],
-        checkout: offerCheckout[getRandomNumber(0, 3)],
+        checkin: OFFER_CHECKIN[getRandomNumber(0, 3)],
+        checkout: OFFER_CHECKOUT[getRandomNumber(0, 3)],
         features: getFeatures(),
         description: '',
         photos: [
@@ -68,19 +104,19 @@ var getPrimaryMass = function () {
           'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
         ]
       },
-      location1: {
+      location: {
         x: xCoordinate,
         y: yCoordinate
       }
     };
   }
   return PrimaryMass;
-};
+};*/
 
 var renderPin = function (mass1) {
   for (var i = 0; i < mass1.length; i++) {
     var pin = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
-    pin.setAttribute('style', 'left: ' + (mass1[i].location1.x - 25) + 'px; top: ' + (mass1[i].location1.y - 70) + 'px;');
+    pin.setAttribute('style', 'left: ' + (mass1[i].location.x - 25) + 'px; top: ' + (mass1[i].location.y - 70) + 'px;');
     pin.querySelector('img').setAttribute('src', mass1[i].author.avatar);
     pin.querySelector('img').setAttribute('alt', mass1[i].offer.title);
     fragment.appendChild(pin);
@@ -125,7 +161,10 @@ var getImgSrcs = function () {
 
 document.querySelector('.map').classList.remove('map--faded');
 
-var PrimaryMass = getPrimaryMass();
+var PrimaryMass = getPrimaryMass(OFFER_LIMIT);
+
+var fragment = document.createDocumentFragment();
+var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
 renderPin(PrimaryMass);
 
