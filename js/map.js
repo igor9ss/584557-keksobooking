@@ -44,7 +44,7 @@ var generateOffer = function (index) {
   var xCoordinate = getRandomNumber(300, 901);
   var yCoordinate = getRandomNumber(150, 501);
   var avatarImgNumber = '0' + (index + 1);
-  var massObj = {
+  return {
     author: {
       avatar: 'img/avatars/user' + avatarImgNumber + '.png'
     },
@@ -52,11 +52,11 @@ var generateOffer = function (index) {
       title: TITLE[index],
       address: xCoordinate + ', ' + yCoordinate,
       price: getRandomNumber(1000, 1000001),
-      type: OFFER_TYPE[getRandomNumber(0, 4)],
+      type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length - 1)],
       rooms: getRandomNumber(1, 6),
       guests: Math.floor(Math.random() * 100),
-      checkin: OFFER_CHECKIN[getRandomNumber(0, 3)],
-      checkout: OFFER_CHECKOUT[getRandomNumber(0, 3)],
+      checkin: OFFER_CHECKIN[getRandomNumber(0, OFFER_CHECKIN.length - 1)],
+      checkout: OFFER_CHECKOUT[getRandomNumber(0, OFFER_CHECKOUT.length - 1)],
       features: getFeatures(),
       description: '',
       photos: [
@@ -70,10 +70,9 @@ var generateOffer = function (index) {
       y: yCoordinate
     }
   };
-  return massObj;
 };
 
-var getPrimaryMass = function () {
+var generateOffers = function () {
   var PrimaryMass = [];
   for (var i = 0; i <= OFFER_LIMIT; i++) {
     PrimaryMass[i] = generateOffer(i);
@@ -127,7 +126,7 @@ var getImgSrcs = function () {
 
 document.querySelector('.map').classList.remove('map--faded');
 
-var PrimaryMass = getPrimaryMass();
+var PrimaryMass = generateOffers();
 
 var fragment = document.createDocumentFragment();
 var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
