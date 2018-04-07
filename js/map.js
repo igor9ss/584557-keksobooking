@@ -40,9 +40,9 @@ var getFeatures = function () {
   return unique(features);
 };
 
-var getPrimaryMass = function (OFFER_LIMIT) {
+var getPrimaryMass = function () {
   var PrimaryMass = [];
-  for(var i = 0; i <= OFFER_LIMIT; i++) {
+  for (var i = 0; i <= OFFER_LIMIT; i++) {
     var avatarImgNumber = '0' + (i + 1);
     var xCoordinate = getRandomNumber(300, 901);
     var yCoordinate = getRandomNumber(150, 501);
@@ -76,42 +76,6 @@ var getPrimaryMass = function (OFFER_LIMIT) {
   }
   return PrimaryMass;
 };
-
-/*var getPrimaryMass = function () {
-  var PrimaryMass = [];
-  for (var i = 0; i <= OFFER_LIMIT; i++) {
-    var avatarImgNumber = '0' + (i + 1);
-    var xCoordinate = getRandomNumber(300, 901);
-    var yCoordinate = getRandomNumber(150, 501);
-    PrimaryMass[i] = {
-      author: {
-        avatar: 'img/avatars/user' + avatarImgNumber + '.png'
-      },
-      offer: {
-        title: TITLE[i],
-        address: xCoordinate + ', ' + yCoordinate,
-        price: getRandomNumber(1000, 1000001),
-        type: OFFER_TYPE[getRandomNumber(0, 4)],
-        rooms: getRandomNumber(1, 6),
-        guests: Math.floor(Math.random() * 100),
-        checkin: OFFER_CHECKIN[getRandomNumber(0, 3)],
-        checkout: OFFER_CHECKOUT[getRandomNumber(0, 3)],
-        features: getFeatures(),
-        description: '',
-        photos: [
-          'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-          'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-          'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-        ]
-      },
-      location: {
-        x: xCoordinate,
-        y: yCoordinate
-      }
-    };
-  }
-  return PrimaryMass;
-};*/
 
 var renderPin = function (mass1) {
   for (var i = 0; i < mass1.length; i++) {
