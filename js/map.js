@@ -145,10 +145,3 @@ card.querySelector('.popup__photo').setAttribute('src', PrimaryMass[0].offer.pho
 card.querySelector('.popup__photos').appendChild(getImgSrcs(massLength));
 document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
 card.querySelector('.popup__avatar').setAttribute('src', PrimaryMass[0].author.avatar);
-
-
-
-
-
-
-
