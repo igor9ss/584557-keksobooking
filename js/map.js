@@ -40,42 +40,41 @@ var getFeatures = function () {
   return unique(features);
 };
 
+var generateOffer = function (index) {
+  var xCoordinate = getRandomNumber(300, 901);
+  var yCoordinate = getRandomNumber(150, 501);
+  var avatarImgNumber = '0' + (index + 1);
+  var massObj = {
+    author: {
+      avatar: 'img/avatars/user' + avatarImgNumber + '.png'
+    },
+    offer: {
+      title: TITLE[index],
+      address: xCoordinate + ', ' + yCoordinate,
+      price: getRandomNumber(1000, 1000001),
+      type: OFFER_TYPE[getRandomNumber(0, 4)],
+      rooms: getRandomNumber(1, 6),
+      guests: Math.floor(Math.random() * 100),
+      checkin: OFFER_CHECKIN[getRandomNumber(0, 3)],
+      checkout: OFFER_CHECKOUT[getRandomNumber(0, 3)],
+      features: getFeatures(),
+      description: '',
+      photos: [
+        'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
+        'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
+        'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
+      ]
+    },
+    location: {
+      x: xCoordinate,
+      y: yCoordinate
+    }
+  };
+  return massObj;
+};
+
 var getPrimaryMass = function () {
   var PrimaryMass = [];
-
-  var generateOffer = function (index) {
-    var xCoordinate = getRandomNumber(300, 901);
-    var yCoordinate = getRandomNumber(150, 501);
-    var avatarImgNumber = '0' + (index + 1);
-    var massObj = {
-      author: {
-        avatar: 'img/avatars/user' + avatarImgNumber + '.png'
-      },
-      offer: {
-        title: TITLE[index],
-        address: xCoordinate + ', ' + yCoordinate,
-        price: getRandomNumber(1000, 1000001),
-        type: OFFER_TYPE[getRandomNumber(0, 4)],
-        rooms: getRandomNumber(1, 6),
-        guests: Math.floor(Math.random() * 100),
-        checkin: OFFER_CHECKIN[getRandomNumber(0, 3)],
-        checkout: OFFER_CHECKOUT[getRandomNumber(0, 3)],
-        features: getFeatures(),
-        description: '',
-        photos: [
-          'http://o0.github.io/assets/images/tokyo/hotel1.jpg',
-          'http://o0.github.io/assets/images/tokyo/hotel2.jpg',
-          'http://o0.github.io/assets/images/tokyo/hotel3.jpg'
-        ]
-      },
-      location: {
-        x: xCoordinate,
-        y: yCoordinate
-      }
-    };
-    return massObj;
-  };
-
   for (var i = 0; i <= OFFER_LIMIT; i++) {
     PrimaryMass[i] = generateOffer(i);
   }
@@ -96,20 +95,13 @@ var renderPin = function (mass1) {
 var getTypeOfDigs = function (key) {
   switch (key) {
     case 'flat':
-      key = 'Квартира';
-      break;
-
+      return 'Квартира';
     case 'bungalo':
-      key = 'Бунгало';
-      break;
-
+      return 'Бунгало';
     case 'house':
-      key = 'Дом';
-      break;
-
+      return 'Дом';
     case 'palace':
-      key = 'Дворец';
-      break;
+      return 'Дворец';
   }
   return key;
 };
@@ -135,7 +127,7 @@ var getImgSrcs = function () {
 
 document.querySelector('.map').classList.remove('map--faded');
 
-var PrimaryMass = getPrimaryMass(OFFER_LIMIT);
+var PrimaryMass = getPrimaryMass();
 
 var fragment = document.createDocumentFragment();
 var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
