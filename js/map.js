@@ -1,6 +1,6 @@
 'use strict';
 
-var TITLE = [
+var OFFER_TITLES = [
   'Большая уютная квартира',
   'Маленькая неуютная квартира',
   'Огромный прекрасный дворец',
@@ -36,13 +36,12 @@ var getFeatures = function () {
 var generateOffer = function (index) {
   var xCoordinate = getRandomNumber(300, 901);
   var yCoordinate = getRandomNumber(150, 501);
-  var avatarImgNumber = '0' + (index + 1);
   return {
     author: {
-      avatar: 'img/avatars/user' + avatarImgNumber + '.png'
+      avatar: 'img/avatars/user0' + (index + 1) + '.png'
     },
     offer: {
-      title: TITLE[index],
+      title: OFFER_TITLES[index],
       address: xCoordinate + ', ' + yCoordinate,
       price: getRandomNumber(1000, 1000001),
       type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length)],
@@ -66,11 +65,11 @@ var generateOffer = function (index) {
 };
 
 var generateOffers = function () {
-  var PrimaryMass = [];
+  var offers = [];
   for (var i = 0; i <= OFFER_LIMIT; i++) {
-    PrimaryMass[i] = generateOffer(i);
+    offers.push(generateOffer(i));
   }
-  return PrimaryMass;
+  return offers;
 };
 
 var renderPin = function (mass1) {
@@ -99,11 +98,11 @@ var getTypeOfDigs = function (key) {
 };
 
 var fragment = document.createDocumentFragment();
-var PrimaryMass = generateOffers();
+var offers = generateOffers();
 
 var getFeaturesList = function (ind) {
-  for (var i = 0; i < PrimaryMass[ind].offer.features.length; i++) {
-    var featuresName = PrimaryMass[ind].offer.features[i];
+  for (var i = 0; i < offers[ind].offer.features.length; i++) {
+    var featuresName = offers[ind].offer.features[i];
     var newElement = document.createElement('li');
     newElement.className = 'popup__feature ' + 'popup__feature--' + featuresName;
     fragment.appendChild(newElement);
@@ -111,9 +110,9 @@ var getFeaturesList = function (ind) {
   return fragment;
 };
 var getImgSrcs = function (ind) {
-  for (var i = 1; i <= PrimaryMass[ind].offer.photos.length - 1; i++) {
+  for (var i = 1; i <= offers[ind].offer.photos.length - 1; i++) {
     var newImg = card.querySelector('.popup__photo').cloneNode(true);
-    newImg.setAttribute('src', PrimaryMass[ind].offer.photos[i]);
+    newImg.setAttribute('src', offers[ind].offer.photos[i]);
     fragment.appendChild(newImg);
   }
   return fragment;
@@ -121,12 +120,12 @@ var getImgSrcs = function (ind) {
 
 document.querySelector('.map').classList.remove('map--faded');
 
-renderPin(PrimaryMass);
+renderPin(offers);
 
 var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
 var renderOfferCard = function (index) {
-  var offer = PrimaryMass[index].offer;
+  var offer = offers[index].offer;
   card.querySelector('.popup__title').textContent = offer.title;
   card.querySelector('.popup__text--address').textContent = offer.address;
   card.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
@@ -139,6 +138,6 @@ var renderOfferCard = function (index) {
   card.querySelector('.popup__photo').setAttribute('src', offer.photos[0]);
   card.querySelector('.popup__photos').appendChild(getImgSrcs(index));
   document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
-  card.querySelector('.popup__avatar').setAttribute('src', PrimaryMass[index].author.avatar);
+  card.querySelector('.popup__avatar').setAttribute('src', offers[index].author.avatar);
 };
-renderOfferCard(3);
+renderOfferCard(4);
