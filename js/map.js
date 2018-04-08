@@ -86,8 +86,8 @@ var fragment = document.createDocumentFragment();
 
 var offers = generateOffers();
 
-for (var i = 0; i < offers.length; i++) {
-  fragment.appendChild(createPinElemet(offers[i]));
+for (var j = 0; j < offers.length; j++) {
+  fragment.appendChild(createPinElemet(offers[j]));
 }
 
 document.querySelector('.map__pins').appendChild(fragment);
@@ -108,7 +108,7 @@ var getTypeOfDigs = function (key) {
 
 
 var getFeaturesList = function (data) {
-  for (i = 0; i < data.offer.features.length; i++) {
+  for (var i = 0; i < data.offer.features.length; i++) {
     var featuresName = data.offer.features[i];
     var newElement = document.createElement('li');
     newElement.className = 'popup__feature ' + 'popup__feature--' + featuresName;
@@ -118,7 +118,7 @@ var getFeaturesList = function (data) {
 };
 
 var getImgSrcs = function (data) {
-  for (i = 1; i <= data.offer.photos.length - 1; i++) {
+  for (var i = 1; i <= data.offer.photos.length - 1; i++) {
     var newImg = card.querySelector('.popup__photo').cloneNode(true);
     newImg.setAttribute('src', data.offer.photos[i]);
     fragment.appendChild(newImg);
