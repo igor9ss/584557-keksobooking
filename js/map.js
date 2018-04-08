@@ -72,16 +72,23 @@ var generateOffers = function () {
   return offers;
 };
 
-var renderPin = function (mass1) {
-  for (var i = 0; i < mass1.length; i++) {
-    var pin = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
-    pin.setAttribute('style', 'left: ' + (mass1[i].location.x - 25) + 'px; top: ' + (mass1[i].location.y - 70) + 'px;');
-    pin.querySelector('img').setAttribute('src', mass1[i].author.avatar);
-    pin.querySelector('img').setAttribute('alt', mass1[i].offer.title);
-    fragment.appendChild(pin);
-  }
-  document.querySelector('.map__pins').appendChild(fragment);
+var createPinElemet = function (objct) {
+  var pin = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+
+  pin.setAttribute('style', 'left: ' + (objct.location.x - 25) + 'px; top: ' + (objct.location.y - 70) + 'px;');
+  pin.querySelector('img').setAttribute('src', objct.author.avatar);
+  pin.querySelector('img').setAttribute('alt', objct.offer.title);
+
+  return pin;
 };
+
+var fragment = document.createDocumentFragment();
+
+for (var i = 0; i < generateOffers().length; i++) {
+  fragment.appendChild(createPinElemet(generateOffers()[i]));
+}
+
+document.querySelector('.map__pins').appendChild(fragment);
 
 var getTypeOfDigs = function (key) {
   switch (key) {
@@ -97,11 +104,10 @@ var getTypeOfDigs = function (key) {
   return key;
 };
 
-var fragment = document.createDocumentFragment();
 var offers = generateOffers();
 
 var getFeaturesList = function (ind) {
-  for (var i = 0; i < offers[ind].offer.features.length; i++) {
+  for (i = 0; i < offers[ind].offer.features.length; i++) {
     var featuresName = offers[ind].offer.features[i];
     var newElement = document.createElement('li');
     newElement.className = 'popup__feature ' + 'popup__feature--' + featuresName;
@@ -110,7 +116,7 @@ var getFeaturesList = function (ind) {
   return fragment;
 };
 var getImgSrcs = function (ind) {
-  for (var i = 1; i <= offers[ind].offer.photos.length - 1; i++) {
+  for (i = 1; i <= offers[ind].offer.photos.length - 1; i++) {
     var newImg = card.querySelector('.popup__photo').cloneNode(true);
     newImg.setAttribute('src', offers[ind].offer.photos[i]);
     fragment.appendChild(newImg);
@@ -119,8 +125,6 @@ var getImgSrcs = function (ind) {
 };
 
 document.querySelector('.map').classList.remove('map--faded');
-
-renderPin(offers);
 
 var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
