@@ -23,21 +23,14 @@ var getRandomNumber = function (min, max) {
 
 var getFeatures = function () {
   var features = [];
-  for (var i = 0; i <= OFFER_FEATURES_WORDS.length; i++) {
-    features[i] = OFFER_FEATURES_WORDS[getRandomNumber(0, OFFER_FEATURES_WORDS.length)];
-  }
-  function unique(arr) {
-    var obj = {};
-
-    for (i = 0; i < arr.length; i++) {
-      var str = arr[i];
-      obj[str] = true;
+  for (var key in OFFER_FEATURES_WORDS) {
+    if (features.hasOwnProperty.call(OFFER_FEATURES_WORDS, key)) {
+      features[key] = OFFER_FEATURES_WORDS[key];
     }
-
-    return Object.keys(obj);
   }
+  features.splice(getRandomNumber(0, OFFER_FEATURES_WORDS.length - 1), getRandomNumber(1, 3));
 
-  return unique(features);
+  return features;
 };
 
 var generateOffer = function (index) {
@@ -105,8 +98,11 @@ var getTypeOfDigs = function (key) {
   return key;
 };
 
+var fragment = document.createDocumentFragment();
+var PrimaryMass = generateOffers();
+
 var getFeaturesList = function () {
-  for (var i = 0; i < featuresMass.length; i++) {
+  for (var i = 0; i < PrimaryMass[0].offer.features.length; i++) {
     var featuresName = PrimaryMass[0].offer.features[i];
     var newElement = document.createElement('li');
     newElement.className = 'popup__feature ' + 'popup__feature--' + featuresName;
@@ -114,9 +110,8 @@ var getFeaturesList = function () {
   }
   return fragment;
 };
-
 var getImgSrcs = function () {
-  for (var i = 1; i <= massLength - 1; i++) {
+  for (var i = 1; i <= PrimaryMass[0].offer.photos.length - 1; i++) {
     var newImg = card.querySelector('.popup__photo').cloneNode(true);
     newImg.setAttribute('src', PrimaryMass[0].offer.photos[i]);
     fragment.appendChild(newImg);
@@ -126,26 +121,24 @@ var getImgSrcs = function () {
 
 document.querySelector('.map').classList.remove('map--faded');
 
-var PrimaryMass = generateOffers();
-
-var fragment = document.createDocumentFragment();
-var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
-
 renderPin(PrimaryMass);
 
-var featuresMass = PrimaryMass[0].offer.features;
-var massLength = PrimaryMass[0].offer.photos.length;
+var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
-card.querySelector('.popup__title').textContent = PrimaryMass[0].offer.title;
-card.querySelector('.popup__text--address').textContent = PrimaryMass[0].offer.address;
-card.querySelector('.popup__text--price').textContent = PrimaryMass[0].offer.price + '₽/ночь';
-card.querySelector('.popup__type').textContent = getTypeOfDigs(PrimaryMass[0].offer.type);
-card.querySelector('.popup__text--capacity').textContent = PrimaryMass[0].offer.rooms + ' комнаты для ' + PrimaryMass[0].offer.guests + ' гостей';
-card.querySelector('.popup__text--time').textContent = 'Заезд после ' + PrimaryMass[0].offer.checkin + ' , выезд до ' + PrimaryMass[0].offer.checkout;
-card.querySelector('.popup__features').innerHTML = '';
-card.querySelector('.popup__features').appendChild(getFeaturesList(featuresMass));
-card.querySelector('.popup__description').textContent = PrimaryMass[0].offer.description;
-card.querySelector('.popup__photo').setAttribute('src', PrimaryMass[0].offer.photos[0]);
-card.querySelector('.popup__photos').appendChild(getImgSrcs(massLength));
-document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
-card.querySelector('.popup__avatar').setAttribute('src', PrimaryMass[0].author.avatar);
+var renderCard = function (i) {
+  var offer = PrimaryMass[i].offer;
+  card.querySelector('.popup__title').textContent = offer.title;
+  card.querySelector('.popup__text--address').textContent = offer.address;
+  card.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
+  card.querySelector('.popup__type').textContent = getTypeOfDigs(offer.type);
+  card.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
+  card.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ' , выезд до ' + offer.checkout;
+  card.querySelector('.popup__features').innerHTML = '';
+  card.querySelector('.popup__features').appendChild(getFeaturesList(offer.features));
+  card.querySelector('.popup__description').textContent = offer.description;
+  card.querySelector('.popup__photo').setAttribute('src', offer.photos[0]);
+  card.querySelector('.popup__photos').appendChild(getImgSrcs(offer.photos.length));
+  document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
+  card.querySelector('.popup__avatar').setAttribute('src', PrimaryMass[i].author.avatar);
+};
+renderCard(7);
