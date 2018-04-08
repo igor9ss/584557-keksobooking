@@ -75,7 +75,8 @@ var generateOffers = function () {
 var createPinElemet = function (data) {
   var pin = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
 
-  pin.setAttribute('style', 'left: ' + (data.location.x - 25) + 'px; top: ' + (data.location.y - 70) + 'px;');
+  pin.style.left = (data.location.x - 25) + 'px';
+  pin.style.top = (data.location.y - 70) + 'px';
   pin.querySelector('img').setAttribute('src', data.author.avatar);
   pin.querySelector('img').setAttribute('alt', data.offer.title);
 
