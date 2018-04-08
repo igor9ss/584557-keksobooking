@@ -45,11 +45,11 @@ var generateOffer = function (index) {
       title: TITLE[index],
       address: xCoordinate + ', ' + yCoordinate,
       price: getRandomNumber(1000, 1000001),
-      type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length - 1)],
+      type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length)],
       rooms: getRandomNumber(1, 6),
       guests: Math.floor(Math.random() * 100),
-      checkin: OFFER_CHECKIN[getRandomNumber(0, OFFER_CHECKIN.length - 1)],
-      checkout: OFFER_CHECKOUT[getRandomNumber(0, OFFER_CHECKOUT.length - 1)],
+      checkin: OFFER_CHECKIN[getRandomNumber(0, OFFER_CHECKIN.length)],
+      checkout: OFFER_CHECKOUT[getRandomNumber(0, OFFER_CHECKOUT.length)],
       features: getFeatures(),
       description: '',
       photos: [
@@ -141,4 +141,4 @@ var renderCard = function (i) {
   document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
   card.querySelector('.popup__avatar').setAttribute('src', PrimaryMass[i].author.avatar);
 };
-renderCard(7);
+renderCard(3);
