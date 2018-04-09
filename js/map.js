@@ -89,7 +89,7 @@ var fragment = document.createDocumentFragment();
 var offers = generateOffers();
 
 for (var j = 0; j < offers.length; j++) {
-  fragment.appendChild(createPinElemet(offers[j]), pinTempl);
+  fragment.appendChild(createPinElemet(offers[j], pinTempl));
 }
 
 document.querySelector('.map__pins').appendChild(fragment);
