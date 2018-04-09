@@ -64,14 +64,6 @@ var generateOffer = function (index) {
   };
 };
 
-var generateOffers = function () {
-  var offers = [];
-  for (var i = 0; i <= OFFER_LIMIT; i++) {
-    offers.push(generateOffer(i));
-  }
-  return offers;
-};
-
 var createPinElemet = function (data, templ) {
   var pin = templ.cloneNode(true);
   pin.style.left = (data.location.x - 25) + 'px';
@@ -107,8 +99,6 @@ var getFeaturesList = function (features) {
   }
   return featuresFragment;
 };
-
-//var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
 var getImgSrcs = function (photos, imgTempl) {
   var newImg = imgTempl.cloneNode(true);
@@ -148,6 +138,12 @@ var offers = generateOffers();
 var imgTempl = document.querySelector('template').content.querySelector('.map__card').cloneNode(true).querySelector('.popup__photo')
 
 var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+
+var offers = [];
+
+for (var i = 0; i <= OFFER_LIMIT; i++) {
+  offers.push(generateOffer(i));
+}
 
 for (var j = 0; j < offers.length; j++) {
   fragment.appendChild(createPinElemet(offers[j], pinTempl));
