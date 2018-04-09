@@ -15,7 +15,7 @@ var OFFER_TYPE = ['palace', 'flat', 'house', 'bungalo'];
 var OFFER_CHECKIN = ['12:00', '13:00', '4:00'];
 var OFFER_CHECKOUT = ['12:00', '13:00', '14:00'];
 var OFFER_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
-var OFFER_LIMIT = 7;
+var OFFER_LIMIT = 8;
 
 var getRandomNumber = function (min, max) {
   return Math.floor(Math.random() * (max - min) + min);
@@ -66,7 +66,7 @@ var generateOffer = function (index) {
 
 var generateOffers = function () {
   var offers = [];
-  for (var i = 0; i <= OFFER_LIMIT; i++) {
+  for (var i = 1; i <= OFFER_LIMIT; i++) {
     offers.push(generateOffer(i));
   }
   return offers;
