@@ -72,9 +72,10 @@ var generateOffers = function () {
   return offers;
 };
 
-var createPinElemet = function (data) {
-  var pin = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+var pinTempl = document.querySelector('template').content.querySelector('.map__pin');
 
+var createPinElemet = function (data, templ) {
+  var pin = templ.cloneNode(true);
   pin.style.left = (data.location.x - 25) + 'px';
   pin.style.top = (data.location.y - 70) + 'px';
   pin.querySelector('img').setAttribute('src', data.author.avatar);
@@ -88,7 +89,7 @@ var fragment = document.createDocumentFragment();
 var offers = generateOffers();
 
 for (var j = 0; j < offers.length; j++) {
-  fragment.appendChild(createPinElemet(offers[j]));
+  fragment.appendChild(createPinElemet(offers[j]), pinTempl);
 }
 
 document.querySelector('.map__pins').appendChild(fragment);
@@ -109,9 +110,9 @@ var getTypeOfDigs = function (key) {
 
 
 var getFeaturesList = function (data) {
+  var featuresName = data.offer.features[i];
+  var newElement = document.createElement('li');
   for (var i = 0; i < data.offer.features.length; i++) {
-    var featuresName = data.offer.features[i];
-    var newElement = document.createElement('li');
     newElement.className = 'popup__feature ' + 'popup__feature--' + featuresName;
     fragment.appendChild(newElement);
   }
@@ -119,8 +120,8 @@ var getFeaturesList = function (data) {
 };
 
 var getImgSrcs = function (data) {
+  var newImg = card.querySelector('.popup__photo').cloneNode(true);
   for (var i = 1; i <= data.offer.photos.length - 1; i++) {
-    var newImg = card.querySelector('.popup__photo').cloneNode(true);
     newImg.setAttribute('src', data.offer.photos[i]);
     fragment.appendChild(newImg);
   }
