@@ -34,15 +34,15 @@ var getFeatures = function () {
 };
 
 var generateOffer = function (index) {
-  var xCoordinate = getRandomNumber(300, 901);
-  var yCoordinate = getRandomNumber(150, 501);
+  var x = getRandomNumber(300, 901);
+  var y = getRandomNumber(150, 501);
   return {
     author: {
       avatar: 'img/avatars/user0' + (index + 1) + '.png'
     },
     offer: {
       title: OFFER_TITLES[index],
-      address: xCoordinate + ', ' + yCoordinate,
+      address: x + ', ' + y,
       price: getRandomNumber(1000, 1000001),
       type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length)],
       rooms: getRandomNumber(1, 6),
@@ -58,21 +58,19 @@ var generateOffer = function (index) {
       ]
     },
     location: {
-      x: xCoordinate,
-      y: yCoordinate
+      x: x,
+      y: y
     }
   };
 };
 
 var generateOffers = function () {
   var offers = [];
-  for (var i = 1; i <= OFFER_LIMIT; i++) {
+  for (var i = 0; i <= OFFER_LIMIT; i++) {
     offers.push(generateOffer(i));
   }
   return offers;
 };
-
-var pinTempl = document.querySelector('template').content.querySelector('.map__pin');
 
 var createPinElemet = function (data, templ) {
   var pin = templ.cloneNode(true);
@@ -83,16 +81,6 @@ var createPinElemet = function (data, templ) {
 
   return pin;
 };
-
-var fragment = document.createDocumentFragment();
-
-var offers = generateOffers();
-
-for (var j = 0; j < offers.length; j++) {
-  fragment.appendChild(createPinElemet(offers[j], pinTempl));
-}
-
-document.querySelector('.map__pins').appendChild(fragment);
 
 var getTypeOfDigs = function (key) {
   switch (key) {
@@ -108,7 +96,6 @@ var getTypeOfDigs = function (key) {
   return key;
 };
 
-
 var getFeaturesList = function (features) {
   var newElement = document.createElement('li');
   var featuresFragment = document.createDocumentFragment();
@@ -123,8 +110,6 @@ var getFeaturesList = function (features) {
 
 //var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
-var imgTempl = document.querySelector('template').content.querySelector('.map__card').cloneNode(true).querySelector('.popup__photo')
-
 var getImgSrcs = function (photos, imgTempl) {
   var newImg = imgTempl.cloneNode(true);
   var imgSrcsFragment = document.createDocumentFragment();
@@ -137,10 +122,7 @@ var getImgSrcs = function (photos, imgTempl) {
   return imgSrcsFragment;
 };
 
-document.querySelector('.map').classList.remove('map--faded');
-
 var renderOfferCard = function (data) {
-  var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
 
   card.querySelector('.popup__title').textContent = data.offer.title;
   card.querySelector('.popup__text--address').textContent = data.offer.address;
@@ -156,4 +138,23 @@ var renderOfferCard = function (data) {
   document.querySelector('.map').insertBefore(card, document.querySelector('.map__filters-container'));
   card.querySelector('.popup__avatar').setAttribute('src', data.author.avatar);
 };
+
+var pinTempl = document.querySelector('template').content.querySelector('.map__pin');
+
+var fragment = document.createDocumentFragment();
+
+var offers = generateOffers();
+
+var imgTempl = document.querySelector('template').content.querySelector('.map__card').cloneNode(true).querySelector('.popup__photo')
+
+var card = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+
+for (var j = 0; j < offers.length; j++) {
+  fragment.appendChild(createPinElemet(offers[j], pinTempl));
+}
+
+document.querySelector('.map__pins').appendChild(fragment);
+
+document.querySelector('.map').classList.remove('map--faded');
+
 renderOfferCard(offers[0]);
