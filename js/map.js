@@ -44,11 +44,11 @@ var generateOffer = function (index) {
       title: OFFER_TITLES[index],
       address: x + ', ' + y,
       price: getRandomNumber(1000, 1000001),
-      type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length)],
+      type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length - 1)],
       rooms: getRandomNumber(1, 6),
       guests: Math.floor(Math.random() * 100),
-      checkin: OFFER_CHECKIN[getRandomNumber(0, OFFER_CHECKIN.length)],
-      checkout: OFFER_CHECKOUT[getRandomNumber(0, OFFER_CHECKOUT.length)],
+      checkin: OFFER_CHECKIN[getRandomNumber(0, OFFER_CHECKIN.length - 1)],
+      checkout: OFFER_CHECKOUT[getRandomNumber(0, OFFER_CHECKOUT.length - 1)],
       features: getFeatures(),
       description: '',
       photos: [
@@ -92,7 +92,7 @@ var getFeaturesList = function (features) {
   var newElement = document.createElement('li');
   var featuresFragment = document.createDocumentFragment();
 
-  for (var i = 0; i < features.length; i++) {
+  for (var i = 0; i < features.length - 1; i++) {
     newElement = document.createElement('li');
     newElement.className = 'popup__feature ' + 'popup__feature--' + features[i];
     featuresFragment.appendChild(newElement);
@@ -145,7 +145,7 @@ for (var i = 0; i <= OFFER_LIMIT; i++) {
   offers.push(generateOffer(i));
 }
 
-for (var j = 0; j < offers.length; j++) {
+for (var j = 0; j < offers.length - 1; j++) {
   fragment.appendChild(createPinElemet(offers[j], pinTempl));
 }
 
