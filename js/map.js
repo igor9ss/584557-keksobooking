@@ -18,7 +18,7 @@ var OFFER_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'co
 var OFFER_LIMIT = 8;
 
 var getRandomNumber = function (min, max) {
-  return Math.floor(Math.random() * (max - min) + min);
+  return Math.floor(min + Math.random() * (max + 1 - min));
 };
 
 var generateRandomFeatures = function () {
