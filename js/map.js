@@ -153,17 +153,8 @@ var fragment = document.createDocumentFragment();
 
 var offers = [];
 var offer;
+var fieldset = document.querySelector('.notice').querySelectorAll('fieldset');
+for (var i = 0; i < fieldset.length; i++) {
+  fieldset[i].disabled = true;
+};
 
-for (var i = 0; i < OFFER_LIMIT; i++) {
-  offer = generateOffer(i);
-  offers.push(offer);
-  fragment.appendChild(
-      createPinElemet(offer, pinElement)
-  );
-}
-
-renderOfferCard(offers[0], cardElement, photoElement);
-
-document.querySelector('.map__pins').appendChild(fragment);
-mapElement.classList.remove('map--faded');
-mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
