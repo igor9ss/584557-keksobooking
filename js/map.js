@@ -44,7 +44,7 @@ var generateOffer = function (index) {
       address: x + ', ' + y,
       price: getRandomNumber(1000, 1000000),
       type: OFFER_TYPE[getRandomNumber(0, OFFER_TYPE.length - 1)],
-      rooms: getRandomNumber(1, 6),
+      rooms: getRandomNumber(1, 5),
       guests: Math.floor(Math.random() * 100),
       checkin: OFFER_CHECKIN[getRandomNumber(0, OFFER_CHECKIN.length - 1)],
       checkout: OFFER_CHECKOUT[getRandomNumber(0, OFFER_CHECKOUT.length - 1)],
@@ -70,8 +70,8 @@ var createPinElemet = function (offerData, template) {
   pinElement.style.left = (offerData.location.x - 25) + 'px';
   pinElement.style.top = (offerData.location.y - 70) + 'px';
 
-  imageElement.setAttribute('src', offerData.author.avatar);
-  imageElement.setAttribute('alt', offerData.title);
+  imageElement.src =  offerData.author.avatar;
+  imageElement.alt = offerData.title;
 
   return pinElement;
 };
@@ -109,7 +109,7 @@ var createPhotoElements = function (photos, template) {
 
   for (var i = 0; i < photos.length; i++) {
     element = template.cloneNode(true);
-    element.setAttribute('src', photos[i]);
+    element.src = photos[i];
     fragment.appendChild(element);
   }
   return fragment;
@@ -117,6 +117,8 @@ var createPhotoElements = function (photos, template) {
 
 var renderOfferCard = function (data, cardElement, photoElement) {
   var offer = data.offer;
+  var features = cardElement.querySelector('.popup__features');
+  var photos = cardElement.querySelector('.popup__photos');
 
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
@@ -128,13 +130,13 @@ var renderOfferCard = function (data, cardElement, photoElement) {
 
   cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-  cardElement.querySelector('.popup__features').innerHTML = '';
-  cardElement.querySelector('.popup__features').appendChild(
+  features.innerHTML = '';
+  features.appendChild(
       createFeatureElements(offer.features)
   );
 
-  cardElement.querySelector('.popup__photos').innerHTML = '';
-  cardElement.querySelector('.popup__photos').appendChild(
+  photos.innerHTML = '';
+  photos.appendChild(
       createPhotoElements(offer.photos, photoElement)
   );
 
