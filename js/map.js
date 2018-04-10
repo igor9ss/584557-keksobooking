@@ -154,7 +154,7 @@ var fragment = document.createDocumentFragment();
 var offers = [];
 var offer;
 
-for (var i = 0; i <= OFFER_LIMIT - 1; i++) {
+for (var i = 0; i < OFFER_LIMIT; i++) {
   offer = generateOffer(i);
   offers.push(offer);
   fragment.appendChild(
