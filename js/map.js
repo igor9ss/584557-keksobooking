@@ -70,7 +70,7 @@ var createPinElemet = function (offerData, template) {
   pinElement.style.left = (offerData.location.x - 25) + 'px';
   pinElement.style.top = (offerData.location.y - 70) + 'px';
 
-  imageElement.src =  offerData.author.avatar;
+  imageElement.src = offerData.author.avatar;
   imageElement.alt = offerData.title;
 
   return pinElement;
