@@ -214,98 +214,17 @@ mainPinElement.addEventListener('mouseup', function () {
   showPinElements(pinElements);
 });
 
-pinElements[0].addEventListener('click', function () {
-
-  renderOfferCard(offers[0], cardElement, photoElement);
+var onPinClick = function () {
+  renderOfferCard(offers[i], cardElement, photoElement);
   mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
   document.querySelector('.popup').classList.remove('hidden');
+};
 
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[1].addEventListener('click', function () {
-
-  renderOfferCard(offers[1], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[2].addEventListener('click', function () {
-
-  renderOfferCard(offers[2], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[3].addEventListener('click', function () {
-
-  renderOfferCard(offers[3], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[4].addEventListener('click', function () {
-
-  renderOfferCard(offers[4], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[5].addEventListener('click', function () {
-
-  renderOfferCard(offers[5], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[6].addEventListener('click', function () {
-
-  renderOfferCard(offers[6], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
-
-pinElements[7].addEventListener('click', function () {
-
-  renderOfferCard(offers[7], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-
-  document.querySelector('.popup__close').addEventListener('click', function () {
-    var popup = document.querySelector('.popup');
-    popup.classList.add('hidden');
-  });
-});
+for (i = 0; i < OFFER_LIMIT; i++) {
+  pinElements[i].addEventListener(
+      'click',
+      function () {
+        onPinClick(offers[i]);
+      }
+  );
+}
