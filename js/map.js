@@ -146,21 +146,13 @@ var renderOfferCard = function (data, cardElement, photoElement) {
 
 var onMainPinDrag = function (fieldsets) {
 
-  document.querySelector('.map').classList.remove('map--faded');
+  mapElement.classList.remove('map--faded');
   document.querySelector('.ad-form').classList.remove('ad-form--disabled');
 
-  for (var i = 0; i < fieldsets.length; i++) {
-    fieldsets[i].disabled = false;
-  }
-
   setAdressData(mainPinElementArrowX, mainPinElementArrowY);
-  document.querySelector('#address').disabled = true;
-};
 
-var showPinElements = function (pinElements) {
-  for (var i = 0; i < pinElements.length; i++) {
-    pinElements[i].classList.remove('hidden');
-  }
+  disableFieldset();
+  fieldAdressElement.disabled = true;
 };
 
 var setAdressData = function (x, y) {
@@ -176,54 +168,66 @@ var onPinClick = function (data) {
   document.querySelector('.popup').classList.remove('hidden');
 };
 
+var enableFieldset = function () {
+  for (var i = 0; i < fieldsetElements.length; i++) {
+    fieldsetElements[i].disabled = true;
+  }
+}
+
+var disableFieldset = function () {
+  for (var i = 0; i < fieldsetElements.length; i++) {
+    fieldsetElements[i].disabled = false;
+  }
+}
+
 var template = document.querySelector('template');
-
-var fieldAdressElement = document.querySelector('#address');
-
-var pinTemplateElement = template.content.querySelector('.map__pin');
 var cardElement = template.content.querySelector('.map__card').cloneNode(true);
 var photoElement = cardElement.querySelector('.popup__photo');
-var mapElement = document.querySelector('.map');
-
+var pinTemplateElement = template.content.querySelector('.map__pin');
 var mainPinElement = document.querySelector('.map__pin--main');
+var mapElement = document.querySelector('.map');
+var fieldAdressElement = document.querySelector('#address');
+var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
+
 var mainPinElementCenterX = parseInt(mainPinElement.style.left, 10);
 var mainPinElementCenterY = parseInt(mainPinElement.style.top, 10);
 var mainPinElementArrowY = mainPinElementCenterY + MAIN_PIN_HEIGHT / 2 + MAIN_PIN_ARROW_HEIGHT;
 var mainPinElementArrowX = mainPinElementCenterX;
-var pinElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
 var fragment = document.createDocumentFragment();
 
 var offers = [];
 var offer;
-var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
-var createClickHandler = function(data, previewElement) {
+
+var createClickHandler = function(data) {
   return function (e) {
-    previewElement.classList.remove('hidden');
-    previewElement.textContent = data.src
+    console.log(data)
   }
 }
 
-var element;
+var pinElements = []
+var pinElement;
 
 for (var i = 0; i < OFFER_LIMIT; i++) {
   offer = generateOffer(i);
   offers.push(offer);
-  element = createPinElemet(offer, pinTemplateElement);
-  // element.addEventListener('click', createClickHandler(data))
-  fragment.appendChild(element);
-}
-
-for (var j = 0; j < fieldsetElements.length; j++) {
-  fieldsetElements[j].disabled = true;
+  pinElement = createPinElemet(offer, pinTemplateElement);
+  pinElement.addEventListener('click', createClickHandler(offer))
+  pinElements.push(pinElement);
+  fragment.appendChild(pinElement);
 }
 
 document.querySelector('.map__pins').appendChild(fragment);
+
+enableFieldset();
 
 setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
 mainPinElement.addEventListener('mouseup', function () {
   onMainPinDrag(fieldsetElements);
-  showPinElements(pinElements);
+
+  for (var i = 0; i < pinElements.length; i++) {
+    pinElements[i].classList.remove('hidden');
+  }
 });
