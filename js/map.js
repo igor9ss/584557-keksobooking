@@ -118,11 +118,12 @@ var createPhotoElements = function (photos, template) {
   return fragment;
 };
 
-var renderOfferCard = function (data, cardTemplate, photoTemplate) {
-  var offer = data.offer;
+var createCardElement = function (data, cardTemplate, photoTemplate) {
   var cardElement = cardTemplate.cloneNode(true);
   var features = cardElement.querySelector('.popup__features');
   var photos = cardElement.querySelector('.popup__photos');
+
+  var offer = data.offer;
 
   cardElement.querySelector('.popup__title').textContent = offer.title;
   cardElement.querySelector('.popup__text--address').textContent = offer.address;
@@ -143,6 +144,8 @@ var renderOfferCard = function (data, cardTemplate, photoTemplate) {
   photos.appendChild(
       createPhotoElements(offer.photos, photoTemplate)
   );
+
+  return cardElement;
 };
 
 var onMainPinDrag = function (fieldsets) {
@@ -163,14 +166,6 @@ var setAdressData = function (x, y) {
     (y - MAIN_PIN_HEIGHT / 2);
 };
 
-/*
-var onPinClick = function (data) {
-  renderOfferCard(data[i], cardElement, photoElement);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  document.querySelector('.popup').classList.remove('hidden');
-};
-*/
-
 var enableFieldset = function () {
   for (var i = 0; i < fieldsetElements.length; i++) {
     fieldsetElements[i].disabled = true;
@@ -183,6 +178,15 @@ var disableFieldset = function () {
   }
 }
 
+var createClickHandler = function(data, cardTemplate, photoTemplate) {
+  return function (e) {
+    var cardElement = createCardElement(data, cardTemplate, photoTemplate);
+
+    mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+    popupElement.classList.remove('hidden');
+  };
+};
+
 var template = document.querySelector('template');
 var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
 var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
@@ -192,6 +196,8 @@ var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
 var fieldAdressElement = document.querySelector('#address');
 var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
+var popupElement = document.querySelector('.popup');
+
 
 var mainPinElementCenterX = parseInt(mainPinElement.style.left, 10);
 var mainPinElementCenterY = parseInt(mainPinElement.style.top, 10);
@@ -202,12 +208,6 @@ var fragment = document.createDocumentFragment();
 
 var offers = [];
 var offer;
-
-var createClickHandler = function(data, cardTemplate, photoTemplate) {
-  return function (e) {
-    renderOfferCard(data, cardTemplate, photoTemplate);
-  }
-}
 
 var pinElements = []
 var pinElement;
