@@ -142,7 +142,6 @@ var renderOfferCard = function (data, cardElement, photoElement) {
   photos.appendChild(
       createPhotoElements(offer.photos, photoElement)
   );
-
 };
 
 var template = document.querySelector('template');
@@ -162,7 +161,6 @@ var fragment = document.createDocumentFragment();
 
 var offers = [];
 var offer;
-
 var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
 var onMainPinDrag = function (fieldsets) {
@@ -184,11 +182,11 @@ var showPinElements = function (pinElements) {
   }
 };
 
-var setAdressData = function (X, Y) {
+var setAdressData = function (x, y) {
   document.querySelector('#address').value =
-    (X - MAIN_PIN_WIDTH / 2) +
+    (x - MAIN_PIN_WIDTH / 2) +
     ' ' +
-    (Y - MAIN_PIN_HEIGHT / 2);
+    (y - MAIN_PIN_HEIGHT / 2);
 };
 
 for (var i = 0; i < OFFER_LIMIT; i++) {
@@ -214,8 +212,8 @@ mainPinElement.addEventListener('mouseup', function () {
   showPinElements(pinElements);
 });
 
-var onPinClick = function () {
-  renderOfferCard(offers[i], cardElement, photoElement);
+var onPinClick = function (data) {
+  renderOfferCard(data[i], cardElement, photoElement);
   mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
   document.querySelector('.popup').classList.remove('hidden');
 };
@@ -224,7 +222,7 @@ for (i = 0; i < OFFER_LIMIT; i++) {
   pinElements[i].addEventListener(
       'click',
       function () {
-        onPinClick(offers[i]);
+        onPinClick(offers);
       }
   );
 }
