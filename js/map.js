@@ -73,6 +73,7 @@ var createPinElemet = function (offerData, template) {
   pinElement.style.left = (offerData.location.x - 25) + 'px';
   pinElement.style.top = (offerData.location.y - 70) + 'px';
   pinElement.classList.add('hidden');
+
   imageElement.src = offerData.author.avatar;
   imageElement.alt = offerData.title;
 
@@ -160,10 +161,7 @@ var onMainPinDrag = function (fieldsets) {
 };
 
 var setAdressData = function (x, y) {
-  fieldAdressElement.value =
-    (x - MAIN_PIN_WIDTH / 2) +
-    ' ' +
-    (y - MAIN_PIN_HEIGHT / 2);
+  fieldAdressElement.value = (x - MAIN_PIN_WIDTH / 2) + ' ' + (y - MAIN_PIN_HEIGHT / 2);
 };
 
 var enableFieldset = function () {
@@ -183,7 +181,14 @@ var createClickHandler = function(data, cardTemplate, photoTemplate) {
     var cardElement = createCardElement(data, cardTemplate, photoTemplate);
 
     mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+
+    var popupElement = document.querySelector('.popup');
+
     popupElement.classList.remove('hidden');
+
+    document.querySelector('.popup__close').addEventListener('click', function () {
+      mapElement.removeChild(popupElement);
+    });
   };
 };
 
@@ -196,7 +201,6 @@ var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
 var fieldAdressElement = document.querySelector('#address');
 var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
-var popupElement = document.querySelector('.popup');
 
 
 var mainPinElementCenterX = parseInt(mainPinElement.style.left, 10);
