@@ -119,11 +119,9 @@ var createPhotoElements = function (photos, template) {
   return fragment;
 };
 
-var createCardElement = function (data, cardTemplate, photoTemplate) {
-  var cardElement = cardTemplate.cloneNode(true);
+var renderCardElement = function (data) {
   var features = cardElement.querySelector('.popup__features');
   var photos = cardElement.querySelector('.popup__photos');
-
   var offer = data.offer;
 
   cardElement.querySelector('.popup__title').textContent = offer.title;
@@ -145,14 +143,13 @@ var createCardElement = function (data, cardTemplate, photoTemplate) {
   photos.appendChild(
       createPhotoElements(offer.photos, photoTemplate)
   );
-
-  return cardElement;
+  cardElement.classList.add('hidden');
+  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 };
 
-var onMainPinDrag = function (fieldsets) {
-
+var onMainPinDrag = function () {
   mapElement.classList.remove('map--faded');
-  document.querySelector('.ad-form').classList.remove('ad-form--disabled');
+  document.querySelector('.ad-form').classList.remove('ad-form--disabled'); // extract select
 
   setAdressData(mainPinElementArrowX, mainPinElementArrowY);
 
@@ -168,27 +165,32 @@ var enableFieldset = function () {
   for (var i = 0; i < fieldsetElements.length; i++) {
     fieldsetElements[i].disabled = true;
   }
-}
+};
 
 var disableFieldset = function () {
   for (var i = 0; i < fieldsetElements.length; i++) {
     fieldsetElements[i].disabled = false;
   }
-}
+};
 
-var createClickHandler = function(data, cardTemplate, photoTemplate) {
-  return function (e) {
-    var cardElement = createCardElement(data, cardTemplate, photoTemplate);
-
-    mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-
+var createClickHandler = function (data) {
+  return function () {
+    renderCardElement(data);
     var popupElement = document.querySelector('.popup');
+    var popupClose = popupElement.querySelector('.popup__close');
 
     popupElement.classList.remove('hidden');
 
-    document.querySelector('.popup__close').addEventListener('click', function () {
-      mapElement.removeChild(popupElement);
+    popupClose.addEventListener('keydown', function (e) {
+      if (e.keyCode === 27) {
+        popupElement.classList.add('hidden');
+      }
     });
+
+    popupClose.addEventListener('click', function () {
+      popupElement.classList.add('hidden');
+    });
+
   };
 };
 
@@ -197,11 +199,11 @@ var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
 var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
+var cardElement = cardTemplate.cloneNode(true);
 var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
 var fieldAdressElement = document.querySelector('#address');
 var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
-
 
 var mainPinElementCenterX = parseInt(mainPinElement.style.left, 10);
 var mainPinElementCenterY = parseInt(mainPinElement.style.top, 10);
@@ -213,7 +215,7 @@ var fragment = document.createDocumentFragment();
 var offers = [];
 var offer;
 
-var pinElements = []
+var pinElements = [];
 var pinElement;
 
 for (var i = 0; i < OFFER_LIMIT; i++) {
@@ -221,11 +223,12 @@ for (var i = 0; i < OFFER_LIMIT; i++) {
   offers.push(offer);
 
   pinElement = createPinElemet(offer, pinTemplate);
-  pinElement.addEventListener('click', createClickHandler(offer, cardTemplate, photoTemplate));
+  pinElement.addEventListener('click', createClickHandler(offer));
   pinElements.push(pinElement);
 
   fragment.appendChild(pinElement);
 }
+
 
 document.querySelector('.map__pins').appendChild(fragment);
 
@@ -233,10 +236,18 @@ enableFieldset();
 
 setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
-mainPinElement.addEventListener('mouseup', function () {
-  onMainPinDrag(fieldsetElements);
+document.addEventListener('keydown', function (e) {
+  if (document.querySelector('.popup')) {
+    if (e.keyCode === 27) {
+      document.querySelector('.popup').classList.add('hidden');
+    }
+  }
+});
 
-  for (var i = 0; i < pinElements.length; i++) {
+mainPinElement.addEventListener('mouseup', function () {
+  onMainPinDrag();
+
+  for (i = 0; i < pinElements.length; i++) {
     pinElements[i].classList.remove('hidden');
   }
 });
