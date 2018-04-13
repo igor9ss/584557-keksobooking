@@ -118,8 +118,9 @@ var createPhotoElements = function (photos, template) {
   return fragment;
 };
 
-var renderOfferCard = function (data, cardElement, photoElement) {
+var renderOfferCard = function (data, cardTemplate, photoTemplate) {
   var offer = data.offer;
+  var cardElement = cardTemplate.cloneNode(true);
   var features = cardElement.querySelector('.popup__features');
   var photos = cardElement.querySelector('.popup__photos');
 
@@ -140,7 +141,7 @@ var renderOfferCard = function (data, cardElement, photoElement) {
 
   photos.innerHTML = '';
   photos.appendChild(
-      createPhotoElements(offer.photos, photoElement)
+      createPhotoElements(offer.photos, photoTemplate)
   );
 };
 
@@ -162,11 +163,13 @@ var setAdressData = function (x, y) {
     (y - MAIN_PIN_HEIGHT / 2);
 };
 
+/*
 var onPinClick = function (data) {
   renderOfferCard(data[i], cardElement, photoElement);
   mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
   document.querySelector('.popup').classList.remove('hidden');
 };
+*/
 
 var enableFieldset = function () {
   for (var i = 0; i < fieldsetElements.length; i++) {
@@ -181,9 +184,10 @@ var disableFieldset = function () {
 }
 
 var template = document.querySelector('template');
-var cardElement = template.content.querySelector('.map__card').cloneNode(true);
-var photoElement = cardElement.querySelector('.popup__photo');
-var pinTemplateElement = template.content.querySelector('.map__pin');
+var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
+var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
+var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
+
 var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
 var fieldAdressElement = document.querySelector('#address');
@@ -199,10 +203,9 @@ var fragment = document.createDocumentFragment();
 var offers = [];
 var offer;
 
-
-var createClickHandler = function(data) {
+var createClickHandler = function(data, cardTemplate, photoTemplate) {
   return function (e) {
-    console.log(data)
+    renderOfferCard(data, cardTemplate, photoTemplate);
   }
 }
 
@@ -213,8 +216,8 @@ for (var i = 0; i < OFFER_LIMIT; i++) {
   offer = generateOffer(i);
   offers.push(offer);
 
-  pinElement = createPinElemet(offer, pinTemplateElement);
-  pinElement.addEventListener('click', createClickHandler(offer))
+  pinElement = createPinElemet(offer, pinTemplate);
+  pinElement.addEventListener('click', createClickHandler(offer, cardTemplate, photoTemplate));
   pinElements.push(pinElement);
 
   fragment.appendChild(pinElement);
