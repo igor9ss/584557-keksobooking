@@ -212,9 +212,11 @@ var pinElement;
 for (var i = 0; i < OFFER_LIMIT; i++) {
   offer = generateOffer(i);
   offers.push(offer);
+
   pinElement = createPinElemet(offer, pinTemplateElement);
   pinElement.addEventListener('click', createClickHandler(offer))
   pinElements.push(pinElement);
+
   fragment.appendChild(pinElement);
 }
 
