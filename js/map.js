@@ -148,8 +148,9 @@ var renderCardElement = function (data) {
 };
 
 var onMainPinDrag = function () {
+
   mapElement.classList.remove('map--faded');
-  document.querySelector('.ad-form').classList.remove('ad-form--disabled'); // extract select
+  formElement.classList.remove('ad-form--disabled');
 
   setAdressData(mainPinElementArrowX, mainPinElementArrowY);
 
@@ -212,6 +213,7 @@ var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
 var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
+var formElement = document.querySelector('.ad-form');
 var cardElement = cardTemplate.cloneNode(true);
 var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
@@ -242,12 +244,7 @@ for (var i = 0; i < OFFER_LIMIT; i++) {
   fragment.appendChild(pinElement);
 }
 
-
 document.querySelector('.map__pins').appendChild(fragment);
-
-enableFieldset();
-
-setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
 mainPinElement.addEventListener('mouseup', function () {
   onMainPinDrag();
@@ -256,3 +253,7 @@ mainPinElement.addEventListener('mouseup', function () {
     pinElements[i].classList.remove('hidden');
   }
 });
+
+enableFieldset();
+
+setAdressData(mainPinElementCenterX, mainPinElementCenterY);
