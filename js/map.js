@@ -197,15 +197,15 @@ var mainPinElementArrowY = mainPinElementCenterY + MAIN_PIN_HEIGHT / 2 + MAIN_PI
 var mainPinElementArrowX = mainPinElementCenterX;
 
 var fragment = document.createDocumentFragment();
-
 var offers = [];
 var offer;
-
 var pinElements = [];
 var pinElement;
 
 mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-cardElement.classList.add('hidden');
+
+var popupElement = document.querySelector('.popup');
+var popupClose = popupElement.querySelector('.popup__close');
 
 for (var i = 0; i < OFFER_LIMIT; i++) {
   offer = generateOffer(i);
@@ -220,8 +220,9 @@ for (var i = 0; i < OFFER_LIMIT; i++) {
 
 document.querySelector('.map__pins').appendChild(fragment);
 
-var popupElement = document.querySelector('.popup');
-var popupClose = popupElement.querySelector('.popup__close');
+cardElement.classList.add('hidden');
+enableFieldset();
+setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
 mainPinElement.addEventListener('mouseup', function () {
   mapElement.classList.remove('map--faded');
@@ -236,10 +237,6 @@ mainPinElement.addEventListener('mouseup', function () {
     pinElements[i].classList.remove('hidden');
   }
 });
-
-enableFieldset();
-
-setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
 popupClose.addEventListener('keydown', function (e) {
   onPopupEscPress(e);
