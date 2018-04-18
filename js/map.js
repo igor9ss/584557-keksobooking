@@ -164,9 +164,7 @@ var enableFieldset = function () {
 var createClickHandler = function (data) {
   return function () {
     renderCardElement(data);
-
-    document.querySelector('.popup').classList.remove('hidden');
-    document.addEventListener('keydown', onPopupEscPress);
+    popupElement.classList.remove('hidden');
   };
 };
 
@@ -238,7 +236,6 @@ enableFieldset();
 
 setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
-
 popupClose.addEventListener('keydown', function (e) {
   onPopupEscPress(e);
 });
@@ -247,3 +244,5 @@ popupClose.addEventListener('click', function () {
   document.querySelector('.popup').classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
 });
+
+document.addEventListener('keydown', onPopupEscPress);
