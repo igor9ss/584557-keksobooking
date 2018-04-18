@@ -165,25 +165,14 @@ var createClickHandler = function (data) {
   return function () {
     renderCardElement(data);
 
-    var popupClose = document.querySelector('.popup__close');
-
     document.querySelector('.popup').classList.remove('hidden');
     document.addEventListener('keydown', onPopupEscPress);
-
-    popupClose.addEventListener('keydown', function (e) {
-      onPopupEscPress(e);
-    });
-
-    popupClose.addEventListener('click', function () {
-      document.querySelector('.popup').classList.add('hidden');
-      document.removeEventListener('keydown', onPopupEscPress);
-    });
   };
 };
 
 var onPopupEscPress = function (e) {
   if (e.keyCode === 27) {
-    document.querySelector('.popup').classList.add('hidden'); //вынести
+    popupElement.classList.add('hidden');
   }
 };
 
@@ -192,17 +181,7 @@ var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
 var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
-var popupElement = document.querySelector('.popup');
-
 var formElement = document.querySelector('.ad-form');
-var titleInputElement = formElement.querySelector('#title');
-var homeType = formElement.querySelector('#type');
-var rentPrice = formElement.querySelector('#price');
-var timesFieldsetElement = formElement.querySelector('.ad-form__element--time');
-var timeIn = formElement.querySelector('#timein');
-var timeOut = formElement.querySelector('#timeout');
-var roomsSelectElement = formElement.querySelector('#room_number');
-var guestNumber = formElement.querySelector('#capacity');
 var cardElement = cardTemplate.cloneNode(true);
 var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
@@ -238,6 +217,9 @@ document.querySelector('.map__pins').appendChild(fragment);
 mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 cardElement.classList.add('hidden');
 
+var popupElement = document.querySelector('.popup');
+var popupClose = popupElement.querySelector('.popup__close');
+
 mainPinElement.addEventListener('mouseup', function () {
   mapElement.classList.remove('map--faded');
   formElement.classList.remove('ad-form--disabled');
@@ -256,3 +238,12 @@ enableFieldset();
 
 setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
+
+popupClose.addEventListener('keydown', function (e) {
+  onPopupEscPress(e);
+});
+
+popupClose.addEventListener('click', function () {
+  document.querySelector('.popup').classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+});
