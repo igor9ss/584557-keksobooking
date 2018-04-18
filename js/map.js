@@ -149,7 +149,7 @@ var renderCardElement = function (data) {
 };
 
 var setAdressData = function (x, y) {
-  AdressInputElement.value = (x - MAIN_PIN_WIDTH / 2) + ' ' + (y - MAIN_PIN_HEIGHT / 2);
+  adressInputField.value = (x - MAIN_PIN_WIDTH / 2) + ' ' + (y - MAIN_PIN_HEIGHT / 2);
 };
 
 var disableFieldset = function () {
@@ -194,7 +194,7 @@ var timeInSelectField = formElement.querySelector('#timein');
 var timeOutSelectField = formElement.querySelector('#timeout');
 var numberRoomsSelectField = formElement.querySelector('#room_number');
 var guestNumberSelectField = formElement.querySelector('#capacity');
-var AdressInputField = document.querySelector('#address');
+var adressInputField = document.querySelector('#address');
 var cardElement = cardTemplate.cloneNode(true);
 var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
@@ -242,7 +242,7 @@ mainPinElement.addEventListener('mouseup', function () {
   setAdressData(mainPinElementArrowX, mainPinElementArrowY);
 
   enableFieldset();
-  AdressInputElement.disabled = true;
+  adressInputField.disabled = true;
 
   for (i = 0; i < pinElements.length; i++) {
     pinElements[i].classList.remove('hidden');
@@ -258,83 +258,77 @@ popupClose.addEventListener('click', function () {
   document.removeEventListener('keydown', onPopupEscPress);
 });
 
-formElement.addEventListener('change', function (evt) {
-  var target = evt.target;
-
-  switch (target) {
-    case homeTypeSelectElement:
-
-      switch (homeTypeSelectElement.value) {
-        case 'bungalo':
-          rentPriceInputElement.min = '0';
-          rentPriceInputElement.placeholder = '0';
-          break;
-
-        case 'flat':
-          rentPriceInputElement.min = '1000';
-          rentPriceInputElement.placeholder = '1000';
-          break;
-
-        case 'house':
-          rentPriceInputElement.min = '5000';
-          rentPriceInputElement.placeholder = '5000';
-          break;
-
-        case 'palace':
-          rentPriceInputElement.min = '10000';
-          rentPriceInputElement.placeholder = '10000';
-      }
+homeTypeSelectField.addEventListener('change', function () {
+  switch (homeTypeSelectField.value) {
+    case 'bungalo':
+      rentPriceInputField.min = '0';
+      rentPriceInputField.placeholder = '0';
       break;
 
-    case timeOutSelectElement:
-      timeInSelectElement.value = timeOutSelectElement.value;
+    case 'flat':
+      rentPriceInputField.min = '1000';
+      rentPriceInputField.placeholder = '1000';
       break;
 
-    case timeInSelectElement:
-      timeOutSelectElement.value = timeInSelectElement.value;
+    case 'house':
+      rentPriceInputField.min = '5000';
+      rentPriceInputField.placeholder = '5000';
       break;
 
-    case numberRoomsSelectElement:
-      guestNumberSelectElement.value = '';
-      guestNumberSelectElement.style.border = BORDER_STYLE_ERROR;
+    case 'palace':
+      rentPriceInputField.min = '10000';
+      rentPriceInputField.placeholder = '10000';
+  }
+});
 
-      switch (numberRoomsSelectElement.value) {
-        case '1':
-          guestNumberSelectElement.options[0].disabled = false;
-          guestNumberSelectElement.options[1].disabled = true;
-          guestNumberSelectElement.options[2].disabled = true;
-          guestNumberSelectElement.options[3].disabled = true;
-          break;
-        case '2':
-          guestNumberSelectElement.options[0].disabled = false;
-          guestNumberSelectElement.options[1].disabled = false;
-          guestNumberSelectElement.options[2].disabled = true;
-          guestNumberSelectElement.options[3].disabled = true;
-          break;
-        case '3':
-          guestNumberSelectElement.options[0].disabled = false;
-          guestNumberSelectElement.options[1].disabled = false;
-          guestNumberSelectElement.options[2].disabled = false;
-          guestNumberSelectElement.options[3].disabled = true;
-          break;
-        case '100':
-          guestNumberSelectElement.options[0].disabled = true;
-          guestNumberSelectElement.options[1].disabled = true;
-          guestNumberSelectElement.options[2].disabled = true;
-          guestNumberSelectElement.options[3].disabled = false;
-      }
+timeOutSelectField.addEventListener('change', function () {
+  timeInSelectField.value = timeOutSelectField.value;
+});
+
+timeInSelectField.addEventListener('change', function () {
+  timeOutSelectField.value = timeInSelectField.value;
+});
+
+numberRoomsSelectField.addEventListener('change', function () {
+  guestNumberSelectField.value = '';
+  guestNumberSelectField.style.border = BORDER_STYLE_ERROR;
+
+  switch (numberRoomsSelectField.value) {
+    case '1':
+      guestNumberSelectField.options[0].disabled = false;
+      guestNumberSelectField.options[1].disabled = true;
+      guestNumberSelectField.options[2].disabled = true;
+      guestNumberSelectField.options[3].disabled = true;
       break;
+    case '2':
+      guestNumberSelectField.options[0].disabled = false;
+      guestNumberSelectField.options[1].disabled = false;
+      guestNumberSelectField.options[2].disabled = true;
+      guestNumberSelectField.options[3].disabled = true;
+      break;
+    case '3':
+      guestNumberSelectField.options[0].disabled = false;
+      guestNumberSelectField.options[1].disabled = false;
+      guestNumberSelectField.options[2].disabled = false;
+      guestNumberSelectField.options[3].disabled = true;
+      break;
+    case '100':
+      guestNumberSelectField.options[0].disabled = true;
+      guestNumberSelectField.options[1].disabled = true;
+      guestNumberSelectField.options[2].disabled = true;
+      guestNumberSelectField.options[3].disabled = false;
+  }
+});
 
-    case guestNumberSelectElement:
-      if (guestNumberSelectElement.value) {
-        guestNumberSelectElement.style.border = BORDER_STYLE_VALID;
-      }
+guestNumberSelectField.addEventListener('change', function () {
+  if (guestNumberSelectField.value) {
+    guestNumberSelectField.style.border = BORDER_STYLE_VALID;
   }
 });
 
 formElement.addEventListener('submit', function (evt) {
-  if (!guestNumberSelectElement.checkValidity()) {
-    guestNumberSelectElement.style.border = BORDER_STYLE_ERROR;
+  if (!guestNumberSelectField.checkValidity()) {
+    guestNumberSelectField.style.border = BORDER_STYLE_ERROR;
   }
   evt.preventDefault();
 });
@@ -343,17 +337,17 @@ formElement.addEventListener('reset', function () {
   mapElement.classList.add('map--faded');
   formElement.classList.add('ad-form--disabled');
 
-  if (document.querySelector('.popup')) {
-    document.querySelector('.popup').outerHTML = '';
+  if (popupElement) {
+    popupElement.outerHTML = '';
   }
 
   for (i = 0; i < pins.length; i++) {
     pins[i].classList.add('hidden');
   }
 
-  titleInputElement.style.border = '';
-  rentPriceInputElement.style.border = '';
-  guestNumberSelectElement.style.border = '';
+  titleInputField.style.border = '';
+  rentPriceInputField.style.border = '';
+  guestNumberSelectField.style.border = '';
 
   disableFieldset();
 });
@@ -362,31 +356,31 @@ formElement.addEventListener('input', function (evt) {
   var target = evt.target;
 
   switch (target) {
-    case titleInputElement:
+    case titleInputField:
 
-      if (!titleInputElement.validity.valid) {
-        titleInputElement.style.border = BORDER_STYLE_ERROR;
+      if (!titleInputField.validity.valid) {
+        titleInputField.style.border = BORDER_STYLE_ERROR;
       } else {
-        titleInputElement.style.border = BORDER_STYLE_VALID;
+        titleInputField.style.border = BORDER_STYLE_VALID;
       }
       break;
 
-    case rentPriceInputElement:
+    case rentPriceInputField:
 
-      if (!rentPriceInputElement.validity.valid) {
-        rentPriceInputElement.style.border = BORDER_STYLE_ERROR;
+      if (!rentPriceInputField.validity.valid) {
+        rentPriceInputField.style.border = BORDER_STYLE_ERROR;
       } else {
-        rentPriceInputElement.style.border = BORDER_STYLE_VALID;
+        rentPriceInputField.style.border = BORDER_STYLE_VALID;
       }
   }
 });
 
-titleInputElement.addEventListener('invalid', function () {
-  titleInputElement.style.border = BORDER_STYLE_ERROR;
+titleInputField.addEventListener('invalid', function () {
+  titleInputField.style.border = BORDER_STYLE_ERROR;
 });
-rentPriceInputElement.addEventListener('invalid', function () {
-  rentPriceInputElement.style.border = BORDER_STYLE_ERROR;
+rentPriceInputField.addEventListener('invalid', function () {
+  rentPriceInputField.style.border = BORDER_STYLE_ERROR;
 });
-guestNumberSelectElement.addEventListener('invalid', function () {
-  guestNumberSelectElement.style.border = BORDER_STYLE_ERROR;
+guestNumberSelectField.addEventListener('invalid', function () {
+  guestNumberSelectField.style.border = BORDER_STYLE_ERROR;
 });
