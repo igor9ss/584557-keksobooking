@@ -21,6 +21,7 @@ var MAIN_PIN_HEIGHT = 62;
 var MAIN_PIN_ARROW_HEIGHT = 22;
 var ESC_KEYCODE = 27;
 var EROR_BORDER = '2px solid red';
+var VALID_BORDER = '2px solid lightgreen';
 
 var getRandomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -326,7 +327,7 @@ formElement.addEventListener('change', function (evt) {
 
     case guestNumberSelectElement:
       if (guestNumberSelectElement.value) {
-        guestNumberSelectElement.style.border = '2px solid lightgreen';
+        guestNumberSelectElement.style.border = VALID_BORDER;
       }
   }
 });
@@ -366,7 +367,7 @@ formElement.addEventListener('input', function (evt) {
       if (!titleInputElement.validity.valid) {
         titleInputElement.style.border = EROR_BORDER;
       } else {
-        titleInputElement.style.border = '2px solid lightgreen';
+        titleInputElement.style.border = VALID_BORDER;
       }
       break;
 
@@ -375,7 +376,7 @@ formElement.addEventListener('input', function (evt) {
       if (!rentPriceInputElement.validity.valid) {
         rentPriceInputElement.style.border = EROR_BORDER;
       } else {
-        rentPriceInputElement.style.border = '2px solid lightgreen';
+        rentPriceInputElement.style.border = VALID_BORDER;
       }
   }
 });
