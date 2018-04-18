@@ -241,7 +241,7 @@ popupClose.addEventListener('keydown', function (e) {
 });
 
 popupClose.addEventListener('click', function () {
-  document.querySelector('.popup').classList.add('hidden');
+  popupElement.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
 });
 
