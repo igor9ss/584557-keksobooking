@@ -19,6 +19,7 @@ var OFFER_LIMIT = 8;
 var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 62;
 var MAIN_PIN_ARROW_HEIGHT = 22;
+var ESC_CEYCODE = 27;
 
 var getRandomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -164,12 +165,16 @@ var enableFieldset = function () {
 var createClickHandler = function (data) {
   return function () {
     renderCardElement(data);
-    popupElement.classList.remove('hidden');
+
+    if (cardElement.classList.contains('hidden')) {
+      popupElement.classList.remove('hidden');
+      document.addEventListener('keydown', onPopupEscPress);
+    }
   };
 };
 
 var onPopupEscPress = function (e) {
-  if (e.keyCode === 27) {
+  if (e.keyCode === ESC_CEYCODE) {
     popupElement.classList.add('hidden');
   }
 };
@@ -199,6 +204,9 @@ var offer;
 var pinElements = [];
 var pinElement;
 
+mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+cardElement.classList.add('hidden');
+
 for (var i = 0; i < OFFER_LIMIT; i++) {
   offer = generateOffer(i);
   offers.push(offer);
@@ -212,9 +220,6 @@ for (var i = 0; i < OFFER_LIMIT; i++) {
 
 document.querySelector('.map__pins').appendChild(fragment);
 
-mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-cardElement.classList.add('hidden');
-
 var popupElement = document.querySelector('.popup');
 var popupClose = popupElement.querySelector('.popup__close');
 
@@ -227,7 +232,7 @@ mainPinElement.addEventListener('mouseup', function () {
   disableFieldset();
   fieldAdressElement.disabled = true;
 
-  for (i = 0; i < pinElements.length; i++) {
+  for (var i = 0; i < pinElements.length; i++) {
     pinElements[i].classList.remove('hidden');
   }
 });
@@ -244,5 +249,3 @@ popupClose.addEventListener('click', function () {
   popupElement.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
 });
-
-document.addEventListener('keydown', onPopupEscPress);
