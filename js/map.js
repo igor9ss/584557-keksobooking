@@ -20,8 +20,8 @@ var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 62;
 var MAIN_PIN_ARROW_HEIGHT = 22;
 var ESC_KEYCODE = 27;
-var EROR_BORDER = '2px solid red';
-var VALID_BORDER = '2px solid lightgreen';
+var BORDER_STYLE_ERROR = '2px solid red';
+var BORDER_STYLE_VALID = '2px solid lightgreen';
 
 var getRandomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -296,7 +296,7 @@ formElement.addEventListener('change', function (evt) {
 
     case numberRoomsSelectElement:
       guestNumberSelectElement.value = '';
-      guestNumberSelectElement.style.border = EROR_BORDER;
+      guestNumberSelectElement.style.border = BORDER_STYLE_ERROR;
 
       switch (numberRoomsSelectElement.value) {
         case '1':
@@ -327,14 +327,14 @@ formElement.addEventListener('change', function (evt) {
 
     case guestNumberSelectElement:
       if (guestNumberSelectElement.value) {
-        guestNumberSelectElement.style.border = VALID_BORDER;
+        guestNumberSelectElement.style.border = BORDER_STYLE_VALID;
       }
   }
 });
 
 formElement.addEventListener('submit', function (evt) {
   if (!guestNumberSelectElement.checkValidity()) {
-    guestNumberSelectElement.style.border = EROR_BORDER;
+    guestNumberSelectElement.style.border = BORDER_STYLE_ERROR;
   }
   evt.preventDefault();
 });
@@ -365,28 +365,28 @@ formElement.addEventListener('input', function (evt) {
     case titleInputElement:
 
       if (!titleInputElement.validity.valid) {
-        titleInputElement.style.border = EROR_BORDER;
+        titleInputElement.style.border = BORDER_STYLE_ERROR;
       } else {
-        titleInputElement.style.border = VALID_BORDER;
+        titleInputElement.style.border = BORDER_STYLE_VALID;
       }
       break;
 
     case rentPriceInputElement:
 
       if (!rentPriceInputElement.validity.valid) {
-        rentPriceInputElement.style.border = EROR_BORDER;
+        rentPriceInputElement.style.border = BORDER_STYLE_ERROR;
       } else {
-        rentPriceInputElement.style.border = VALID_BORDER;
+        rentPriceInputElement.style.border = BORDER_STYLE_VALID;
       }
   }
 });
 
 titleInputElement.addEventListener('invalid', function () {
-  titleInputElement.style.border = EROR_BORDER;
+  titleInputElement.style.border = BORDER_STYLE_ERROR;
 });
 rentPriceInputElement.addEventListener('invalid', function () {
-  rentPriceInputElement.style.border = EROR_BORDER;
+  rentPriceInputElement.style.border = BORDER_STYLE_ERROR;
 });
 guestNumberSelectElement.addEventListener('invalid', function () {
-  guestNumberSelectElement.style.border = EROR_BORDER;
+  guestNumberSelectElement.style.border = BORDER_STYLE_ERROR;
 });
