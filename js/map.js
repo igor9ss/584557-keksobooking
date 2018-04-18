@@ -147,7 +147,7 @@ var renderCardElement = function (data) {
 };
 
 var setAdressData = function (x, y) {
-  fieldAdressElement.value = (x - MAIN_PIN_WIDTH / 2) + ' ' + (y - MAIN_PIN_HEIGHT / 2);
+  AdressInputElement.value = (x - MAIN_PIN_WIDTH / 2) + ' ' + (y - MAIN_PIN_HEIGHT / 2);
 };
 
 var disableFieldset = function () {
@@ -185,10 +185,17 @@ var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
 var formElement = document.querySelector('.ad-form');
+var titleInputElement = formElement.querySelector('#title');
+var homeTypeSelectElement = formElement.querySelector('#type');
+var rentPriceInputElement = formElement.querySelector('#price');
+var timeInSelectElement = formElement.querySelector('#timein');
+var timeOutSelectElement = formElement.querySelector('#timeout');
+var numberRoomsSelectElement = formElement.querySelector('#room_number');
+var guestNumberSelectElement = formElement.querySelector('#capacity');
+var AdressInputElement = document.querySelector('#address');
 var cardElement = cardTemplate.cloneNode(true);
 var mainPinElement = document.querySelector('.map__pin--main');
 var mapElement = document.querySelector('.map');
-var fieldAdressElement = document.querySelector('#address');
 var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
 var mainPinElementCenterX = parseInt(mainPinElement.style.left, 10);
@@ -220,8 +227,10 @@ for (var i = 0; i < OFFER_LIMIT; i++) {
 
 document.querySelector('.map__pins').appendChild(fragment);
 
+var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+
 cardElement.classList.add('hidden');
-enableFieldset();
+disableFieldset();
 setAdressData(mainPinElementCenterX, mainPinElementCenterY);
 
 mainPinElement.addEventListener('mouseup', function () {
@@ -230,19 +239,152 @@ mainPinElement.addEventListener('mouseup', function () {
 
   setAdressData(mainPinElementArrowX, mainPinElementArrowY);
 
-  disableFieldset();
-  fieldAdressElement.disabled = true;
+  enableFieldset();
+  AdressInputElement.disabled = true;
 
   for (i = 0; i < pinElements.length; i++) {
     pinElements[i].classList.remove('hidden');
   }
 });
 
-popupClose.addEventListener('keydown', function (e) {
-  onPopupEscPress(e);
+popupClose.addEventListener('keydown', function (evt) {
+  onPopupEscPress(evt);
 });
 
 popupClose.addEventListener('click', function () {
   popupElement.classList.add('hidden');
   document.removeEventListener('keydown', onPopupEscPress);
+});
+
+formElement.addEventListener('change', function (evt) {
+  var target = evt.target;
+
+  switch (target) {
+    case homeTypeSelectElement:
+
+      switch (homeTypeSelectElement.value) {
+        case 'bungalo':
+          rentPriceInputElement.min = '0';
+          rentPriceInputElement.placeholder = '0';
+          break;
+
+        case 'flat':
+          rentPriceInputElement.min = '1000';
+          rentPriceInputElement.placeholder = '1000';
+          break;
+
+        case 'house':
+          rentPriceInputElement.min = '5000';
+          rentPriceInputElement.placeholder = '5000';
+          break;
+
+        case 'palace':
+          rentPriceInputElement.min = '10000';
+          rentPriceInputElement.placeholder = '10000';
+      }
+      break;
+
+    case timeOutSelectElement:
+      timeInSelectElement.value = timeOutSelectElement.value;
+      break;
+
+    case timeInSelectElement:
+      timeOutSelectElement.value = timeInSelectElement.value;
+      break;
+
+    case numberRoomsSelectElement:
+      guestNumberSelectElement.value = '';
+      guestNumberSelectElement.style.border = '2px solid red';
+
+      switch (numberRoomsSelectElement.value) {
+        case '1':
+          guestNumberSelectElement.options[0].disabled = false;
+          guestNumberSelectElement.options[1].disabled = true;
+          guestNumberSelectElement.options[2].disabled = true;
+          guestNumberSelectElement.options[3].disabled = true;
+          break;
+        case '2':
+          guestNumberSelectElement.options[0].disabled = false;
+          guestNumberSelectElement.options[1].disabled = false;
+          guestNumberSelectElement.options[2].disabled = true;
+          guestNumberSelectElement.options[3].disabled = true;
+          break;
+        case '3':
+          guestNumberSelectElement.options[0].disabled = false;
+          guestNumberSelectElement.options[1].disabled = false;
+          guestNumberSelectElement.options[2].disabled = false;
+          guestNumberSelectElement.options[3].disabled = true;
+          break;
+        case '100':
+          guestNumberSelectElement.options[0].disabled = true;
+          guestNumberSelectElement.options[1].disabled = true;
+          guestNumberSelectElement.options[2].disabled = true;
+          guestNumberSelectElement.options[3].disabled = false;
+      }
+      break;
+
+    case guestNumberSelectElement:
+      if (guestNumberSelectElement.value) {
+        guestNumberSelectElement.style.border = '2px solid lightgreen';
+      }
+  }
+});
+
+formElement.addEventListener('submit', function (evt) {
+  if (!guestNumberSelectElement.checkValidity()) {
+    guestNumberSelectElement.style.border = '2px solid red';
+  }
+  evt.preventDefault();
+});
+
+formElement.addEventListener('reset', function () {
+  mapElement.classList.add('map--faded');
+  formElement.classList.add('ad-form--disabled');
+
+  if (document.querySelector('.popup')) {
+    document.querySelector('.popup').outerHTML = '';
+  }
+
+  for (i = 0; i < pins.length; i++) {
+    pins[i].classList.add('hidden');
+  }
+
+  titleInputElement.style.border = '';
+  rentPriceInputElement.style.border = '';
+  guestNumberSelectElement.style.border = '';
+
+  disableFieldset();
+});
+
+formElement.addEventListener('input', function (evt) {
+  var target = evt.target;
+
+  switch (target) {
+    case titleInputElement:
+
+      if (!titleInputElement.validity.valid) {
+        titleInputElement.style.border = '2px solid red';
+      } else {
+        titleInputElement.style.border = '2px solid lightgreen';
+      }
+      break;
+
+    case rentPriceInputElement:
+
+      if (!rentPriceInputElement.validity.valid) {
+        rentPriceInputElement.style.border = '2px solid red';
+      } else {
+        rentPriceInputElement.style.border = '2px solid lightgreen';
+      }
+  }
+});
+
+titleInputElement.addEventListener('invalid', function () {
+  titleInputElement.style.border = '2px solid red';
+});
+rentPriceInputElement.addEventListener('invalid', function () {
+  rentPriceInputElement.style.border = '2px solid red';
+});
+guestNumberSelectElement.addEventListener('invalid', function () {
+  guestNumberSelectElement.style.border = '2px solid red';
 });
