@@ -232,7 +232,7 @@ mainPinElement.addEventListener('mouseup', function () {
   disableFieldset();
   fieldAdressElement.disabled = true;
 
-  for (var i = 0; i < pinElements.length; i++) {
+  for (i = 0; i < pinElements.length; i++) {
     pinElements[i].classList.remove('hidden');
   }
 });
