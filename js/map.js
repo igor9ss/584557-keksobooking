@@ -19,7 +19,7 @@ var OFFER_LIMIT = 8;
 var MAIN_PIN_WIDTH = 62;
 var MAIN_PIN_HEIGHT = 62;
 var MAIN_PIN_ARROW_HEIGHT = 22;
-var ESC_CEYCODE = 27;
+var ESC_KEYCODE = 27;
 
 var getRandomNumber = function (min, max) {
   return Math.floor(min + Math.random() * (max + 1 - min));
@@ -174,7 +174,7 @@ var createClickHandler = function (data) {
 };
 
 var onPopupEscPress = function (e) {
-  if (e.keyCode === ESC_CEYCODE) {
+  if (e.keyCode === ESC_KEYCODE) {
     popupElement.classList.add('hidden');
   }
 };
