@@ -192,8 +192,8 @@ var homeTypeSelectField = formElement.querySelector('#type');
 var rentPriceInputField = formElement.querySelector('#price');
 var timeInSelectField = formElement.querySelector('#timein');
 var timeOutSelectField = formElement.querySelector('#timeout');
-var numberRoomsSelectField = formElement.querySelector('#room_number');
-var guestNumberSelectField = formElement.querySelector('#capacity');
+var roomsSelectField = formElement.querySelector('#room_number');
+var guestSelectField = formElement.querySelector('#capacity');
 var adressInputField = document.querySelector('#address');
 var cardElement = cardTemplate.cloneNode(true);
 var mainPinElement = document.querySelector('.map__pin--main');
@@ -289,47 +289,32 @@ timeInSelectField.addEventListener('change', function () {
   timeOutSelectField.value = timeInSelectField.value;
 });
 
-numberRoomsSelectField.addEventListener('change', function () {
-  guestNumberSelectField.value = '';
-  guestNumberSelectField.style.border = BORDER_STYLE_ERROR;
+roomsSelectField.addEventListener('change', function () {
+  guestSelectField.value = '';
+  guestSelectField.style.border = BORDER_STYLE_ERROR;
 
-  switch (numberRoomsSelectField.value) {
-    case '1':
-      guestNumberSelectField.options[0].disabled = false;
-      guestNumberSelectField.options[1].disabled = true;
-      guestNumberSelectField.options[2].disabled = true;
-      guestNumberSelectField.options[3].disabled = true;
-      break;
-    case '2':
-      guestNumberSelectField.options[0].disabled = false;
-      guestNumberSelectField.options[1].disabled = false;
-      guestNumberSelectField.options[2].disabled = true;
-      guestNumberSelectField.options[3].disabled = true;
-      break;
-    case '3':
-      guestNumberSelectField.options[0].disabled = false;
-      guestNumberSelectField.options[1].disabled = false;
-      guestNumberSelectField.options[2].disabled = false;
-      guestNumberSelectField.options[3].disabled = true;
-      break;
-    case '100':
-      guestNumberSelectField.options[0].disabled = true;
-      guestNumberSelectField.options[1].disabled = true;
-      guestNumberSelectField.options[2].disabled = true;
-      guestNumberSelectField.options[3].disabled = false;
+  var validationRoomToGuestIndexesMap = {
+    0: [0],
+    1: [0, 1],
+    2: [0, 1, 2],
+    3: [3]
+  };
+
+  var roomIndex = roomsSelectField.selectedIndex;
+  var guestIndex = guestSelectField.selectedIndex;
+
+  for (i = 0; i < guestSelectField.options.length; i++) {
+    guestSelectField.options[i].disabled = validationRoomToGuestIndexesMap[roomIndex].indexOf(guestIndex) === -1;
   }
 });
 
-guestNumberSelectField.addEventListener('change', function () {
-  if (guestNumberSelectField.value) {
-    guestNumberSelectField.style.border = BORDER_STYLE_VALID;
+guestSelectField.addEventListener('change', function () {
+  if (guestSelectField.value) {
+    guestSelectField.style.border = BORDER_STYLE_VALID;
   }
 });
 
 formElement.addEventListener('submit', function (evt) {
-  if (!guestNumberSelectField.checkValidity()) {
-    guestNumberSelectField.style.border = BORDER_STYLE_ERROR;
-  }
   evt.preventDefault();
 });
 
@@ -347,31 +332,24 @@ formElement.addEventListener('reset', function () {
 
   titleInputField.style.border = '';
   rentPriceInputField.style.border = '';
-  guestNumberSelectField.style.border = '';
+  guestSelectField.style.border = '';
 
   disableFieldset();
 });
 
-formElement.addEventListener('input', function (evt) {
-  var target = evt.target;
+titleInputField.addEventListener('input', function () {
+  if (!titleInputField.validity.valid) {
+    titleInputField.style.border = BORDER_STYLE_ERROR;
+  } else {
+    titleInputField.style.border = BORDER_STYLE_VALID;
+  }
+});
 
-  switch (target) {
-    case titleInputField:
-
-      if (!titleInputField.validity.valid) {
-        titleInputField.style.border = BORDER_STYLE_ERROR;
-      } else {
-        titleInputField.style.border = BORDER_STYLE_VALID;
-      }
-      break;
-
-    case rentPriceInputField:
-
-      if (!rentPriceInputField.validity.valid) {
-        rentPriceInputField.style.border = BORDER_STYLE_ERROR;
-      } else {
-        rentPriceInputField.style.border = BORDER_STYLE_VALID;
-      }
+rentPriceInputField.addEventListener('input', function () {
+  if (!rentPriceInputField.validity.valid) {
+    rentPriceInputField.style.border = BORDER_STYLE_ERROR;
+  } else {
+    rentPriceInputField.style.border = BORDER_STYLE_VALID;
   }
 });
 
@@ -381,6 +359,5 @@ titleInputField.addEventListener('invalid', function () {
 rentPriceInputField.addEventListener('invalid', function () {
   rentPriceInputField.style.border = BORDER_STYLE_ERROR;
 });
-guestNumberSelectField.addEventListener('invalid', function () {
-  guestNumberSelectField.style.border = BORDER_STYLE_ERROR;
-});
+
+
