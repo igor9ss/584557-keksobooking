@@ -301,10 +301,9 @@ roomsSelectField.addEventListener('change', function () {
   };
 
   var roomIndex = roomsSelectField.selectedIndex;
-  var guestIndex = guestSelectField.selectedIndex;
 
   for (i = 0; i < guestSelectField.options.length; i++) {
-    guestSelectField.options[i].disabled = validationRoomToGuestIndexesMap[roomIndex].indexOf(guestIndex) === -1;
+    guestSelectField.options[i].disabled = validationRoomToGuestIndexesMap[roomIndex].indexOf(i) === -1;
   }
 });
 
@@ -323,7 +322,7 @@ formElement.addEventListener('reset', function () {
   formElement.classList.add('ad-form--disabled');
 
   if (popupElement) {
-    popupElement.outerHTML = '';
+    popupElement.classList.add('hidden');
   }
 
   for (i = 0; i < pins.length; i++) {
@@ -338,19 +337,11 @@ formElement.addEventListener('reset', function () {
 });
 
 titleInputField.addEventListener('input', function () {
-  if (!titleInputField.validity.valid) {
-    titleInputField.style.border = BORDER_STYLE_ERROR;
-  } else {
-    titleInputField.style.border = BORDER_STYLE_VALID;
-  }
+  titleInputField.style.border = titleInputField.validity.valid ? BORDER_STYLE_VALID : BORDER_STYLE_ERROR;
 });
 
 rentPriceInputField.addEventListener('input', function () {
-  if (!rentPriceInputField.validity.valid) {
-    rentPriceInputField.style.border = BORDER_STYLE_ERROR;
-  } else {
-    rentPriceInputField.style.border = BORDER_STYLE_VALID;
-  }
+  rentPriceInputField.style.border = rentPriceInputField.validity.valid ? BORDER_STYLE_VALID : BORDER_STYLE_ERROR;
 });
 
 titleInputField.addEventListener('invalid', function () {
