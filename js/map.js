@@ -352,10 +352,10 @@ rentPriceInputField.addEventListener('invalid', function () {
   rentPriceInputField.style.border = BORDER_STYLE_ERROR;
 });
 
-mainPinElement.addEventListener('mousedown', function (evt) {
+mainPinElement.addEventListener('mousedown', function (mouseDownEvt) {
   var startCoords = {
-    x: evt.clientX,
-    y: evt.clientY
+    x: mouseDownEvt.clientX,
+    y: mouseDownEvt.clientY
   };
 
   var onMouseMove = function (moveEvt) {
