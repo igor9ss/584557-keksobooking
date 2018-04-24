@@ -1,7 +1,10 @@
+'use strict';
+
 var template = document.querySelector('template');
 var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
 var cardElement = cardTemplate.cloneNode(true);
 var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
+var mapElement = document.querySelector('.map');
 
 var translateOfferType = function (offerType) {
   switch (offerType) {
@@ -66,6 +69,10 @@ window.renderCardElement = function (data) {
   photos.appendChild(
       createPhotoElements(offer.photos, photoTemplate)
   );
-  
+
   return cardElement;
 };
+
+mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+
+cardElement.classList.add('hidden');

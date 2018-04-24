@@ -10,8 +10,6 @@
   var ESC_KEYCODE = 27;
 
   var template = document.querySelector('template');
-  var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
-  var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
   var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
   var mainPinElement = document.querySelector('.map__pin--main');
@@ -46,7 +44,7 @@
     return function () {
       window.renderCardElement(data);
 
-      if (cardElement.classList.contains('hidden')) {
+      if (popupElement.classList.contains('hidden')) {
         popupElement.classList.remove('hidden');
         document.addEventListener('keydown', onPopupEscPress);
       }
@@ -67,10 +65,9 @@
   var pinElements = [];
   var pinElement;
 
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 
   var popupElement = document.querySelector('.popup');
-  var popupClose = popupElement.querySelector('.popup__close');
+  var popupClose = document.querySelector('.popup__close');
 
   for (var i = 0; i < offers.length; i++) {
     pinElement = createPinElemet(offers[i], pinTemplate);
@@ -81,8 +78,6 @@
   }
 
   document.querySelector('.map__pins').appendChild(fragment);
-
-//  cardElement.classList.add('hidden');
 
   mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
