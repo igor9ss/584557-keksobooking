@@ -66,8 +66,7 @@
   window.generateOffers = function () {
     var offers = [];
     for (var i = 0; i < OFFER_LIMIT; i++) {
-      offer = generateOffer(i);
-      offers.push(offer);
+      offers.push(generateOffer(i));
     }
     return offers;
   };  
