@@ -1,14 +1,10 @@
 'use strict';
 
 (function () {
-
   var MAIN_PIN_WIDTH = 62;
   var MAIN_PIN_HEIGHT = 62;
   var MAIN_PIN_ARROW_HEIGHT = 22;
   var ESC_KEYCODE = 27;
-
-  var template = document.querySelector('template');
-  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
   var mainPinElement = document.querySelector('.map__pin--main');
   var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
@@ -16,7 +12,19 @@
   var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
   var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
 
+  var mapElement = document.querySelector('.map');
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
+
+  var template = document.querySelector('template');
+  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
+
+  var fragment = document.createDocumentFragment();
+
+  var offers = window.generateOffers();
+
+  var popupElement = document.querySelector('.popup');
+  var popupClose = popupElement.querySelector('.popup__close');
+
 
   var createPinElemet = function (offerData, pattern) {
     var pinElement = pattern.cloneNode(true);
@@ -30,12 +38,6 @@
     imageElement.alt = offerData.title;
 
     return pinElement;
-  };
-
-  var onPopupEscPress = function (e) {
-    if (e.keyCode === ESC_KEYCODE) {
-      popupElement.classList.add('hidden');
-    }
   };
 
   var createClickHandler = function (data) {
@@ -55,17 +57,14 @@
     }
   };
 
-  var mapElement = document.querySelector('.map');
-
-  var fragment = document.createDocumentFragment();
-  var offers = window.generateOffers();
+  var onPopupEscPress = function (e) {
+    if (e.keyCode === ESC_KEYCODE) {
+      popupElement.classList.add('hidden');
+    }
+  };
 
   var pinElements = [];
   var pinElement;
-
-  var popupElement = document.querySelector('.popup');
-  var popupClose = document.querySelector('.popup__close');
-
   for (var i = 0; i < offers.length; i++) {
     pinElement = createPinElemet(offers[i], pinTemplate);
     pinElement.addEventListener('click', createClickHandler(offers[i]));
@@ -91,7 +90,6 @@
       pinElements[i].classList.remove('hidden');
     }
   });
-
   mainPinElement.addEventListener('mousedown', function (mouseDownEvt) {
     var startCoords = {
       x: mouseDownEvt.clientX,
@@ -150,7 +148,6 @@
   popupClose.addEventListener('keydown', function (evt) {
     onPopupEscPress(evt);
   });
-
   popupClose.addEventListener('click', function () {
     popupElement.classList.add('hidden');
     document.removeEventListener('keydown', onPopupEscPress);
