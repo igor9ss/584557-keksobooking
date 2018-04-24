@@ -65,12 +65,10 @@
   
   window.generateOffers = function () {
     var offers = [];
-    var offer;
     for (var i = 0; i < OFFER_LIMIT; i++) {
       offer = generateOffer(i);
       offers.push(offer);
-      
-      return offers;
     }
+    return offers;
   };  
 })();
