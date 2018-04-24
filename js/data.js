@@ -72,8 +72,5 @@
       
       return offers;
     }
-  };
-  
-  var offers = window.generateOffers();
-  
+  };  
 })();
