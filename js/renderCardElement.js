@@ -67,7 +67,5 @@ window.renderCardElement = function (data) {
       createPhotoElements(offer.photos, photoTemplate)
   );
   
-  cardElement.classList.add('hidden');
-  
   return cardElement;
 };

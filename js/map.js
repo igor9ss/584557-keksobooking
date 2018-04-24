@@ -82,7 +82,7 @@
 
   document.querySelector('.map__pins').appendChild(fragment);
 
-  cardElement.classList.add('hidden');
+//  cardElement.classList.add('hidden');
 
   mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
