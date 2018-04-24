@@ -130,8 +130,8 @@
   var mapElement = document.querySelector('.map');
 
   var fragment = document.createDocumentFragment();
-  var offers = [];
-  var offer;
+  var offers = window.generateOffers();
+  
   var pinElements = [];
   var pinElement;
 
@@ -140,12 +140,9 @@
   var popupElement = document.querySelector('.popup');
   var popupClose = popupElement.querySelector('.popup__close');
 
-  for (var i = 0; i < OFFER_LIMIT; i++) {
-    offer = window.generateOffer(i);
-    offers.push(offer);
-
-    pinElement = createPinElemet(offer, pinTemplate);
-    pinElement.addEventListener('click', createClickHandler(offer));
+  for (var i = 0; i < offers.length; i++) {
+    pinElement = createPinElemet(offers[i], pinTemplate);
+    pinElement.addEventListener('click', createClickHandler(offers[i]));
     pinElements.push(pinElement);
 
     fragment.appendChild(pinElement);
