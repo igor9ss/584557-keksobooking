@@ -3,13 +3,12 @@
 // pinAndCard.js создаем и рендерим пины и попап.
 
 (function () {
-  
+
   var MAIN_PIN_WIDTH = 62;
   var MAIN_PIN_HEIGHT = 62;
   var MAIN_PIN_ARROW_HEIGHT = 22;
   var ESC_KEYCODE = 27;
-  var OFFER_LIMIT = 8;
-  
+
   var template = document.querySelector('template');
   var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
   var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
@@ -131,7 +130,7 @@
 
   var fragment = document.createDocumentFragment();
   var offers = window.generateOffers();
-  
+
   var pinElements = [];
   var pinElement;
 

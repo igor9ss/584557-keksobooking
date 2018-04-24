@@ -17,7 +17,7 @@
   var OFFER_CHECKOUT = ['12:00', '13:00', '14:00'];
   var OFFER_FEATURES = ['wifi', 'dishwasher', 'parking', 'washer', 'elevator', 'conditioner'];
   var OFFER_LIMIT = 8;
-  
+
   var getRandomNumber = function (min, max) {
     return Math.floor(min + Math.random() * (max + 1 - min));
   };
@@ -62,12 +62,12 @@
       }
     };
   };
-  
+
   window.generateOffers = function () {
     var offers = [];
     for (var i = 0; i < OFFER_LIMIT; i++) {
       offers.push(generateOffer(i));
     }
     return offers;
-  };  
+  };
 })();
