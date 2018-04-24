@@ -4,7 +4,6 @@
   var cardTemplate = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
   var cardElement = cardTemplate.cloneNode(true);
   var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
-  var mapElement = document.querySelector('.map');
 
   var translateOfferType = function (offerType) {
     switch (offerType) {
@@ -73,7 +72,4 @@
     return cardElement;
   };
 
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-
-  cardElement.classList.add('hidden');
 })();
