@@ -1,7 +1,5 @@
 'use strict';
 
-// pinAndCard.js создаем и рендерим пины и попап.
-
 (function () {
 
   var MAIN_PIN_WIDTH = 62;
@@ -64,7 +62,6 @@
 
   var pinElements = [];
   var pinElement;
-
 
   var popupElement = document.querySelector('.popup');
   var popupClose = document.querySelector('.popup__close');
