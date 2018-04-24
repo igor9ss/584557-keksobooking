@@ -15,8 +15,7 @@
   var mapElement = document.querySelector('.map');
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
-  var template = document.querySelector('template');
-  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
+  var pinTemplate = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
 
   var fragment = document.createDocumentFragment();
 
