@@ -65,7 +65,7 @@
 
 })();
 
-// pinAndCard.js создаем и рендерим пины и попап
+// pinAndCard.js создаем и рендерим пины и попап.
 
 (function () {
   var OFFER_LIMIT = 8;
