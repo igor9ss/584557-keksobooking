@@ -36,19 +36,18 @@
       var cardElement = window.renderCardElement(data);
       mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
 
-      var popupElement = document.querySelector('.popup');
-      var popupClose = popupElement.querySelector('.popup__close');
+      var popupClose = cardElement.querySelector('.popup__close');
 
       popupClose.addEventListener('click', function () {
-        popupElement.classList.add('hidden');
+        cardElement.classList.add('hidden');
       });
-      popupClose.addEventListener('keydown', function (evt) {
-        onPopupEscPress(evt);
-      });
+
+      if (!cardElement.classList.contains('hidden')) {
+        document.addEventListener('keydown', onPopupEscPress);
+      }
 
       if (cardElement.classList.contains('hidden')) {
         cardElement.classList.remove('hidden');
-        document.addEventListener('keydown', onPopupEscPress);
       }
     };
   };
