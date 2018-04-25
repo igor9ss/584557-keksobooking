@@ -57,6 +57,9 @@
     rentPriceInputField.style.border = '';
     guestSelectField.style.border = '';
 
+    mainPinElement.style.left = '570px';
+    mainPinElement.style.top = '375px';
+
     disableFieldset();
   });
 

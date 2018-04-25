@@ -38,7 +38,7 @@
     return function () {
       window.renderCardElement(data);
 
-      if (cardElement.classList.contains('hidden')) {
+      if (window.cardElement.classList.contains('hidden')) {
         popupElement.classList.remove('hidden');
         document.addEventListener('keydown', onPopupEscPress);
       }
@@ -51,8 +51,8 @@
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
 
   window.cardElement = cardTemplate.cloneNode(true);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-  cardElement.classList.add('hidden');
+  mapElement.insertBefore(window.cardElement, document.querySelector('.map__filters-container'));
+  window.cardElement.classList.add('hidden');
 
   var popupElement = document.querySelector('.popup');
   var popupClose = popupElement.querySelector('.popup__close');

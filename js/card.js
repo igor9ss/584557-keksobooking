@@ -2,7 +2,6 @@
 
 (function () {
   var cardTemplate = document.querySelector('template').content.querySelector('.map__card');
-//  var cardElement = cardTemplate.cloneNode(true);
   var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 
   var translateOfferType = function (offerType) {
@@ -45,19 +44,19 @@
   };
 
   window.renderCardElement = function (data) {
-    var features = cardElement.querySelector('.popup__features');
-    var photos = cardElement.querySelector('.popup__photos');
+    var features = window.cardElement.querySelector('.popup__features');
+    var photos = window.cardElement.querySelector('.popup__photos');
     var offer = data.offer;
 
-    cardElement.querySelector('.popup__title').textContent = offer.title;
-    cardElement.querySelector('.popup__text--address').textContent = offer.address;
-    cardElement.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-    cardElement.querySelector('.popup__type').textContent = translateOfferType(offer.type);
-    cardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
-    cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ' , выезд до ' + offer.checkout;
-    cardElement.querySelector('.popup__description').textContent = offer.description;
+    window.cardElement.querySelector('.popup__title').textContent = offer.title;
+    window.cardElement.querySelector('.popup__text--address').textContent = offer.address;
+    window.cardElement.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
+    window.cardElement.querySelector('.popup__type').textContent = translateOfferType(offer.type);
+    window.cardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
+    window.cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ' , выезд до ' + offer.checkout;
+    window.cardElement.querySelector('.popup__description').textContent = offer.description;
 
-    cardElement.querySelector('.popup__avatar').src = data.author.avatar;
+    window.cardElement.querySelector('.popup__avatar').src = data.author.avatar;
 
     features.innerHTML = '';
     features.appendChild(
@@ -69,7 +68,7 @@
         createPhotoElements(offer.photos, photoTemplate)
     );
 
-    return cardElement;
+    return window.cardElement;
   };
 
 })();
