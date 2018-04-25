@@ -50,7 +50,7 @@
 
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
 
-  var cardElement = cardTemplate.cloneNode(true);
+  window.cardElement = cardTemplate.cloneNode(true);
   mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
   cardElement.classList.add('hidden');
 
