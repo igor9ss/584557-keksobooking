@@ -19,6 +19,9 @@
 
   var fragment = document.createDocumentFragment();
 
+  var template = document.querySelector('template');
+  var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
+
   var enableFieldset = function () {
     for (var i = 0; i < fieldsetElements.length; i++) {
       fieldsetElements[i].disabled = false;
@@ -33,21 +36,11 @@
 
   var createClickHandler = function (data) {
     return function () {
-      var cardElement = window.renderCardElement(data);
-      mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
-
-      var popupClose = cardElement.querySelector('.popup__close');
-
-      popupClose.addEventListener('click', function () {
-        cardElement.classList.add('hidden');
-      });
-
-      if (!cardElement.classList.contains('hidden')) {
-        document.addEventListener('keydown', onPopupEscPress);
-      }
+      window.renderCardElement(data);
 
       if (cardElement.classList.contains('hidden')) {
-        cardElement.classList.remove('hidden');
+        popupElement.classList.remove('hidden');
+        document.addEventListener('keydown', onPopupEscPress);
       }
     };
   };
@@ -56,6 +49,13 @@
   var pinElement;
 
   var pinTemplate = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+
+  var cardElement = cardTemplate.cloneNode(true);
+  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+  cardElement.classList.add('hidden');
+
+  var popupElement = document.querySelector('.popup');
+  var popupClose = popupElement.querySelector('.popup__close');
 
   for (var i = 0; i < offers.length; i++) {
     pinElement = window.createPinElemet(offers[i], pinTemplate);
@@ -135,5 +135,14 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  popupClose.addEventListener('keydown', function (evt) {
+    onPopupEscPress(evt);
+  });
+
+  popupClose.addEventListener('click', function () {
+    popupElement.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
   });
 })();

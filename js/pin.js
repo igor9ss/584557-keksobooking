@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  window.createPinElemet = function (offerData, pattern) {
-    var pinElement = pattern.cloneNode(true);
+  window.createPinElemet = function (offerData, template) {
+    var pinElement = template.cloneNode(true);
     var imageElement = pinElement.querySelector('img');
 
     pinElement.style.left = (offerData.location.x - 25) + 'px';

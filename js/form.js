@@ -45,7 +45,7 @@
     document.querySelector('.map').classList.add('map--faded');
     formElement.classList.add('ad-form--disabled');
 
-    if (popupElement) {
+    if (!popupElement.classList.contains('hidden')) {
       popupElement.classList.add('hidden');
     }
 

@@ -1,7 +1,7 @@
 'use strict';
 
 (function () {
-  var cardTemplate = document.querySelector('template').content.querySelector('.map__card').cloneNode(true);
+  var cardTemplate = document.querySelector('template').content.querySelector('.map__card');
   var cardElement = cardTemplate.cloneNode(true);
   var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
 
