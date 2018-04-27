@@ -20,7 +20,6 @@
   var fragment = document.createDocumentFragment();
 
   var template = document.querySelector('template');
-  var cardTemplate = template.content.querySelector('.map__card').cloneNode(true);
 
   var enableFieldset = function () {
     for (var i = 0; i < fieldsetElements.length; i++) {
@@ -38,7 +37,7 @@
     return function () {
       window.renderCardElement(data);
 
-      if (window.cardElement.classList.contains('hidden')) {
+      if (cardElement.classList.contains('hidden')) {
         popupElement.classList.remove('hidden');
         document.addEventListener('keydown', onPopupEscPress);
       }
@@ -48,11 +47,11 @@
   var pinElements = [];
   var pinElement;
 
-  var pinTemplate = document.querySelector('template').content.querySelector('.map__pin').cloneNode(true);
+  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
 
-  window.cardElement = cardTemplate.cloneNode(true);
-  mapElement.insertBefore(window.cardElement, document.querySelector('.map__filters-container'));
-  window.cardElement.classList.add('hidden');
+  var cardElement = template.content.querySelector('.map__card').cloneNode(true);
+  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+  cardElement.classList.add('hidden');
 
   var popupElement = document.querySelector('.popup');
   var popupClose = popupElement.querySelector('.popup__close');
