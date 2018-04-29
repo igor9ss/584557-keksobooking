@@ -37,6 +37,41 @@
     }
   };
 
+  var onLoad = function () {
+    document.querySelector('.map').classList.add('map--faded');
+    formElement.classList.add('ad-form--disabled');
+
+    if (!popupElement.classList.contains('hidden')) {
+      popupElement.classList.add('hidden');
+    }
+
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].classList.add('hidden');
+    }
+
+    titleInputField.style.border = '';
+    rentPriceInputField.style.border = '';
+    guestSelectField.style.border = '';
+
+    mainPinElement.style.left = '570px';
+    mainPinElement.style.top = '375px';
+
+    disableFieldset();
+    document.querySelector('.success').classList.remove('hidden');
+  };
+
+  var onError = function (errorMessage) {
+    var errorPopupElement = document.createElement('div');
+    errorPopupElement.style = 'z-index: 100; margin: 0 auto; text-align: center; background-color: red; color: white;';
+    errorPopupElement.style.position = 'absolute';
+    errorPopupElement.style.left = 0;
+    errorPopupElement.style.right = 0;
+    errorPopupElement.style.fontSize = '45px';
+
+    errorPopupElement.textContent = errorMessage;
+    document.body.insertAdjacentElement('afterbegin', errorPopupElement);
+  };
+
   disableFieldset();
 
   window.setAdressData(mainPinElementCenterX, mainPinElementCenterY);
@@ -120,6 +155,8 @@
 
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
+
+    window.upload(new FormData(formElement), onLoad, onError);
   });
 
   titleInputField.addEventListener('input', function () {
