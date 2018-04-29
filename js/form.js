@@ -37,6 +37,29 @@
     }
   };
 
+  var onLoad = function () {
+    document.querySelector('.map').classList.add('map--faded');
+    formElement.classList.add('ad-form--disabled');
+
+    if (!popupElement.classList.contains('hidden')) {
+      popupElement.classList.add('hidden');
+    }
+
+    for (var i = 0; i < pins.length; i++) {
+      pins[i].classList.add('hidden');
+    }
+
+    titleInputField.style.border = '';
+    rentPriceInputField.style.border = '';
+    guestSelectField.style.border = '';
+
+    mainPinElement.style.left = '570px';
+    mainPinElement.style.top = '375px';
+
+    disableFieldset();
+    document.querySelector('.success').classList.remove('hidden');
+  };
+
   disableFieldset();
 
   window.setAdressData(mainPinElementCenterX, mainPinElementCenterY);
@@ -120,6 +143,8 @@
 
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
+
+    window.load.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
   });
 
   titleInputField.addEventListener('input', function () {
