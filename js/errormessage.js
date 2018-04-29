@@ -12,7 +12,7 @@
   document.body.insertAdjacentElement('afterbegin', errorPopupElement);
 
   var closeErrorMessage = function () {
-    document.querySelector('.errorPopup').outerHTML = '';
+    errorPopupElement.outerHTML = '';
   };
 
   window.errorMessage = {
