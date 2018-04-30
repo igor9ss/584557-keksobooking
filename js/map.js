@@ -32,7 +32,7 @@
 
   var createClickHandler = function (data) {
     return function () {
-      window.renderCardElement(data);
+      window.window.mapCard.renderElement(data);
 
       if (cardElement.classList.contains('hidden')) {
         popupElement.classList.remove('hidden');
@@ -65,7 +65,7 @@
     var pinElement;
 
     for (var i = 0; i < data.length; i++) {
-      pinElement = window.createPinElemet(data[i], pinTemplate);
+      pinElement = window.mapPin.createElement(data[i], pinTemplate);
       pinElement.addEventListener('click', createClickHandler(data[i]));
       pinElements.push(pinElement);
 
@@ -75,7 +75,7 @@
     document.querySelector('.map__pins').appendChild(fragment);
   };
 
-  window.load.loadFormData(onSuccessLoad, window.errorMessage.show);
+  window.load.loadData(onSuccessLoad, window.errorMessage.show);
 
   mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
