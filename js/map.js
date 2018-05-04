@@ -9,6 +9,8 @@
   var mapElement = document.querySelector('.map');
   var mainPinElement = document.querySelector('.map__pin--main');
 
+  var filtersElement = document.querySelector('.map__filters');
+
   var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
   var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
   var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
@@ -151,5 +153,10 @@
 
     document.addEventListener('mousemove', onMouseMove);
     document.addEventListener('mouseup', onMouseUp);
+  });
+
+  filtersElement.addEventListener('change', function () {
+    window.renderPin(
+        window.filter.filterPins(window.pinData));
   });
 })();
