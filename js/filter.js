@@ -51,6 +51,30 @@
       rank += 2;
     }
 
+    if ((wifiInput.checked) && (data.offer.features.indexOf('wifi') !== -1)) {
+      rank += 1;
+    }
+
+    if ((dishwasherInput.checked) && (data.offer.features.indexOf('dishwasher')) !== -1) {
+      rank += 1;
+    }
+
+    if ((parkingInput.checked) && (data.offer.features.indexOf('parking')) !== -1) {
+      rank += 1;
+    }
+
+    if ((washerInput.checked) && (data.offer.features.indexOf('washer')) !== -1) {
+      rank += 1;
+    }
+
+    if ((elevatorInput.checked) && (data.offer.features.indexOf('elevator')) !== -1) {
+      rank += 1;
+    }
+
+    if ((conditionerInput.checked) && (data.offer.features.indexOf('conditioner')) !== -1) {
+      rank += 1;
+    }
+
     return rank;
   };
 
