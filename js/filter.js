@@ -102,9 +102,7 @@
   };
 
   var getSelectValue = function (elem) {
-    window.setTimeout(function () {
-      updatePins();
-    }, 500);
+    window.debounce(updatePins);
     return elem.value;
   };
 
@@ -129,9 +127,7 @@
     }
 
     if (evt.target.tagName === 'INPUT') {
-      window.setTimeout(function () {
-        updatePins();
-      }, 500);
+      window.debounce(updatePins);
     }
   });
 })();
