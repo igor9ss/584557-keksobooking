@@ -29,18 +29,18 @@
     var rank = 0;
 
     if (data.offer.type === housingTypeValue) {
-      rank += 2;
+      rank += 4;
     }
 
     if ((housingPriceValue === 'low') && (data.offer.price <= PriceVac.lowPrice)) {
-      rank += 2;
+      rank += 3;
     } else if ((housingPriceValue === 'middle') &&
                (data.offer.price >= PriceVac.lowPrice) &&
                (data.offer.price <= PriceVac.highPrice)) {
-      rank += 2;
+      rank += 3;
     } else if ((housingPriceValue === 'high') &&
                (data.offer.price >= PriceVac.highPrice)) {
-      rank += 2;
+      rank += 3;
     }
 
     if (data.offer.rooms === +housingRoomsValue) {
@@ -86,55 +86,46 @@
     });
 
     window.renderPin(window.pinData.sort(function (lef, rig) {
-      return getRank(lef) - getRank(rig);
+      return getRank(rig) - getRank(lef);
     }));
+
     pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
     pins.forEach(function (it) {
       it.classList.remove('hidden');
     });
   };
 
-  housingTypeElement.addEventListener('change', function () {
-    housingTypeValue = housingTypeElement.value;
-    updatePins();
-  });
+  var getSelectValue = function (elem) {
+    window.setTimeout(function () {
+      updatePins();
+    }, 500);
+    return elem.value;
+  };
 
-  housingPriceElement.addEventListener('change', function () {
-    housingPriceValue = housingPriceElement.value;
-    updatePins();
-  });
+  filtersForm.addEventListener('change', function (evt) {
+    if (evt.target.tagName === 'SELECT') {
+      switch (evt.target) {
+        case housingTypeElement:
+          housingTypeValue = getSelectValue(housingTypeElement);
+          break;
 
-  housingRoomsElement.addEventListener('change', function () {
-    housingRoomsValue = housingRoomsElement.value;
-    updatePins();
-  });
+        case housingPriceElement:
+          housingPriceValue = getSelectValue(housingPriceElement);
+          break;
 
-  housingGuestsElement.addEventListener('change', function () {
-    housingGuestsVlue = housingGuestsElement.value;
-    updatePins();
-  });
+        case housingRoomsElement:
+          housingRoomsValue = getSelectValue(housingRoomsElement);
+          break;
 
-  wifiInput.addEventListener('change', function () {
-    updatePins();
-  });
+        case housingGuestsElement:
+          housingGuestsVlue = getSelectValue(housingGuestsElement);
+      }
+    }
 
-  dishwasherInput.addEventListener('change', function () {
-    updatePins();
-  });
-
-  parkingInput.addEventListener('change', function () {
-    updatePins();
-  });
-
-  washerInput.addEventListener('change', function () {
-    updatePins();
-  });
-
-  elevatorInput.addEventListener('change', function () {
-    updatePins();
-  });
-
-  conditionerInput.addEventListener('change', function () {
-    updatePins();
+    if (evt.target.tagName === 'INPUT') {
+      window.setTimeout(function () {
+        updatePins();
+      }, 500);
+    }
   });
 })();
