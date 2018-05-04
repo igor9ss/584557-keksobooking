@@ -17,13 +17,19 @@
 
   var housingTypeValue;
   var housingPriceValue;
+  var housingRoomsValue;
+  var housingGuestsVlue;
   var PriceVac = {
     lowPrice: 10000,
     highPrice: 50000
   };
 
-  var housingRoomsValue;
-  var housingGuestsVlue;
+  var getCheckboxesBoolValue = function (elem, string, data) {
+    if ((elem.checked) && (data.offer.features.indexOf(string) !== -1)) {
+      return true;
+    }
+    return false;
+  };
 
   var getRank = function (data) {
     var rank = 0;
@@ -51,27 +57,27 @@
       rank += 2;
     }
 
-    if ((wifiInput.checked) && (data.offer.features.indexOf('wifi') !== -1)) {
+    if (getCheckboxesBoolValue(wifiInput, 'wifi', data)) {
       rank += 1;
     }
 
-    if ((dishwasherInput.checked) && (data.offer.features.indexOf('dishwasher')) !== -1) {
+    if (getCheckboxesBoolValue(dishwasherInput, 'dishwasher', data)) {
       rank += 1;
     }
 
-    if ((parkingInput.checked) && (data.offer.features.indexOf('parking')) !== -1) {
+    if (getCheckboxesBoolValue(parkingInput, 'parking', data)) {
       rank += 1;
     }
 
-    if ((washerInput.checked) && (data.offer.features.indexOf('washer')) !== -1) {
+    if (getCheckboxesBoolValue(washerInput, 'washer', data)) {
       rank += 1;
     }
 
-    if ((elevatorInput.checked) && (data.offer.features.indexOf('elevator')) !== -1) {
+    if (getCheckboxesBoolValue(elevatorInput, 'elevator', data)) {
       rank += 1;
     }
 
-    if ((conditionerInput.checked) && (data.offer.features.indexOf('conditioner')) !== -1) {
+    if (getCheckboxesBoolValue(conditionerInput, 'conditioner', data)) {
       rank += 1;
     }
 
