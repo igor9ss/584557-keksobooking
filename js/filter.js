@@ -79,9 +79,19 @@
   };
 
   var updatePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+
+    pins.forEach(function (it) {
+      it.remove();
+    });
+
     window.renderPin(window.pinData.sort(function (lef, rig) {
       return getRank(lef) - getRank(rig);
     }));
+    pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (it) {
+      it.classList.remove('hidden');
+    });
   };
 
   housingTypeElement.addEventListener('change', function () {
