@@ -75,12 +75,12 @@
     document.removeEventListener('keydown', onPopupEscPress);
   });
 
-  window.onSuccessLoad = function (data) {
+  var onSuccessLoad = function (data) {
     window.pinData = data;
     window.renderPin(data);
   };
 
-  window.load.loadData(window.onSuccessLoad, window.errorMessage.show);
+  window.load.loadData(onSuccessLoad, window.errorMessage.show);
 
   mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
