@@ -6,8 +6,6 @@
   var BORDER_STYLE_ERROR = '2px solid red';
   var BORDER_STYLE_VALID = '2px solid lightgreen';
 
-  var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-
   var popupElement = document.querySelector('.popup');
 
   var mainPinElement = document.querySelector('.map__pin--main');
@@ -25,9 +23,36 @@
   var roomsSelectField = formElement.querySelector('#room_number');
   var guestSelectField = formElement.querySelector('#capacity');
 
+  var resetButtonElement = formElement.querySelector('.ad-form__reset');
+
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
   var addressInputField = document.querySelector('#address');
+
+  var typeVacbl = {
+    bungalo: '0',
+    flat: '1000',
+    house: '5000',
+    palace: '10000'
+  };
+
+  var setStandartInputsBorders = function () {
+    titleInputField.style.border = '';
+    rentPriceInputField.style.border = '';
+    guestSelectField.style.border = '';
+  };
+
+  var setMainPinToCenter = function () {
+    mainPinElement.style.left = '570px';
+    mainPinElement.style.top = '375px';
+  };
+
+  var hidePins = function () {
+    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pins.forEach(function (pin) {
+      pin.classList.add('hidden');
+    });
+  };
 
   var disableFieldset = function () {
     for (var i = 0; i < fieldsetElements.length; i++) {
@@ -47,18 +72,12 @@
       popupElement.classList.add('hidden');
     }
 
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].classList.add('hidden');
-    }
-
-    titleInputField.style.border = '';
-    rentPriceInputField.style.border = '';
-    guestSelectField.style.border = '';
-
-    mainPinElement.style.left = '570px';
-    mainPinElement.style.top = '375px';
-
+    hidePins();
+    setStandartInputsBorders();
+    setMainPinToCenter();
     disableFieldset();
+    setAddressData(mainPinElementCenterX, mainPinElementCenterY);
+
     document.querySelector('.success').classList.remove('hidden');
   };
 
@@ -66,7 +85,9 @@
 
   setAddressData(mainPinElementCenterX, mainPinElementCenterY);
 
-  formElement.addEventListener('reset', function () {
+  resetButtonElement.addEventListener('click', function (evt) {
+    evt.preventDefault();
+
     document.querySelector('.map').classList.add('map--faded');
     formElement.classList.add('ad-form--disabled');
 
@@ -74,41 +95,23 @@
       popupElement.classList.add('hidden');
     }
 
-    for (var i = 0; i < pins.length; i++) {
-      pins[i].classList.add('hidden');
-    }
-
-    titleInputField.style.border = '';
-    rentPriceInputField.style.border = '';
-    guestSelectField.style.border = '';
-
-    mainPinElement.style.left = '570px';
-    mainPinElement.style.top = '375px';
-
+    hidePins();
+    setStandartInputsBorders();
+    setMainPinToCenter();
     disableFieldset();
+    formElement.reset();
+    setAddressData(mainPinElementCenterX, mainPinElementCenterY);
   });
 
   homeTypeSelectField.addEventListener('change', function () {
-    switch (homeTypeSelectField.value) {
-      case 'bungalo':
-        rentPriceInputField.min = '0';
-        rentPriceInputField.placeholder = '0';
-        break;
+    rentPriceInputField.value = '';
+    rentPriceInputField.style.border = '';
 
-      case 'flat':
-        rentPriceInputField.min = '1000';
-        rentPriceInputField.placeholder = '1000';
-        break;
+    var typeIndex = homeTypeSelectField.selectedIndex;
+    var objK = Object.keys(typeVacbl)[typeIndex];
 
-      case 'house':
-        rentPriceInputField.min = '5000';
-        rentPriceInputField.placeholder = '5000';
-        break;
-
-      case 'palace':
-        rentPriceInputField.min = '10000';
-        rentPriceInputField.placeholder = '10000';
-    }
+    rentPriceInputField.min = typeVacbl[objK];
+    rentPriceInputField.placeholder = typeVacbl[objK];
   });
 
   timeOutSelectField.addEventListener('change', function () {
@@ -164,7 +167,6 @@
   rentPriceInputField.addEventListener('invalid', function () {
     rentPriceInputField.style.border = BORDER_STYLE_ERROR;
   });
-
 
   window.form = {
     setAddressData: setAddressData

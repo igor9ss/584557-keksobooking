@@ -30,8 +30,8 @@
         window.mainPinElement.style.top = (window.mainPinElement.offsetTop - shift.y) + 'px';
         window.mainPinElement.style.left = (window.mainPinElement.offsetLeft - shift.x) + 'px';
 
-        if (window.mainPinElement.offsetTop < 0) {
-          window.mainPinElement.style.top = 0 + 'px';
+        if (window.mainPinElement.offsetTop < 150 - (window.MAIN_PIN_HEIGHT + window.MAIN_PIN_ARROW_HEIGHT)) {
+          window.mainPinElement.style.top = 150 - (window.MAIN_PIN_HEIGHT + window.MAIN_PIN_ARROW_HEIGHT) + 'px';
         }
 
         if (window.mainPinElement.offsetLeft + window.MAIN_PIN_WIDTH / 2 < 0) {
@@ -42,8 +42,8 @@
           window.mainPinElement.style.left = mapElement.offsetWidth - window.MAIN_PIN_WIDTH / 2 + 'px';
         }
 
-        if (window.mainPinElement.offsetTop + window.MAIN_PIN_HEIGHT + window.MAIN_PIN_ARROW_HEIGHT > mapElement.offsetHeight) {
-          window.mainPinElement.style.top = mapElement.offsetHeight - window.MAIN_PIN_HEIGHT - window.MAIN_PIN_ARROW_HEIGHT + 'px';
+        if (window.mainPinElement.offsetTop + window.MAIN_PIN_HEIGHT + window.MAIN_PIN_ARROW_HEIGHT > 500) {
+          window.mainPinElement.style.top = 500 - window.MAIN_PIN_HEIGHT - window.MAIN_PIN_ARROW_HEIGHT + 'px';
         }
 
         window.form.setAddressData(currentArrowX, currentArrowY);

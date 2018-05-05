@@ -105,6 +105,7 @@
   });
 
   mapFiltersElement.addEventListener('change', function () {
+    cardElement.classList.add('hidden');
     window.debounce(function () {
       renderPins(
           window.mapFilter.filterPins(cachedPins));
