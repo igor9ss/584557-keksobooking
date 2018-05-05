@@ -106,9 +106,10 @@
 
 
   mapFiltersElement.addEventListener('change', function () {
-    renderPins(
-        window.filter.filterPins(cachedPins)
-    );
+    window.debounce(function () {
+      renderPins(
+          window.filter.filterPins(cachedPins));
+    });
   });
 
   mainPinElement.addEventListener('mousedown', function (mouseDownEvt) {
