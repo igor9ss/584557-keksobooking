@@ -27,14 +27,16 @@
 
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
-  window.setAdressData = function (x, y) {
-    document.querySelector('#address').value = x + ' ' + y;
-  };
+  var addressInputField = document.querySelector('#address');
 
   var disableFieldset = function () {
     for (var i = 0; i < fieldsetElements.length; i++) {
       fieldsetElements[i].disabled = true;
     }
+  };
+
+  var setAddressData = function (x, y) {
+    addressInputField.value = x + ' ' + y;
   };
 
   var onLoad = function () {
@@ -62,7 +64,7 @@
 
   disableFieldset();
 
-  window.setAdressData(mainPinElementCenterX, mainPinElementCenterY);
+  setAddressData(mainPinElementCenterX, mainPinElementCenterY);
 
   formElement.addEventListener('reset', function () {
     document.querySelector('.map').classList.add('map--faded');
@@ -158,7 +160,13 @@
   titleInputField.addEventListener('invalid', function () {
     titleInputField.style.border = BORDER_STYLE_ERROR;
   });
+
   rentPriceInputField.addEventListener('invalid', function () {
     rentPriceInputField.style.border = BORDER_STYLE_ERROR;
   });
+
+
+  window.form = {
+    setAddressData: setAddressData
+  };
 })();

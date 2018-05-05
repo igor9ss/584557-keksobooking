@@ -1,14 +1,24 @@
 'use strict';
 
 (function () {
-
-  var housingTypeSelect = document.querySelector('#housing-type');
+  var filterTypeSelect = document.querySelector('#housing-type');
 
   window.filter = {
-    filterPins: function (pinData) {
-      return pinData.filter(function (pin) {
-        return housingTypeSelect.value === 'any' || pin.offer.type === housingTypeSelect.value;
-      });
+    filterPins: function (pins) {
+
+      return pins
+          .filter(function (pin) {
+            return filterTypeSelect.value === 'any' || pin.offer.type === filterTypeSelect.value;
+          })
+          .filter(function () {
+            return true;
+          })
+          .filter(function () {
+            return true;
+          })
+          .filter(function () {
+            return true;
+          });
     }
   };
 })();
