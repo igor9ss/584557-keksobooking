@@ -80,7 +80,7 @@
     popupElement.classList.add('hidden');
   });
 
-  mainPinElement.addEventListener('mouseup', function () {
+  mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
     var adressInputField = document.querySelector('#address');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
@@ -104,11 +104,14 @@
     });
   });
 
-
   mapFiltersElement.addEventListener('change', function () {
     window.debounce(function () {
       renderPins(
           window.filter.filterPins(cachedPins));
+
+      document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pin) {
+        pin.classList.remove('hidden');
+      });
     });
   });
 
