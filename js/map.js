@@ -107,7 +107,7 @@
   mapFiltersElement.addEventListener('change', function () {
     window.debounce(function () {
       renderPins(
-          window.filter.filterPins(cachedPins));
+          window.mapFilter.filterPins(cachedPins));
 
       document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pin) {
         pin.classList.remove('hidden');

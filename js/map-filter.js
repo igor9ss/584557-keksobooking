@@ -8,7 +8,7 @@
 
   var filterCheckboxElements = document.querySelectorAll('.map__checkbox');
 
-  window.filter = {
+  window.mapFilter = {
     filterPins: function (pins) {
       return pins
           .filter(function (pin) {
