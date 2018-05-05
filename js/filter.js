@@ -26,7 +26,7 @@
           .filter(function (pin) {
             return filterGuestsSelect.value === 'any' || pin.offer.guests >= +filterGuestsSelect.value;
           })
-          .fitler(function (pin) {
+          .filter(function (pin) {
             var selectedFeatures = [];
             filterCheckboxElements.forEach(function (filterCheckboxElement) {
               if (filterCheckboxElement.checked) {
