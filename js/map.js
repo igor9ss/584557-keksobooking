@@ -4,95 +4,114 @@
   var MAIN_PIN_WIDTH = 62;
   var MAIN_PIN_HEIGHT = 62;
   var MAIN_PIN_ARROW_HEIGHT = 22;
+  var PIN_SHOW_LIMIT = 5;
   var ESC_KEYCODE = 27;
 
-  var mapElement = document.querySelector('.map');
-  var mainPinElement = document.querySelector('.map__pin--main');
-
-  var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
-  var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
-  var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
-  var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
-
-  var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
-
-  var template = document.querySelector('template');
-
   var enableFieldset = function () {
-    for (var i = 0; i < fieldsetElements.length; i++) {
-      fieldsetElements[i].disabled = false;
-    }
+    fieldsetElements.forEach(function (fieldsetElement) {
+      fieldsetElement.disabled = false;
+    });
   };
 
   var onPopupEscPress = function (e) {
     if (e.keyCode === ESC_KEYCODE) {
-      document.querySelector('.popup').classList.add('hidden');
+      popupElement.classList.add('hidden');
     }
   };
 
   var createClickHandler = function (data) {
     return function () {
-      window.window.mapCard.renderElement(data);
+      window.mapCard.renderElement(data);
 
-      if (cardElement.classList.contains('hidden')) {
+      if (popupElement.classList.contains('hidden')) {
         popupElement.classList.remove('hidden');
-        document.addEventListener('keydown', onPopupEscPress);
       }
     };
   };
 
-  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
+  var renderPins = function (pins) {
+    var fragment = document.createDocumentFragment();
+    var pinElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
 
+    pins
+        .slice(0, PIN_SHOW_LIMIT)
+        .forEach(function (pin) {
+          var pinElement = window.mapPin.createElement(pin, pinTemplate);
+
+          pinElement.addEventListener('click', createClickHandler(pin));
+
+          fragment.appendChild(pinElement);
+        });
+
+    pinElements.forEach(function (pinElement) {
+      pinElement.remove();
+    });
+    mapPinsElement.appendChild(fragment);
+  };
+
+  var mapElement = document.querySelector('.map');
+  var mapPinsElement = document.querySelector('.map__pins');
+  var mainPinElement = document.querySelector('.map__pin--main');
+  var mapFiltersElement = document.querySelector('.map__filters');
+  var mapFiltersContainerElement = document.querySelector('.map__filters-container');
+
+  var fieldsetElements = document.querySelectorAll('fieldset');
+  var template = document.querySelector('template');
+  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
   var cardElement = template.content.querySelector('.map__card').cloneNode(true);
-  mapElement.insertBefore(cardElement, document.querySelector('.map__filters-container'));
+
+  mapElement.insertBefore(cardElement, mapFiltersContainerElement);
   cardElement.classList.add('hidden');
 
   var popupElement = document.querySelector('.popup');
   var popupClose = popupElement.querySelector('.popup__close');
+  var cachedPins;
 
-  popupClose.addEventListener('keydown', function (evt) {
-    onPopupEscPress(evt);
-  });
-
-  popupClose.addEventListener('click', function () {
-    popupElement.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
-  });
-
-  var onSuccessLoad = function (data) {
-    var fragment = document.createDocumentFragment();
-    var pinElements = [];
-    var pinElement;
-
-    for (var i = 0; i < data.length; i++) {
-      pinElement = window.mapPin.createElement(data[i], pinTemplate);
-      pinElement.addEventListener('click', createClickHandler(data[i]));
-      pinElements.push(pinElement);
-
-      fragment.appendChild(pinElement);
-    }
-
-    document.querySelector('.map__pins').appendChild(fragment);
+  var onSuccessLoad = function (pins) {
+    cachedPins = pins;
+    renderPins(pins);
   };
 
   window.load.loadData(onSuccessLoad, window.errorMessage.show);
 
-  mainPinElement.addEventListener('mousedown', function () {
+  document.addEventListener('keydown', onPopupEscPress);
+
+  popupClose.addEventListener('click', function () {
+    popupElement.classList.add('hidden');
+  });
+
+  mainPinElement.addEventListener('mouseup', function () {
     var formElement = document.querySelector('.ad-form');
     var adressInputField = document.querySelector('#address');
-    var pinsElements = document.querySelector('.map__pins').querySelectorAll('button[type="button"]');
+    var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
+
+    var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
+    var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
+    var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
+    var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
+
     mapElement.classList.remove('map--faded');
     formElement.classList.remove('ad-form--disabled');
 
-    window.setAdressData(mainPinElementCenterX, mainPinElementArrowY);
+    window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
 
     enableFieldset();
     adressInputField.disabled = true;
 
-    for (var i = 0; i < pinsElements.length; i++) {
-      pinsElements[i].classList.remove('hidden');
-    }
+
+    buttonElements.forEach(function (buttonElement) {
+      buttonElement.classList.remove('hidden');
+    });
   });
+
+
+  mapFiltersElement.addEventListener('change', function () {
+    window.debounce(function () {
+      renderPins(
+          window.filter.filterPins(cachedPins));
+    });
+  });
+
   mainPinElement.addEventListener('mousedown', function (mouseDownEvt) {
     var startCoords = {
       x: mouseDownEvt.clientX,
@@ -134,7 +153,7 @@
         mainPinElement.style.top = mapElement.offsetHeight - MAIN_PIN_HEIGHT - MAIN_PIN_ARROW_HEIGHT + 'px';
       }
 
-      window.setAdressData(currentArrowX, currentArrowY);
+      window.form.setAddressData(currentArrowX, currentArrowY);
     };
 
     var onMouseUp = function (upEvt) {

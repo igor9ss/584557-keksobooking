@@ -3,7 +3,7 @@
 (function () {
   var cardTemplate = document.querySelector('template').content.querySelector('.map__card');
   var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
-  var cardElement = document.querySelector('.popup');
+  var popupElement = document.querySelector('.popup');
 
   var translateOfferType = function (offerType) {
     switch (offerType) {
@@ -46,19 +46,19 @@
 
   window.mapCard = {
     renderElement: function (data) {
-      var features = cardElement.querySelector('.popup__features');
-      var photos = cardElement.querySelector('.popup__photos');
+      var features = popupElement.querySelector('.popup__features');
+      var photos = popupElement.querySelector('.popup__photos');
       var offer = data.offer;
 
-      cardElement.querySelector('.popup__title').textContent = offer.title;
-      cardElement.querySelector('.popup__text--address').textContent = offer.address;
-      cardElement.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
-      cardElement.querySelector('.popup__type').textContent = translateOfferType(offer.type);
-      cardElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
-      cardElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ' , выезд до ' + offer.checkout;
-      cardElement.querySelector('.popup__description').textContent = offer.description;
+      popupElement.querySelector('.popup__title').textContent = offer.title;
+      popupElement.querySelector('.popup__text--address').textContent = offer.address;
+      popupElement.querySelector('.popup__text--price').textContent = offer.price + '₽/ночь';
+      popupElement.querySelector('.popup__type').textContent = translateOfferType(offer.type);
+      popupElement.querySelector('.popup__text--capacity').textContent = offer.rooms + ' комнаты для ' + offer.guests + ' гостей';
+      popupElement.querySelector('.popup__text--time').textContent = 'Заезд после ' + offer.checkin + ' , выезд до ' + offer.checkout;
+      popupElement.querySelector('.popup__description').textContent = offer.description;
 
-      cardElement.querySelector('.popup__avatar').src = data.author.avatar;
+      popupElement.querySelector('.popup__avatar').src = data.author.avatar;
 
       features.innerHTML = '';
       features.appendChild(
@@ -70,7 +70,7 @@
           createPhotoElements(offer.photos, photoTemplate)
       );
 
-      return cardElement;
+      return popupElement;
     }
   };
 })();
