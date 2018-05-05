@@ -19,11 +19,11 @@
             ((filterPriceSelect.value === 'high') && (pin.offer.price >= 50000));
           })
           .filter(function (pin) {
-            return filterRoomsSelect === 'any' || pin.offer.rooms === +filterRoomsSelect.value;
+            return filterRoomsSelect.value === 'any' || pin.offer.rooms === +filterRoomsSelect.value;
           })
 
           .filter(function (pin) {
-            return filterGuestsSelect === 'any' || pin.offer.guests >= +filterGuestsSelect.value;
+            return filterGuestsSelect.value === 'any' || pin.offer.guests >= +filterGuestsSelect.value;
           });
     }
   };
