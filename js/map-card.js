@@ -47,8 +47,8 @@
 
   window.mapCard = {
     renderElement: function (data) {
-      var features = popupElement.querySelector('.popup__features');
-      var photos = popupElement.querySelector('.popup__photos');
+      var featureElements = popupElement.querySelector('.popup__features');
+      var photoElements = popupElement.querySelector('.popup__photos');
       var offer = data.offer;
 
       popupElement.querySelector('.popup__title').textContent = offer.title;
@@ -61,13 +61,13 @@
 
       popupElement.querySelector('.popup__avatar').src = data.author.avatar;
 
-      features.innerHTML = '';
-      features.appendChild(
+      featureElements.innerHTML = '';
+      featureElements.appendChild(
           createFeatureElements(offer.features)
       );
 
-      photos.innerHTML = '';
-      photos.appendChild(
+      photoElements.innerHTML = '';
+      photoElements.appendChild(
           createPhotoElements(offer.photos, photoTemplate)
       );
 
