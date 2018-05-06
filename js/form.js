@@ -84,6 +84,10 @@
     setAddressData(mainPinElementCenterX, mainPinElementCenterY);
 
     document.querySelector('.success').classList.remove('hidden');
+
+    setTimeout(function () {
+      document.querySelector('.success').classList.add('hidden');
+    }, 3000);
   };
 
   disableFieldset();
