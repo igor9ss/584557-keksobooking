@@ -1,6 +1,9 @@
 'use strict';
 
 (function () {
+  var LOW_PRICE = 10000;
+  var MIDDLE_PRICE = 50000;
+
   var filterTypeSelect = document.querySelector('#housing-type');
   var filterPriceSelect = document.querySelector('#housing-price');
   var filterRoomsSelect = document.querySelector('#housing-rooms');
@@ -8,7 +11,7 @@
 
   var filterCheckboxElements = document.querySelectorAll('.map__checkbox');
 
-  window.filter = {
+  window.mapFilter = {
     filterPins: function (pins) {
       return pins
           .filter(function (pin) {
@@ -16,9 +19,9 @@
           })
           .filter(function (pin) {
             return filterPriceSelect.value === 'any' ||
-            ((filterPriceSelect.value === 'low') && (pin.offer.price <= 10000)) ||
-            ((filterPriceSelect.value === 'middle') && (pin.offer.price >= 10000) && (pin.offer.price <= 50000)) ||
-            ((filterPriceSelect.value === 'high') && (pin.offer.price >= 50000));
+            ((filterPriceSelect.value === 'low') && (pin.offer.price <= LOW_PRICE)) ||
+            ((filterPriceSelect.value === 'middle') && (pin.offer.price >= LOW_PRICE) && (pin.offer.price <= MIDDLE_PRICE)) ||
+            ((filterPriceSelect.value === 'high') && (pin.offer.price >= MIDDLE_PRICE));
           })
           .filter(function (pin) {
             return filterRoomsSelect.value === 'any' || pin.offer.rooms === +filterRoomsSelect.value;
