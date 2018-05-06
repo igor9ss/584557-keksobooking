@@ -51,7 +51,7 @@
 
   var mapElement = document.querySelector('.map');
   var mapPinsElement = document.querySelector('.map__pins');
-  window.mainPinElement = document.querySelector('.map__pin--main');
+  var mainPinElement = document.querySelector('.map__pin--main');
   var mapFiltersElement = document.querySelector('.map__filters');
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
 
@@ -80,14 +80,14 @@
     popupElement.classList.add('hidden');
   });
 
-  window.mainPinElement.addEventListener('mousedown', function () {
+  mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
     var adressInputField = document.querySelector('#address');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
-    var mainPinElementLeftX = parseInt(window.mainPinElement.style.left, 10);
+    var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
     var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
-    var mainPinElementTopY = parseInt(window.mainPinElement.style.top, 10);
+    var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
     var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
 
     mapElement.classList.remove('map--faded');

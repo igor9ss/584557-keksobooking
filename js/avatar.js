@@ -1,12 +1,12 @@
 'use strict';
 
 (function () {
-  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png'];
-  var fileInpit = document.querySelector('#avatar');
-  var avatar = document.querySelector('.ad-form-header__preview img');
+  var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'ico'];
+  var avatarInpitField = document.querySelector('#avatarElement');
+  var avatarElement = document.querySelector('.ad-form-header__preview img');
+  var dropZoneElement = document.querySelector('.ad-form-header__drop-zone');
 
-  fileInpit.addEventListener('change', function () {
-    var file = fileInpit.files[0];
+  var checkFileAndRenderPrevImg = function (file) {
     var fileName = file.name.toLowerCase();
 
     var matches = FILE_TYPES.some(function (it) {
@@ -17,10 +17,41 @@
       var reader = new FileReader();
 
       reader.addEventListener('load', function () {
-        avatar.src = reader.result;
+        avatarElement.src = reader.result;
       });
 
       reader.readAsDataURL(file);
     }
+  };
+
+  avatarInpitField.addEventListener('change', function () {
+    var file = avatarInpitField.files[0];
+    checkFileAndRenderPrevImg(file);
+  });
+
+  dropZoneElement.addEventListener('dragenter', function (evt) {
+    evt.target.style.outline = '2px solid red';
+    evt.preventDefault();
+  });
+
+  dropZoneElement.addEventListener('dragleave', function (evt) {
+    evt.target.style.outline = '';
+    evt.preventDefault();
+  });
+
+  dropZoneElement.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+
+  dropZoneElement.addEventListener('drop', function (evt) {
+    evt.preventDefault();
+
+    evt.target.style.outline = '';
+
+    var dt = evt.dataTransfer;
+    var file = dt.files[0];
+
+    checkFileAndRenderPrevImg(file);
   });
 })();
