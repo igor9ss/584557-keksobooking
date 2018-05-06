@@ -25,8 +25,7 @@
   };
 
   avatarInpitField.addEventListener('change', function () {
-    var file = avatarInpitField.files[0];
-    checkFileAndRenderPrevImg(file);
+    checkFileAndRenderPrevImg(avatarInpitField.files[0]);
   });
 
   dropZoneElement.addEventListener('dragenter', function (evt) {
@@ -49,9 +48,6 @@
 
     evt.target.style.outline = '';
 
-    var dt = evt.dataTransfer;
-    var file = dt.files[0];
-
-    checkFileAndRenderPrevImg(file);
+    checkFileAndRenderPrevImg(evt.dataTransfer.files[0]);
   });
 })();
