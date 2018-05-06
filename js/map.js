@@ -1,9 +1,9 @@
 'use strict';
 
 (function () {
-  window.MAIN_PIN_WIDTH = 62;
-  window.MAIN_PIN_HEIGHT = 62;
-  window.MAIN_PIN_ARROW_HEIGHT = 22;
+  var MAIN_PIN_WIDTH = 62;
+  var MAIN_PIN_HEIGHT = 62;
+  var MAIN_PIN_ARROW_HEIGHT = 22;
   var PIN_SHOW_LIMIT = 5;
   var ESC_KEYCODE = 27;
 
@@ -86,9 +86,9 @@
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
     var mainPinElementLeftX = parseInt(window.mainPinElement.style.left, 10);
-    var mainPinElementCenterX = mainPinElementLeftX + window.MAIN_PIN_WIDTH / 2;
+    var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
     var mainPinElementTopY = parseInt(window.mainPinElement.style.top, 10);
-    var mainPinElementArrowY = mainPinElementTopY + window.MAIN_PIN_HEIGHT + window.MAIN_PIN_ARROW_HEIGHT;
+    var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
 
     mapElement.classList.remove('map--faded');
     formElement.classList.remove('ad-form--disabled');
