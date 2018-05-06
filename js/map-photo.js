@@ -2,7 +2,7 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'ico'];
-  var avatarInpitField = document.querySelector('#avatarElement');
+  var avatarInpitField = document.querySelector('#avatar');
   var avatarElement = document.querySelector('.ad-form-header__preview img');
   var dropZoneElement = document.querySelector('.ad-form-header__drop-zone');
 

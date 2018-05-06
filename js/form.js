@@ -54,9 +54,9 @@
   };
 
   var hidePins = function () {
-    var pins = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pins.forEach(function (pin) {
-      pin.classList.add('hidden');
+    var pinsElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pinsElements.forEach(function (pinElement) {
+      pinElement.classList.add('hidden');
     });
   };
 

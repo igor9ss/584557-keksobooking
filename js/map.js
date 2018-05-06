@@ -86,8 +86,9 @@
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
     var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
-    var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
     var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
+
+    var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
     var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
 
     mapElement.classList.remove('map--faded');
@@ -109,9 +110,8 @@
     window.debounce(function () {
       renderPins(
           window.mapFilter.filterPins(cachedPins));
-
-      document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pin) {
-        pin.classList.remove('hidden');
+      document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pinElement) {
+        pinElement.classList.remove('hidden');
       });
     });
   });
