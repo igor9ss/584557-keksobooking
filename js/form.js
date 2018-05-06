@@ -22,8 +22,9 @@
 
   var mainPinElement = document.querySelector('.map__pin--main');
   var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
-  var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
   var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
+
+  var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
   var mainPinElementCenterY = mainPinElementTopY + MAIN_PIN_HEIGHT / 2;
 
   var formElement = document.querySelector('.ad-form');
