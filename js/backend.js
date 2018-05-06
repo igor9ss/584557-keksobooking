@@ -33,7 +33,7 @@
     xhr.send(data);
   };
 
-  window.load = {
+  window.backend = {
     loadData: function (onLoad, onError) {
       request('GET', LOAD_URL, onLoad, onError);
     },
