@@ -5,6 +5,18 @@
   var MAIN_PIN_HEIGHT = 62;
   var BORDER_STYLE_ERROR = '2px solid red';
   var BORDER_STYLE_VALID = '2px solid lightgreen';
+  var VALIDATION_ROOM_TO_GUEST_INDEXES_MAP = {
+    0: [0],
+    1: [0, 1],
+    2: [0, 1, 2],
+    3: [3]
+  };
+  var HOME_TYPE_VOCABULARY = {
+    bungalo: '0',
+    flat: '1000',
+    house: '5000',
+    palace: '10000'
+  };
 
   var popupElement = document.querySelector('.popup');
 
@@ -29,13 +41,6 @@
 
   var addressInputField = document.querySelector('#address');
 
-  var typeVacbl = {
-    bungalo: '0',
-    flat: '1000',
-    house: '5000',
-    palace: '10000'
-  };
-
   var setStandartInputsBorders = function () {
     titleInputField.style.border = '';
     rentPriceInputField.style.border = '';
@@ -55,9 +60,9 @@
   };
 
   var disableFieldset = function () {
-    for (var i = 0; i < fieldsetElements.length; i++) {
-      fieldsetElements[i].disabled = true;
-    }
+    fieldsetElements.forEach(function (fieldsetElement) {
+      fieldsetElement.disabled = true;
+    });
   };
 
   var setAddressData = function (x, y) {
@@ -108,10 +113,10 @@
     rentPriceInputField.style.border = '';
 
     var typeIndex = homeTypeSelectField.selectedIndex;
-    var objK = Object.keys(typeVacbl)[typeIndex];
+    var objK = Object.keys(HOME_TYPE_VOCABULARY)[typeIndex];
 
-    rentPriceInputField.min = typeVacbl[objK];
-    rentPriceInputField.placeholder = typeVacbl[objK];
+    rentPriceInputField.min = HOME_TYPE_VOCABULARY[objK];
+    rentPriceInputField.placeholder = HOME_TYPE_VOCABULARY[objK];
   });
 
   timeOutSelectField.addEventListener('change', function () {
@@ -126,18 +131,12 @@
     guestSelectField.value = '';
     guestSelectField.style.border = BORDER_STYLE_ERROR;
 
-    var validationRoomToGuestIndexesMap = {
-      0: [0],
-      1: [0, 1],
-      2: [0, 1, 2],
-      3: [3]
-    };
-
     var roomIndex = roomsSelectField.selectedIndex;
+    var guestSelectFieldOptions = guestSelectField.options;
 
-    for (var i = 0; i < guestSelectField.options.length; i++) {
-      guestSelectField.options[i].disabled = validationRoomToGuestIndexesMap[roomIndex].indexOf(i) === -1;
-    }
+    Array.from(guestSelectFieldOptions).forEach(function (option, i) {
+      option.disabled = VALIDATION_ROOM_TO_GUEST_INDEXES_MAP[roomIndex].indexOf(i) === -1;
+    });
   });
 
   guestSelectField.addEventListener('change', function () {
@@ -149,7 +148,7 @@
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.load.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
+    window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
   });
 
   titleInputField.addEventListener('input', function () {

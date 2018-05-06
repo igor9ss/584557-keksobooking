@@ -36,11 +36,12 @@
     var element;
     var fragment = document.createDocumentFragment();
 
-    for (var i = 0; i < photos.length; i++) {
+    photos.forEach(function (photo) {
       element = pattern.cloneNode(true);
-      element.src = photos[i];
+      element.src = photo;
       fragment.appendChild(element);
-    }
+    });
+
     return fragment;
   };
 

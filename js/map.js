@@ -72,7 +72,7 @@
     renderPins(pins);
   };
 
-  window.load.loadData(onSuccessLoad, window.errorMessage.show);
+  window.backend.loadData(onSuccessLoad, window.errorMessage.show);
 
   document.addEventListener('keydown', onPopupEscPress);
 
@@ -115,6 +115,4 @@
       });
     });
   });
-
-  window.mainPinElement.addEventListener('mousedown', window.dragNdrop.mainPinDND);
 })();
