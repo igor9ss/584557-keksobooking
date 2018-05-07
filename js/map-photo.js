@@ -2,52 +2,96 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'ico'];
-  var avatarInpitField = document.querySelector('#avatar');
-  var avatarElement = document.querySelector('.ad-form-header__preview img');
-  var dropZoneElement = document.querySelector('.ad-form-header__drop-zone');
 
-  var checkFileAndRenderPrevImg = function (file) {
+  var avatarInputField = document.querySelector('#avatar');
+  var avatarElement = document.querySelector('.ad-form-header__preview img');
+  var avatarDropZoneElement = document.querySelector('.ad-form-header__drop-zone');
+  var housingInputField = document.querySelector('#images');
+  var housingPhotoBox = document.querySelector('.ad-form__photo');
+  var housingPhotoDropZone = document.querySelector('.ad-form__drop-zone');
+
+  var checkFileForImg = function (file) {
     var fileName = file.name.toLowerCase();
 
-    var matches = FILE_TYPES.some(function (it) {
+    return FILE_TYPES.some(function (it) {
       return fileName.endsWith(it);
     });
+  };
+  var renderPrevImg = function (file, elem) {
+    var reader = new FileReader();
 
-    if (matches) {
-      var reader = new FileReader();
+    reader.addEventListener('load', function () {
+      elem.src = reader.result;
+    });
 
-      reader.addEventListener('load', function () {
-        avatarElement.src = reader.result;
-      });
+    reader.readAsDataURL(file);
+  };
+  var createHousingPhotosFragment = function (elem) {
+    var fragment = document.createDocumentFragment();
 
-      reader.readAsDataURL(file);
-    }
+    Array.from(elem.files).forEach(function (file) {
+
+      if (checkFileForImg(file)) {
+        var imgElement = document.createElement('img');
+
+        renderPrevImg(file, imgElement);
+
+        imgElement.width = '45';
+        imgElement.height = '40';
+        imgElement.alt = 'Фото жилья';
+        imgElement.classList.add('popup__photo');
+
+        fragment.appendChild(imgElement);
+      }
+    });
+    return fragment;
   };
 
-  avatarInpitField.addEventListener('change', function () {
-    checkFileAndRenderPrevImg(avatarInpitField.files[0]);
+  avatarInputField.addEventListener('change', function () {
+    renderPrevImg(avatarInputField.files[0], avatarElement);
   });
-
-  dropZoneElement.addEventListener('dragenter', function (evt) {
+  avatarDropZoneElement.addEventListener('dragenter', function (evt) {
     evt.target.style.outline = '2px solid red';
     evt.preventDefault();
   });
-
-  dropZoneElement.addEventListener('dragleave', function (evt) {
+  avatarDropZoneElement.addEventListener('dragleave', function (evt) {
     evt.target.style.outline = '';
     evt.preventDefault();
   });
-
-  dropZoneElement.addEventListener('dragover', function (evt) {
+  avatarDropZoneElement.addEventListener('dragover', function (evt) {
     evt.preventDefault();
     return false;
   });
-
-  dropZoneElement.addEventListener('drop', function (evt) {
+  avatarDropZoneElement.addEventListener('drop', function (evt) {
     evt.preventDefault();
 
     evt.target.style.outline = '';
 
-    checkFileAndRenderPrevImg(evt.dataTransfer.files[0]);
+    renderPrevImg(evt.dataTransfer.files[0], avatarElement);
+  });
+
+  housingInputField.addEventListener('change', function () {
+    housingPhotoBox.appendChild(createHousingPhotosFragment(housingInputField));
+  });
+  housingPhotoDropZone.addEventListener('dragenter', function (evt) {
+    evt.target.style.outline = '2px solid red';
+    evt.preventDefault();
+  });
+  housingPhotoDropZone.addEventListener('dragleave', function (evt) {
+    evt.target.style.outline = '';
+    evt.preventDefault();
+  });
+  housingPhotoDropZone.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+    return false;
+  });
+  housingPhotoDropZone.addEventListener('drop', function (evt) {
+    evt.preventDefault();
+
+    evt.target.style.outline = '';
+
+    var files = evt.dataTransfer;
+
+    housingPhotoBox.appendChild(createHousingPhotosFragment(files));
   });
 })();

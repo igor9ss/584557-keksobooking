@@ -118,10 +118,10 @@
     rentPriceInputField.style.border = '';
 
     var typeIndex = homeTypeSelectField.selectedIndex;
-    var objK = Object.keys(HOME_TYPE_VOCABULARY)[typeIndex];
+    var housingType = Object.keys(HOME_TYPE_VOCABULARY)[typeIndex];
 
-    rentPriceInputField.min = HOME_TYPE_VOCABULARY[objK];
-    rentPriceInputField.placeholder = HOME_TYPE_VOCABULARY[objK];
+    rentPriceInputField.min = HOME_TYPE_VOCABULARY[housingType];
+    rentPriceInputField.placeholder = HOME_TYPE_VOCABULARY[housingType];
   });
 
   timeOutSelectField.addEventListener('change', function () {

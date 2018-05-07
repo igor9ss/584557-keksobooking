@@ -20,6 +20,7 @@
   };
 
   var createClickHandler = function (data) {
+    document.addEventListener('keydown', onPopupEscPress);
     return function () {
       window.mapCard.renderElement(data);
 
@@ -74,15 +75,14 @@
 
   window.backend.loadData(onSuccessLoad, window.errorMessage.show);
 
-  document.addEventListener('keydown', onPopupEscPress);
-
   popupClose.addEventListener('click', function () {
     popupElement.classList.add('hidden');
+    document.removeEventListener('keydown', onPopupEscPress);
   });
 
   mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
-    var adressInputField = document.querySelector('#address');
+    var addressInputField = document.querySelector('#address');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
     var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
@@ -97,7 +97,7 @@
     window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
 
     enableFieldset();
-    adressInputField.disabled = true;
+    addressInputField.disabled = true;
 
 
     buttonElements.forEach(function (buttonElement) {
