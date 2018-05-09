@@ -67,7 +67,7 @@
   };
 
   var setAddressData = function (x, y) {
-    addressInputField.value = x + ' ' + y;
+    addressInputField.value = x + ', ' + y;
   };
 
   var onLoad = function () {
@@ -82,6 +82,7 @@
     setStandartInputsBorders();
     setMainPinToCenter();
     disableFieldset();
+    formElement.reset();
     setAddressData(mainPinElementCenterX, mainPinElementCenterY);
 
     document.querySelector('.success').classList.remove('hidden');

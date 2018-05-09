@@ -10,6 +10,8 @@
   var housingPhotoBox = document.querySelector('.ad-form__photo');
   var housingPhotoDropZone = document.querySelector('.ad-form__drop-zone');
 
+  var draggedItem = null;
+
   var checkFileForImg = function (file) {
     var fileName = file.name.toLowerCase();
 
@@ -36,10 +38,11 @@
 
         renderPrevImg(file, imgElement);
 
-        imgElement.width = '45';
-        imgElement.height = '40';
+        imgElement.width = '55';
+        imgElement.height = '50';
         imgElement.alt = 'Фото жилья';
-        imgElement.classList.add('popup__photo');
+        imgElement.draggable = 'true';
+        imgElement.style.margin = '3px';
 
         fragment.appendChild(imgElement);
       }
@@ -93,5 +96,32 @@
     var files = evt.dataTransfer;
 
     housingPhotoBox.appendChild(createHousingPhotosFragment(files));
+  });
+
+  housingPhotoBox.addEventListener('dragstart', function (evt) {
+    if (evt.target.tagName === 'IMG') {
+      draggedItem = evt.target;
+    }
+  });
+  housingPhotoBox.addEventListener('dragover', function (evt) {
+    evt.preventDefault();
+  });
+  housingPhotoBox.addEventListener('drop', function (evt) {
+    if (evt.target.tagName === 'IMG') {
+      if (evt.target.offsetTop === draggedItem.offsetTop) {
+        if (evt.target.offsetLeft < draggedItem.offsetLeft) {
+          evt.target.insertAdjacentElement('beforebegin', draggedItem);
+        } else if (evt.target.offsetLeft > draggedItem.offsetLeft) {
+          evt.target.insertAdjacentElement('afterend', draggedItem);
+        }
+      } else {
+        if (evt.target.offsetTop < draggedItem.offsetTop) {
+          evt.target.insertAdjacentElement('beforebegin', draggedItem);
+        } else if (evt.target.offsetTop > draggedItem.offsetTop) {
+          evt.target.insertAdjacentElement('afterend', draggedItem);
+        }
+      }
+    }
+    evt.preventDefault();
   });
 })();

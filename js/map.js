@@ -82,7 +82,6 @@
 
   mainPinElement.addEventListener('mousedown', function () {
     var formElement = document.querySelector('.ad-form');
-    var addressInputField = document.querySelector('#address');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
     var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
@@ -97,8 +96,6 @@
     window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
 
     enableFieldset();
-    addressInputField.disabled = true;
-
 
     buttonElements.forEach(function (buttonElement) {
       buttonElement.classList.remove('hidden');
