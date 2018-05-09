@@ -2,13 +2,18 @@
 
 (function () {
   var FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'ico'];
+  var IMAGE_WIDTH = '55';
+  var IMAGE_HEIGHT = '50';
+  var IMAGE_ALT = 'Фото жилья';
+  var IMAGE_DRAGGABLE = 'true';
+  var IMAGE_MARGIN = '3px';
 
   var avatarInputField = document.querySelector('#avatar');
   var avatarElement = document.querySelector('.ad-form-header__preview img');
   var avatarDropZoneElement = document.querySelector('.ad-form-header__drop-zone');
-  var housingInputField = document.querySelector('#images');
-  var housingPhotoBox = document.querySelector('.ad-form__photo');
-  var housingPhotoDropZone = document.querySelector('.ad-form__drop-zone');
+  var inputField = document.querySelector('#images');
+  var photoBoxElement = document.querySelector('.ad-form__photo');
+  var photoDropZoneElement = document.querySelector('.ad-form__drop-zone');
 
   var draggedItemElement;
 
@@ -38,11 +43,11 @@
 
         renderPrevImg(file, imgElement);
 
-        imgElement.width = '55';
-        imgElement.height = '50';
-        imgElement.alt = 'Фото жилья';
-        imgElement.draggable = 'true';
-        imgElement.style.margin = '3px';
+        imgElement.width = IMAGE_WIDTH;
+        imgElement.height = IMAGE_HEIGHT;
+        imgElement.alt = IMAGE_ALT;
+        imgElement.draggable = IMAGE_DRAGGABLE;
+        imgElement.style.margin = IMAGE_MARGIN;
 
         fragment.appendChild(imgElement);
       }
@@ -73,52 +78,53 @@
     renderPrevImg(evt.dataTransfer.files[0], avatarElement);
   });
 
-  housingInputField.addEventListener('change', function () {
-    housingPhotoBox.appendChild(createHousingPhotosFragment(housingInputField));
+  inputField.addEventListener('change', function () {
+    photoBoxElement.appendChild(createHousingPhotosFragment(inputField));
   });
-  housingPhotoDropZone.addEventListener('dragenter', function (evt) {
+  photoDropZoneElement.addEventListener('dragenter', function (evt) {
     evt.target.style.outline = '2px solid red';
     evt.preventDefault();
   });
-  housingPhotoDropZone.addEventListener('dragleave', function (evt) {
+  photoDropZoneElement.addEventListener('dragleave', function (evt) {
     evt.target.style.outline = '';
     evt.preventDefault();
   });
-  housingPhotoDropZone.addEventListener('dragover', function (evt) {
+  photoDropZoneElement.addEventListener('dragover', function (evt) {
     evt.preventDefault();
     return false;
   });
-  housingPhotoDropZone.addEventListener('drop', function (evt) {
+  photoDropZoneElement.addEventListener('drop', function (evt) {
     evt.preventDefault();
 
     evt.target.style.outline = '';
 
     var files = evt.dataTransfer;
 
-    housingPhotoBox.appendChild(createHousingPhotosFragment(files));
+    photoBoxElement.appendChild(createHousingPhotosFragment(files));
   });
 
-  housingPhotoBox.addEventListener('dragstart', function (evt) {
+  photoBoxElement.addEventListener('dragstart', function (evt) {
     if (evt.target.tagName === 'IMG') {
       draggedItemElement = evt.target;
     }
   });
-  housingPhotoBox.addEventListener('dragover', function (evt) {
+  photoBoxElement.addEventListener('dragover', function (evt) {
     evt.preventDefault();
   });
-  housingPhotoBox.addEventListener('drop', function (evt) {
-    if (evt.target.tagName === 'IMG') {
-      if (evt.target.offsetTop === draggedItemElement.offsetTop) {
-        if (evt.target.offsetLeft < draggedItemElement.offsetLeft) {
-          evt.target.insertAdjacentElement('beforebegin', draggedItemElement);
-        } else if (evt.target.offsetLeft > draggedItemElement.offsetLeft) {
-          evt.target.insertAdjacentElement('afterend', draggedItemElement);
+  photoBoxElement.addEventListener('drop', function (evt) {
+    var target = evt.target;
+    if (target.tagName === 'IMG') {
+      if (target.offsetTop === draggedItemElement.offsetTop) {
+        if (target.offsetLeft < draggedItemElement.offsetLeft) {
+          target.insertAdjacentElement('beforebegin', draggedItemElement);
+        } else if (target.offsetLeft > draggedItemElement.offsetLeft) {
+          target.insertAdjacentElement('afterend', draggedItemElement);
         }
       } else {
-        if (evt.target.offsetTop < draggedItemElement.offsetTop) {
-          evt.target.insertAdjacentElement('beforebegin', draggedItemElement);
-        } else if (evt.target.offsetTop > draggedItemElement.offsetTop) {
-          evt.target.insertAdjacentElement('afterend', draggedItemElement);
+        if (target.offsetTop < draggedItemElement.offsetTop) {
+          target.insertAdjacentElement('beforebegin', draggedItemElement);
+        } else if (target.offsetTop > draggedItemElement.offsetTop) {
+          target.insertAdjacentElement('afterend', draggedItemElement);
         }
       }
     }

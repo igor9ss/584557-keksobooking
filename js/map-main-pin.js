@@ -7,6 +7,7 @@
   var MAIN_PIN_ARROW_HEIGHT = 22;
   var TOP_LIMITATION_Y = 150;
   var BOTTOM_LIMITATION_Y = 500;
+  var TOP_LIMITATION_Y_MAIN_PIN_ARROW = TOP_LIMITATION_Y - (MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT);
 
   var mapElement = document.querySelector('.map');
   var mainPinElement = document.querySelector('.map__pin--main');
@@ -36,8 +37,8 @@
       mainPinElement.style.top = (mainPinElement.offsetTop - shift.y) + 'px';
       mainPinElement.style.left = (mainPinElement.offsetLeft - shift.x) + 'px';
 
-      if (mainPinElement.offsetTop < TOP_LIMITATION_Y - (MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT)) {
-        mainPinElement.style.top = TOP_LIMITATION_Y - (MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT) + 'px';
+      if (mainPinElement.offsetTop < TOP_LIMITATION_Y_MAIN_PIN_ARROW) {
+        mainPinElement.style.top = TOP_LIMITATION_Y_MAIN_PIN_ARROW + 'px';
       }
 
       if (mainPinElement.offsetLeft + MAIN_PIN_WIDTH / 2 < 0) {
