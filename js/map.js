@@ -13,16 +13,15 @@
     });
   };
 
-  var onPopupEscPress = function (e) {
+  window.onPopupEscPress = function (e) {
     if (e.keyCode === ESC_KEYCODE) {
       popupElement.classList.add('hidden');
     }
   };
 
   var createClickHandler = function (data) {
-    document.addEventListener('keydown', onPopupEscPress);
     return function () {
-      window.mapCard.renderElement(data);
+      window.mapPopup.renderElement(data);
 
       if (popupElement.classList.contains('hidden')) {
         popupElement.classList.remove('hidden');
@@ -59,10 +58,10 @@
   var fieldsetElements = document.querySelectorAll('fieldset');
   var template = document.querySelector('template');
   var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
-  var cardElement = template.content.querySelector('.map__card').cloneNode(true);
+  var popupTemplate = template.content.querySelector('.popup').cloneNode(true);
 
-  mapElement.insertBefore(cardElement, mapFiltersContainerElement);
-  cardElement.classList.add('hidden');
+  mapElement.insertBefore(popupTemplate, mapFiltersContainerElement);
+  popupTemplate.classList.add('hidden');
 
   var popupElement = document.querySelector('.popup');
   var popupClose = popupElement.querySelector('.popup__close');
@@ -77,10 +76,11 @@
 
   popupClose.addEventListener('click', function () {
     popupElement.classList.add('hidden');
-    document.removeEventListener('keydown', onPopupEscPress);
   });
 
   mainPinElement.addEventListener('mousedown', function () {
+    document.addEventListener('keydown', window.onPopupEscPress);
+
     var formElement = document.querySelector('.ad-form');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
@@ -103,7 +103,7 @@
   });
 
   mapFiltersElement.addEventListener('change', function () {
-    cardElement.classList.add('hidden');
+    popupElement.classList.add('hidden');
     window.debounce(function () {
       renderPins(
           window.mapFilter.filterPins(cachedPins));

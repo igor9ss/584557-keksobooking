@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var cardTemplate = document.querySelector('template').content.querySelector('.map__card');
-  var photoTemplate = cardTemplate.querySelector('.popup__photo').cloneNode(true);
+  var popupTemplate = document.querySelector('template').content.querySelector('.popup');
+  var photoTemplate = popupTemplate.querySelector('.popup__photo').cloneNode(true);
   var popupElement = document.querySelector('.popup');
 
   var translateOfferType = function (offerType) {
@@ -45,7 +45,7 @@
     return fragment;
   };
 
-  window.mapCard = {
+  window.mapPopup = {
     renderElement: function (data) {
       var featureElements = popupElement.querySelector('.popup__features');
       var photoElements = popupElement.querySelector('.popup__photos');
