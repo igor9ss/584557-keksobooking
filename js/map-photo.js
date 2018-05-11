@@ -8,7 +8,7 @@
   var IMAGE_DRAGGABLE = 'true';
   var IMAGE_MARGIN = '3px';
 
-  var avatarInputField = document.querySelector('#avatar');
+  var avatarInputFieldElement = document.querySelector('#avatar');
   var avatarElement = document.querySelector('.ad-form-header__preview img');
   var avatarDropZoneElement = document.querySelector('.ad-form-header__drop-zone');
   var inputFieldElement = document.querySelector('#images');
@@ -55,8 +55,8 @@
     return fragment;
   };
 
-  avatarInputField.addEventListener('change', function () {
-    renderPrevImg(avatarInputField.files[0], avatarElement);
+  avatarInputFieldElement.addEventListener('change', function () {
+    renderPrevImg(avatarInputFieldElement.files[0], avatarElement);
   });
   avatarDropZoneElement.addEventListener('dragenter', function (evt) {
     evt.target.style.outline = '2px solid red';
