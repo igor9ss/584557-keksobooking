@@ -51,6 +51,8 @@
 
   var addressInputFieldElement = document.querySelector('#address');
 
+  var popupCloseElement = popupElement.querySelector('.popup__close');
+
   var setStandartInputsBorders = function () {
     titleInputFieldElement.style.border = '';
     rentPriceInputFieldElement.style.border = '';
@@ -111,7 +113,7 @@
   resetButtonElement.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    window.mpa.setPopupCloseElementListener();
+    popupCloseElement.removeEventListener('click', window.map.onPopupCloseElementClick);
 
     document.removeEventListener('keydown', window.map.onPopupEscPress);
 
@@ -173,7 +175,7 @@
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.map.setPopupCloseElementListener();
+    popupCloseElement.removeEventListener('click', window.map.onPopupCloseElementClick);
 
     document.removeEventListener('keydown', window.map.onPopupEscPress);
 

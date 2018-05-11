@@ -49,10 +49,8 @@
     mapPinsElement.appendChild(fragment);
   };
 
-  var setPopupCloseElementListener = function () {
-    popupCloseElement.addEventListener('click', function () {
-      popupElement.classList.add('hidden');
-    });
+  var onPopupCloseElementClick = function () {
+    popupElement.classList.add('hidden');
   };
 
   var mapElement = document.querySelector('.map');
@@ -82,7 +80,8 @@
 
   mainPinElement.addEventListener('mousedown', function () {
     document.addEventListener('keydown', onPopupEscPress);
-    setPopupCloseElementListener();
+    popupCloseElement.addEventListener('click', window.map.onPopupCloseElementClick);
+
 
     var formElement = document.querySelector('.ad-form');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
@@ -117,7 +116,7 @@
   });
 
   window.map = {
-    setPopupCloseElementListener: setPopupCloseElementListener,
+    onPopupCloseElementClick: onPopupCloseElementClick,
     onPopupEscPress: onPopupEscPress
   };
 
