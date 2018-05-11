@@ -68,7 +68,7 @@
 
   mainPinElement.addEventListener('mousedown', function () {
 
-    window.mapPopup.addListeners(popupElement);
+    window.mapPopup.addListeners();
 
     var formElement = document.querySelector('.ad-form');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');

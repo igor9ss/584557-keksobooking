@@ -110,7 +110,7 @@
   resetButtonElement.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    window.mapPopup.removeListeners(popupElement);
+    window.mapPopup.removeListeners();
 
     document.querySelector('.map').classList.add('map--faded');
     formElement.classList.add('ad-form--disabled');
@@ -170,7 +170,7 @@
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    window.mapPopup.removeListeners(popupElement);
+    window.mapPopup.removeListeners();
 
     window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
   });
