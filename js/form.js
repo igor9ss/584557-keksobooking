@@ -59,10 +59,10 @@
     mainPinElement.style.top = MAIN_PIN_DEFAULT_COORDINATE_Y;
   };
 
-  var hidePins = function () {
-    var pinsElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pinsElements.forEach(function (pinElement) {
-      pinElement.classList.add('hidden');
+  var removePins = function () {
+    var pinElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+    pinElements.forEach(function (pinElement) {
+      pinElement.remove();
     });
   };
 
@@ -76,6 +76,11 @@
     addressInputFieldElement.value = x + ', ' + y;
   };
 
+  var setDefaultValueForPriceElement = function () {
+    rentPriceInputFieldElement.min = HOME_TYPE_VOCABULARY['flat'];
+    rentPriceInputFieldElement.placeholder = HOME_TYPE_VOCABULARY['flat'];
+  };
+
   var onLoad = function () {
     document.querySelector('.map').classList.add('map--faded');
     formElement.classList.add('ad-form--disabled');
@@ -84,7 +89,7 @@
 
     window.mapPopup.hidePopup();
 
-    hidePins();
+    removePins();
     setStandartInputsBorders();
     setMainPinToCenter();
     disableFieldset();
@@ -115,13 +120,24 @@
 
     window.mapPopup.hidePopup();
 
-    hidePins();
+    removePins();
     setStandartInputsBorders();
     setMainPinToCenter();
     disableFieldset();
     formElement.reset();
     mapFilterFormElement.reset();
     setAddressData(mainPinElementCenterX, mainPinElementCenterY);
+    setDefaultValueForPriceElement();
+  });
+
+  formElement.addEventListener('submit', function (evt) {
+    evt.preventDefault();
+
+    window.mapPopup.removeListeners();
+
+    window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
+
+    setDefaultValueForPriceElement();
   });
 
   homeTypeSelectFieldElement.addEventListener('change', function () {
@@ -159,14 +175,6 @@
     if (guestSelectFieldElement.value) {
       guestSelectFieldElement.style.border = BORDER_STYLE_VALID;
     }
-  });
-
-  formElement.addEventListener('submit', function (evt) {
-    evt.preventDefault();
-
-    window.mapPopup.removeListeners();
-
-    window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
   });
 
   titleInputFieldElement.addEventListener('input', function () {
