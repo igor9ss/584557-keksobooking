@@ -5,18 +5,11 @@
   var MAIN_PIN_HEIGHT = 62;
   var MAIN_PIN_ARROW_HEIGHT = 22;
   var PIN_SHOW_LIMIT = 5;
-  var ESC_KEYCODE = 27;
 
   var enableFieldset = function () {
     fieldsetElements.forEach(function (fieldsetElement) {
       fieldsetElement.disabled = false;
     });
-  };
-
-  var onPopupEscPress = function (e) {
-    if (e.keyCode === ESC_KEYCODE) {
-      popupElement.classList.add('hidden');
-    }
   };
 
   var createClickHandler = function (data) {
@@ -49,10 +42,6 @@
     mapPinsElement.appendChild(fragment);
   };
 
-  var onPopupCloseElementClick = function () {
-    popupElement.classList.add('hidden');
-  };
-
   var mapElement = document.querySelector('.map');
   var mapPinsElement = document.querySelector('.map__pins');
   var mainPinElement = document.querySelector('.map__pin--main');
@@ -68,7 +57,6 @@
   popupTemplateElement.classList.add('hidden');
 
   var popupElement = document.querySelector('.popup');
-  var popupCloseElement = popupElement.querySelector('.popup__close');
   var cachedPins;
 
   var onSuccessLoad = function (pins) {
@@ -79,9 +67,8 @@
   window.backend.loadData(onSuccessLoad, window.errorMessage.show);
 
   mainPinElement.addEventListener('mousedown', function () {
-    document.addEventListener('keydown', onPopupEscPress);
-    popupCloseElement.addEventListener('click', window.map.onPopupCloseElementClick);
 
+    window.mapPopup.addListeners(popupElement);
 
     var formElement = document.querySelector('.ad-form');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
@@ -114,10 +101,4 @@
       });
     });
   });
-
-  window.map = {
-    onPopupCloseElementClick: onPopupCloseElementClick,
-    onPopupEscPress: onPopupEscPress
-  };
-
 })();

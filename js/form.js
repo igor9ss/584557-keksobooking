@@ -22,8 +22,6 @@
     palace: '10000'
   };
 
-  var popupElement = document.querySelector('.popup');
-
   var mainPinElement = document.querySelector('.map__pin--main');
   var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
   var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
@@ -39,6 +37,7 @@
   var timeOutSelectFieldElement = formElement.querySelector('#timeout');
   var roomsSelectFieldElement = formElement.querySelector('#room_number');
   var guestSelectFieldElement = formElement.querySelector('#capacity');
+  var addressInputFieldElement = document.querySelector('#address');
 
   var userAvatarPreviewElement = document.querySelector('.ad-form-header__preview img');
   var photoPreviewBoxElement = document.querySelector('.ad-form__photo');
@@ -49,9 +48,7 @@
 
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
-  var addressInputFieldElement = document.querySelector('#address');
-
-  var popupCloseElement = popupElement.querySelector('.popup__close');
+  var popupElement = document.querySelector('.popup');
 
   var setStandartInputsBorders = function () {
     titleInputFieldElement.style.border = '';
@@ -113,9 +110,7 @@
   resetButtonElement.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    popupCloseElement.removeEventListener('click', window.map.onPopupCloseElementClick);
-
-    document.removeEventListener('keydown', window.map.onPopupEscPress);
+    window.mapPopup.removeListeners(popupElement);
 
     document.querySelector('.map').classList.add('map--faded');
     formElement.classList.add('ad-form--disabled');
@@ -175,9 +170,7 @@
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    popupCloseElement.removeEventListener('click', window.map.onPopupCloseElementClick);
-
-    document.removeEventListener('keydown', window.map.onPopupEscPress);
+    window.mapPopup.removeListeners(popupElement);
 
     window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
   });
