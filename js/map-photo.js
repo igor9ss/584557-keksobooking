@@ -11,7 +11,7 @@
   var avatarInputField = document.querySelector('#avatar');
   var avatarElement = document.querySelector('.ad-form-header__preview img');
   var avatarDropZoneElement = document.querySelector('.ad-form-header__drop-zone');
-  var inputField = document.querySelector('#images');
+  var inputFieldElement = document.querySelector('#images');
   var photoBoxElement = document.querySelector('.ad-form__photo');
   var photoDropZoneElement = document.querySelector('.ad-form__drop-zone');
 
@@ -78,8 +78,8 @@
     renderPrevImg(evt.dataTransfer.files[0], avatarElement);
   });
 
-  inputField.addEventListener('change', function () {
-    photoBoxElement.appendChild(createHousingPhotosFragment(inputField));
+  inputFieldElement.addEventListener('change', function () {
+    photoBoxElement.appendChild(createHousingPhotosFragment(inputFieldElement));
   });
   photoDropZoneElement.addEventListener('dragenter', function (evt) {
     evt.target.style.outline = '2px solid red';

@@ -49,7 +49,7 @@
 
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
-  var addressInputField = document.querySelector('#address');
+  var addressInputFieldElement = document.querySelector('#address');
 
   var setStandartInputsBorders = function () {
     titleInputFieldElement.style.border = '';
@@ -76,7 +76,7 @@
   };
 
   var setAddressData = function (x, y) {
-    addressInputField.value = x + ', ' + y;
+    addressInputFieldElement.value = x + ', ' + y;
   };
 
   var onLoad = function () {

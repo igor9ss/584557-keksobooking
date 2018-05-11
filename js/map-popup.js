@@ -1,8 +1,8 @@
 'use strict';
 
 (function () {
-  var popupTemplate = document.querySelector('template').content.querySelector('.popup');
-  var photoTemplate = popupTemplate.querySelector('.popup__photo').cloneNode(true);
+  var popupTemplateElement = document.querySelector('template').content.querySelector('.popup');
+  var photoTemplateElement = popupTemplateElement.querySelector('.popup__photo').cloneNode(true);
   var popupElement = document.querySelector('.popup');
   var featureElements = popupElement.querySelector('.popup__features');
   var photoElements = popupElement.querySelector('.popup__photos');
@@ -68,7 +68,7 @@
 
       photoElements.innerHTML = '';
       photoElements.appendChild(
-          createPhotoElements(offer.photos, photoTemplate)
+          createPhotoElements(offer.photos, photoTemplateElement)
       );
 
       return popupElement;
