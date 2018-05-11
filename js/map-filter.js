@@ -58,15 +58,15 @@
 
       var filteredPins = [];
 
-      for (var i = 0; i < pins.length; i++) {
-        if (filterByType(pins[i]) &&
-          (filterByPrice(pins[i])) &&
-          (filterByRooms(pins[i])) &&
-          (filterByGuests(pins[i])) &&
-          (filterByFeatures(pins[i]))) {
-          filteredPins.push(pins[i]);
+      pins.forEach(function (pin) {
+        if (filterByType(pin) &&
+          (filterByPrice(pin)) &&
+          (filterByRooms(pin)) &&
+          (filterByGuests(pin)) &&
+          (filterByFeatures(pin))) {
+          filteredPins.push(pin);
         }
-      }
+      });
 
       return filteredPins;
 
