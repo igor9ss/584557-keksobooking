@@ -48,8 +48,6 @@
 
   var fieldsetElements = document.querySelector('.notice').querySelectorAll('fieldset');
 
-  var popupElement = document.querySelector('.popup');
-
   var setStandartInputsBorders = function () {
     titleInputFieldElement.style.border = '';
     rentPriceInputFieldElement.style.border = '';
@@ -84,9 +82,7 @@
     userAvatarPreviewElement.src = DEFAULT_USER_AVATAR;
     photoPreviewBoxElement.innerHTML = '';
 
-    if (!popupElement.classList.contains('hidden')) {
-      popupElement.classList.add('hidden');
-    }
+    window.mapPopup.hidePopup();
 
     hidePins();
     setStandartInputsBorders();
@@ -117,9 +113,7 @@
     userAvatarPreviewElement.src = DEFAULT_USER_AVATAR;
     photoPreviewBoxElement.innerHTML = '';
 
-    if (!popupElement.classList.contains('hidden')) {
-      popupElement.classList.add('hidden');
-    }
+    window.mapPopup.hidePopup();
 
     hidePins();
     setStandartInputsBorders();
