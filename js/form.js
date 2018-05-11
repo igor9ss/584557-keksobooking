@@ -111,7 +111,9 @@
   resetButtonElement.addEventListener('click', function (evt) {
     evt.preventDefault();
 
-    document.removeEventListener('keydown', window.onPopupEscPress);
+    window.mpa.setPopupCloseElementListener();
+
+    document.removeEventListener('keydown', window.map.onPopupEscPress);
 
     document.querySelector('.map').classList.add('map--faded');
     formElement.classList.add('ad-form--disabled');
@@ -171,7 +173,9 @@
   formElement.addEventListener('submit', function (evt) {
     evt.preventDefault();
 
-    document.removeEventListener('keydown', window.onPopupEscPress);
+    window.map.setPopupCloseElementListener();
+
+    document.removeEventListener('keydown', window.map.onPopupEscPress);
 
     window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
   });

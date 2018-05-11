@@ -13,7 +13,7 @@
     });
   };
 
-  window.onPopupEscPress = function (e) {
+  var onPopupEscPress = function (e) {
     if (e.keyCode === ESC_KEYCODE) {
       popupElement.classList.add('hidden');
     }
@@ -49,6 +49,12 @@
     mapPinsElement.appendChild(fragment);
   };
 
+  var setPopupCloseElementListener = function () {
+    popupCloseElement.addEventListener('click', function () {
+      popupElement.classList.add('hidden');
+    });
+  };
+
   var mapElement = document.querySelector('.map');
   var mapPinsElement = document.querySelector('.map__pins');
   var mainPinElement = document.querySelector('.map__pin--main');
@@ -74,12 +80,9 @@
 
   window.backend.loadData(onSuccessLoad, window.errorMessage.show);
 
-  popupCloseElement.addEventListener('click', function () {
-    popupElement.classList.add('hidden');
-  });
-
   mainPinElement.addEventListener('mousedown', function () {
-    document.addEventListener('keydown', window.onPopupEscPress);
+    document.addEventListener('keydown', onPopupEscPress);
+    setPopupCloseElementListener();
 
     var formElement = document.querySelector('.ad-form');
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
@@ -112,4 +115,10 @@
       });
     });
   });
+
+  window.map = {
+    setPopupCloseElementListener: setPopupCloseElementListener,
+    onPopupEscPress: onPopupEscPress
+  };
+
 })();
