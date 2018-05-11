@@ -36,7 +36,7 @@
     pins
         .slice(0, PIN_SHOW_LIMIT)
         .forEach(function (pin) {
-          var pinElement = window.mapPin.createElement(pin, pinTemplate);
+          var pinElement = window.mapPin.createElement(pin, pinTemplateElement);
 
           pinElement.addEventListener('click', createClickHandler(pin));
 
@@ -56,15 +56,15 @@
   var mapFiltersContainerElement = document.querySelector('.map__filters-container');
 
   var fieldsetElements = document.querySelectorAll('fieldset');
-  var template = document.querySelector('template');
-  var pinTemplate = template.content.querySelector('.map__pin').cloneNode(true);
-  var popupTemplate = template.content.querySelector('.popup').cloneNode(true);
+  var templateElement = document.querySelector('template');
+  var pinTemplateElement = templateElement.content.querySelector('.map__pin').cloneNode(true);
+  var popupTemplateElement = templateElement.content.querySelector('.popup').cloneNode(true);
 
-  mapElement.insertBefore(popupTemplate, mapFiltersContainerElement);
-  popupTemplate.classList.add('hidden');
+  mapElement.insertBefore(popupTemplateElement, mapFiltersContainerElement);
+  popupTemplateElement.classList.add('hidden');
 
   var popupElement = document.querySelector('.popup');
-  var popupClose = popupElement.querySelector('.popup__close');
+  var popupCloseElement = popupElement.querySelector('.popup__close');
   var cachedPins;
 
   var onSuccessLoad = function (pins) {
@@ -74,7 +74,7 @@
 
   window.backend.loadData(onSuccessLoad, window.errorMessage.show);
 
-  popupClose.addEventListener('click', function () {
+  popupCloseElement.addEventListener('click', function () {
     popupElement.classList.add('hidden');
   });
 

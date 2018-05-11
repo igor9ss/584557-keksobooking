@@ -24,19 +24,19 @@
       return fileName.endsWith(it);
     });
   };
-  var renderPrevImg = function (file, elem) {
+  var renderPrevImg = function (file, element) {
     var reader = new FileReader();
 
     reader.addEventListener('load', function () {
-      elem.src = reader.result;
+      element.src = reader.result;
     });
 
     reader.readAsDataURL(file);
   };
-  var createHousingPhotosFragment = function (elem) {
+  var createHousingPhotosFragment = function (element) {
     var fragment = document.createDocumentFragment();
 
-    Array.from(elem.files).forEach(function (file) {
+    Array.from(element.files).forEach(function (file) {
 
       if (checkFileForImg(file)) {
         var imgElement = document.createElement('img');

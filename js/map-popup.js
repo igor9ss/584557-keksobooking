@@ -4,6 +4,8 @@
   var popupTemplate = document.querySelector('template').content.querySelector('.popup');
   var photoTemplate = popupTemplate.querySelector('.popup__photo').cloneNode(true);
   var popupElement = document.querySelector('.popup');
+  var featureElements = popupElement.querySelector('.popup__features');
+  var photoElements = popupElement.querySelector('.popup__photos');
 
   var translateOfferType = function (offerType) {
     switch (offerType) {
@@ -47,8 +49,6 @@
 
   window.mapPopup = {
     renderElement: function (data) {
-      var featureElements = popupElement.querySelector('.popup__features');
-      var photoElements = popupElement.querySelector('.popup__photos');
       var offer = data.offer;
 
       popupElement.querySelector('.popup__title').textContent = offer.title;

@@ -13,7 +13,7 @@
   var mainPinElement = document.querySelector('.map__pin--main');
 
   mainPinElement.addEventListener('mousedown', function (mouseDownEvt) {
-    var startCoords = {
+    var startCoordinates = {
       x: mouseDownEvt.clientX,
       y: mouseDownEvt.clientY
     };
@@ -25,11 +25,11 @@
       var currentArrowY = parseInt(mainPinElement.style.top, 10) + MAIN_PIN_WIDTH + MAIN_PIN_ARROW_HEIGHT;
 
       var shift = {
-        x: startCoords.x - moveEvt.clientX,
-        y: startCoords.y - moveEvt.clientY
+        x: startCoordinates.x - moveEvt.clientX,
+        y: startCoordinates.y - moveEvt.clientY
       };
 
-      startCoords = {
+      startCoordinates = {
         x: moveEvt.clientX,
         y: moveEvt.clientY
       };

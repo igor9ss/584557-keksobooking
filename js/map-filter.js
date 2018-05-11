@@ -8,30 +8,30 @@
   var PRICE_SELECT_MIDDLE = 'middle';
   var PRICE_SELECT_HIGH = 'high';
 
-  var filterTypeSelect = document.querySelector('#housing-type');
-  var filterPriceSelect = document.querySelector('#housing-price');
-  var filterRoomsSelect = document.querySelector('#housing-rooms');
-  var filterGuestsSelect = document.querySelector('#housing-guests');
+  var filterTypeSelectElement = document.querySelector('#housing-type');
+  var filterPriceSelectElement = document.querySelector('#housing-price');
+  var filterRoomsSelectElement = document.querySelector('#housing-rooms');
+  var filterGuestsSelectElement = document.querySelector('#housing-guests');
 
   var filterCheckboxElements = document.querySelectorAll('.map__checkbox');
 
   var filterByType = function (pin) {
-    return filterTypeSelect.value === SELECT_OPTION_ANY || pin.offer.type === filterTypeSelect.value;
+    return filterTypeSelectElement.value === SELECT_OPTION_ANY || pin.offer.type === filterTypeSelectElement.value;
   };
 
   var filterByPrice = function (pin) {
-    return filterPriceSelect.value === SELECT_OPTION_ANY ||
-            ((filterPriceSelect.value === PRICE_SELECT_LOW) && (pin.offer.price <= LOW_PRICE)) ||
-            ((filterPriceSelect.value === PRICE_SELECT_MIDDLE) && (pin.offer.price >= LOW_PRICE) && (pin.offer.price <= MIDDLE_PRICE)) ||
-            ((filterPriceSelect.value === PRICE_SELECT_HIGH) && (pin.offer.price >= MIDDLE_PRICE));
+    return filterPriceSelectElement.value === SELECT_OPTION_ANY ||
+            ((filterPriceSelectElement.value === PRICE_SELECT_LOW) && (pin.offer.price <= LOW_PRICE)) ||
+            ((filterPriceSelectElement.value === PRICE_SELECT_MIDDLE) && (pin.offer.price >= LOW_PRICE) && (pin.offer.price <= MIDDLE_PRICE)) ||
+            ((filterPriceSelectElement.value === PRICE_SELECT_HIGH) && (pin.offer.price >= MIDDLE_PRICE));
   };
 
   var filterByRooms = function (pin) {
-    return filterRoomsSelect.value === SELECT_OPTION_ANY || pin.offer.rooms === +filterRoomsSelect.value;
+    return filterRoomsSelectElement.value === SELECT_OPTION_ANY || pin.offer.rooms === +filterRoomsSelectElement.value;
   };
 
   var filterByGuests = function (pin) {
-    return filterGuestsSelect.value === SELECT_OPTION_ANY || pin.offer.guests >= +filterGuestsSelect.value;
+    return filterGuestsSelectElement.value === SELECT_OPTION_ANY || pin.offer.guests >= +filterGuestsSelectElement.value;
   };
 
   var filterByFeatures = function (pin) {
