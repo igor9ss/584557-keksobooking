@@ -12,7 +12,7 @@
     });
   };
 
-  var createClickHandler = function (data) {
+  var onPinElementClick = function (data) {
     return function () {
       window.mapPopup.renderElement(data);
       window.mapPopup.showPopup();
@@ -26,7 +26,7 @@
         .forEach(function (pin) {
           var pinElement = window.mapPin.createElement(pin, pinTemplateElement);
 
-          pinElement.addEventListener('click', createClickHandler(pin));
+          pinElement.addEventListener('click', onPinElementClick(pin));
 
           fragment.appendChild(pinElement);
         });
