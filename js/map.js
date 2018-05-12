@@ -19,7 +19,7 @@
     };
   };
 
-  var renderPins = function (pins) {
+  var createPins = function (pins) {
     var fragment = document.createDocumentFragment();
     pins
         .slice(0, PIN_SHOW_LIMIT)
@@ -70,7 +70,7 @@
 
     enableFieldset();
 
-    renderPins(cachedPins);
+    createPins(cachedPins);
     var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
     buttonElements.forEach(function (buttonElement) {
@@ -81,7 +81,7 @@
   mapFiltersElement.addEventListener('change', function () {
     window.mapPopup.hidePopup();
     window.debounce(function () {
-      renderPins(window.mapFilter.filterPins(cachedPins));
+      createPins(window.mapFilter.filterPins(cachedPins));
       document.querySelectorAll('.map__pin:not(.map__pin--main)').forEach(function (pinElement) {
         pinElement.classList.remove('hidden');
       });
