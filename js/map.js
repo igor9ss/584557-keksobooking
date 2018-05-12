@@ -27,7 +27,7 @@
           var pinElement = window.mapPin.createElement(pin, pinTemplateElement);
 
           pinElement.addEventListener('click', onPinElementClick(pin));
-
+          removePins();
           fragment.appendChild(pinElement);
         });
     mapPinsElement.appendChild(fragment);
