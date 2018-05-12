@@ -121,6 +121,8 @@
     mapFilterFormElement.reset();
     setAddressData(mainPinElementCenterX, mainPinElementCenterY);
     setDefaultValueForPriceElement();
+
+    mainPinElement.addEventListener('mousedown', window.map.onMainPinElementMousedown);
   });
 
   formElement.addEventListener('submit', function (evt) {
@@ -131,6 +133,8 @@
     window.backend.sendFormData(new FormData(formElement), onLoad, window.errorMessage.show);
 
     setDefaultValueForPriceElement();
+
+    mainPinElement.addEventListener('mousedown', window.map.onMainPinElementMousedown);
   });
 
   homeTypeSelectFieldElement.addEventListener('change', function () {

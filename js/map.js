@@ -55,9 +55,7 @@
     cachedPins = pins;
   };
 
-  window.backend.loadData(onSuccessLoad, window.errorMessage.show);
-
-  mainPinElement.addEventListener('mousedown', function () {
+  var onMainPinElementMousedown = function () {
     if (mapElement.classList.contains('map--faded')) {
       var formElement = document.querySelector('.ad-form');
       var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
@@ -80,8 +78,14 @@
 
       window.mapPopup.addListeners();
       window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
+
+      mainPinElement.removeEventListener('mousedown', onMainPinElementMousedown);
     }
-  });
+  };
+
+  window.backend.loadData(onSuccessLoad, window.errorMessage.show);
+
+  mainPinElement.addEventListener('mousedown', onMainPinElementMousedown);
 
   mapFiltersElement.addEventListener('change', function () {
     window.mapPopup.hidePopup();
@@ -94,6 +98,7 @@
   });
 
   window.map = {
-    removePins: removePins
+    removePins: removePins,
+    onMainPinElementMousedown: onMainPinElementMousedown
   };
 })();
