@@ -21,8 +21,6 @@
 
   var renderPins = function (pins) {
     var fragment = document.createDocumentFragment();
-    var pinElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-
     pins
         .slice(0, PIN_SHOW_LIMIT)
         .forEach(function (pin) {
@@ -32,10 +30,7 @@
 
           fragment.appendChild(pinElement);
         });
-
-    pinElements.forEach(function (pinElement) {
-      pinElement.remove();
-    });
+    window.map.removePins();
     mapPinsElement.appendChild(fragment);
   };
 
@@ -92,4 +87,13 @@
       });
     });
   });
+
+  window.map = {
+    removePins: function () {
+      var pinElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
+      pinElements.forEach(function (pinElement) {
+        pinElement.remove();
+      });
+    }
+  };
 })();

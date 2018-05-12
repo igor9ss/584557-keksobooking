@@ -59,13 +59,6 @@
     mainPinElement.style.top = MAIN_PIN_DEFAULT_COORDINATE_Y;
   };
 
-  var removePins = function () {
-    var pinElements = document.querySelectorAll('.map__pin:not(.map__pin--main)');
-    pinElements.forEach(function (pinElement) {
-      pinElement.remove();
-    });
-  };
-
   var disableFieldset = function () {
     fieldsetElements.forEach(function (fieldsetElement) {
       fieldsetElement.disabled = true;
@@ -89,7 +82,7 @@
 
     window.mapPopup.hidePopup();
 
-    removePins();
+    window.map.removePins();
     setStandartInputsBorders();
     setMainPinToCenter();
     disableFieldset();
@@ -120,7 +113,7 @@
 
     window.mapPopup.hidePopup();
 
-    removePins();
+    window.map.removePins();
     setStandartInputsBorders();
     setMainPinToCenter();
     disableFieldset();
