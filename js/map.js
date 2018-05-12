@@ -56,31 +56,29 @@
   };
 
   var onMainPinElementMousedown = function () {
-    if (mapElement.classList.contains('map--faded')) {
-      var formElement = document.querySelector('.ad-form');
-      var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
-      var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
+    var formElement = document.querySelector('.ad-form');
+    var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
+    var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
 
-      var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
-      var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
+    var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
+    var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
 
-      mapElement.classList.remove('map--faded');
-      formElement.classList.remove('ad-form--disabled');
+    mapElement.classList.remove('map--faded');
+    formElement.classList.remove('ad-form--disabled');
 
-      removePins();
-      createPins(cachedPins);
-      enableFieldset();
+    removePins();
+    createPins(cachedPins);
+    enableFieldset();
 
-      var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
-      buttonElements.forEach(function (buttonElement) {
-        buttonElement.classList.remove('hidden');
-      });
+    var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
+    buttonElements.forEach(function (buttonElement) {
+      buttonElement.classList.remove('hidden');
+    });
 
-      window.mapPopup.addListeners();
-      window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
+    window.mapPopup.addListeners();
+    window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
 
-      mainPinElement.removeEventListener('mousedown', onMainPinElementMousedown);
-    }
+    mainPinElement.removeEventListener('mousedown', onMainPinElementMousedown);
   };
 
   window.backend.loadData(onSuccessLoad, window.errorMessage.show);
