@@ -61,20 +61,21 @@
     var formElement = document.querySelector('.ad-form');
     var mainPinElementLeftX = parseInt(mainPinElement.style.left, 10);
     var mainPinElementTopY = parseInt(mainPinElement.style.top, 10);
-    var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
 
     var mainPinElementCenterX = mainPinElementLeftX + MAIN_PIN_WIDTH / 2;
     var mainPinElementArrowY = mainPinElementTopY + MAIN_PIN_HEIGHT + MAIN_PIN_ARROW_HEIGHT;
 
     mapElement.classList.remove('map--faded');
     formElement.classList.remove('ad-form--disabled');
+
+    removePins();
+    createPins(cachedPins);
+    enableFieldset();
+
+    var buttonElements = mapPinsElement.querySelectorAll('button[type="button"]');
     buttonElements.forEach(function (buttonElement) {
       buttonElement.classList.remove('hidden');
     });
-
-    window.map.removePins();
-    createPins(cachedPins);
-    enableFieldset();
 
     window.mapPopup.addListeners();
     window.form.setAddressData(mainPinElementCenterX, mainPinElementArrowY);
