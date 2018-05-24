@@ -1,5 +1,7 @@
 # Личный проект «Кексобукинг» [![Build status][travis-image]][travis-url]
 
+Приложение для размещения и поиска обьявлений по аренде недвижимости(а-ля Booking).
+
 * Студент: [Igor Zorin](https://up.htmlacademy.ru/javascript/13/user/584557).
 * Наставник: Сергей Ufocoder.
 
